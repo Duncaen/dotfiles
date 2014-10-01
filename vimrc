@@ -5,6 +5,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-sensible'
 " git
 Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
 " visual
 Plug 'junegunn/seoul256.vim'
 Plug 'chriskempson/vim-tomorrow-theme'
@@ -29,7 +30,7 @@ Plug 'moll/vim-node', { 'for': 'javascript' }
 Plug 'marijnh/tern_for_vim', { 'do': 'npm install', 'for': 'javascript' }
 Plug 'klen/python-mode', { 'for': 'python' }
 Plug 'jmcantrell/vim-virtualenv', { 'for': 'python' }
-Plug 'Valloric/YouCompleteMe', { 'do': './install.sh', 'for': ['python', 'javascript', 'vim', 'scss', 'css'] }
+Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'cakebaker/scss-syntax.vim', { 'for': 'scss' }
