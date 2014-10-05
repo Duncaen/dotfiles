@@ -1,6 +1,13 @@
 set nocompatible
 filetype off
 
+" Install plug
+if empty(expand("~/.vim/autoload/plug.vim"))
+	!mkdir -p ~/.vim/autoload
+	!curl -fLo ~/.vim/autoload/plug.vim 
+	\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+endif
+
 call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-sensible'
 " git

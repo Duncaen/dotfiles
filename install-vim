@@ -2,17 +2,7 @@
 
 cd $(dirname $BASH_SOURCE)
 BASE=$(pwd)
-VIM_PLUG=~/.vim/autoload/plug.vim
 VIM_RC=~/.vimrc
-
-echo $VIM_PLUG
-
-# download plug
-if [ ! -f "$VIM_PLUG" ]; then
-	export GIT_SSL_NO_VERIFY=true
-	mkdir -p ~/.vim/autoload
-	curl --insecure -fLo ~/.vim/autoload/plug.vim https://raw.github.com/junegunn/vim-plug/master/plug.vim
-fi
 
 # move vimrc to vimrc.old
 if [ -f "$VIM_RC" ]; then
