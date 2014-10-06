@@ -57,7 +57,7 @@ let maplocalleader = ','
 set number
 set smartindent
 set lazyredraw
-set visualbell
+" set visualbell
 set timeoutlen=500
 set whichwrap=b,s
 set hlsearch
@@ -79,6 +79,11 @@ set guifont=Source\ Code\ Pro\ 9
 set history=1000                    " Store a ton of history (default is 20)
 set cursorline                      " Highlight current line
 set virtualedit=onemore             " Allow for cursor beyond last character
+
+" Directories
+set undodir=~/.vim/undo//
+set backupdir=~/.vim/backup//
+set directory=~/.vim/swp//
 
 " Clipboard
 if has('clipboard')
