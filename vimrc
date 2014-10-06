@@ -51,39 +51,45 @@ endif
 " Basic settings
 " ============================================================================
 
+" Leader
 let mapleader      = ','
 let maplocalleader = ','
 
+" Vim
 set number
-set smartindent
 set lazyredraw
 " set visualbell
-set timeoutlen=500
-set whichwrap=b,s
-set hlsearch
-set incsearch
-set hidden
-set ignorecase smartcase
-set tabstop=2
-set shiftwidth=2
-set expandtab smarttab
-set scrolloff=5
-set list
-" set listchars=tab:\|\ ,
-set nojoinspaces
-set diffopt=filler,vertical
-set autoread
-set foldlevelstart=99
-set foldmethod=indent
-set guifont=Source\ Code\ Pro\ 9
+set timeoutlen=500 " time to wait for key code, mapped key sequence
 set history=1000                    " Store a ton of history (default is 20)
 set cursorline                      " Highlight current line
 set virtualedit=onemore             " Allow for cursor beyond last character
+set guifont=Source\ Code\ Pro\ 9
 
 " Directories
 set undodir=~/.vim/undo//
 set backupdir=~/.vim/backup//
 set directory=~/.vim/swp//
+
+" Search
+set hlsearch
+set incsearch
+set ignorecase smartcase
+
+set hidden
+set scrolloff=5
+
+" Formating
+" set whichwrap=b,s " Default
+set tabstop=2
+set shiftwidth=2
+set expandtab smarttab
+set smartindent
+set list
+set foldlevelstart=99
+set foldmethod=indent
+
+" set listchars=tab:\|\ ,
+set diffopt=filler,vertical
 
 " Clipboard
 if has('clipboard')
@@ -106,8 +112,6 @@ endif
 set mouse=a                          " Automatically enable mouse usage
 set mousehide                        " Hide the mouse cursor while typing
 
-" Use the below highlight group when displaying bad whitespace is desired.
-highlight BadWhitespace ctermbg=red guibg=red
 highlight clear SignColumn           " SignColumn should match background
 highlight clear LineNr               " Current line number row will have same background color in relative mode
 set viewoptions=folds,options,cursor,unix,slash " Better Unix / Windows compatibility
@@ -167,6 +171,10 @@ if v:version >= 703
   let g:tagbar_sort = 0
 endif
 
+" Reselect visual block after indent/outdent
+vnoremap < <gv
+vnoremap > >gv
+
 " ----------------------------------------------------------------------------
 " <tab> / <s-tab> | Circular windows navigation
 " ----------------------------------------------------------------------------
@@ -193,6 +201,7 @@ function! s:map_change_option(...)
 endfunction
 
 call s:map_change_option('p', 'paste')
+call s:map_change_option('l', 'list')
 call s:map_change_option('n', 'number')
 call s:map_change_option('w', 'wrap')
 call s:map_change_option('h', 'hlsearch')
