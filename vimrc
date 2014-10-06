@@ -174,6 +174,7 @@ endif
 " Reselect visual block after indent/outdent
 vnoremap < <gv
 vnoremap > >gv
+vnoremap = =gv
 
 " ----------------------------------------------------------------------------
 " <tab> / <s-tab> | Circular windows navigation
