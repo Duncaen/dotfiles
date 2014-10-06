@@ -13,6 +13,8 @@ Plug 'airblade/vim-gitgutter'
 " Colors
 Plug 'junegunn/seoul256.vim'
 Plug 'chriskempson/vim-tomorrow-theme'
+Plug 'jnurmine/Zenburn'
+Plug 'fugalh/desert.vim', { 'dir': '~/.vim/plugged/desert.vim/colors' }
 
 " Navigation
 Plug 'Lokaltog/vim-easymotion'
@@ -89,6 +91,8 @@ set foldlevelstart=99
 set foldmethod=indent
 
 " set listchars=tab:\|\ ,
+" set listchars=tab:▸\ ,eol:¬,trail:⋅,extends:❯,precedes:❮
+" set showbreak=↪
 set diffopt=filler,vertical
 
 " Clipboard
@@ -112,15 +116,12 @@ endif
 set mouse=a                          " Automatically enable mouse usage
 set mousehide                        " Hide the mouse cursor while typing
 
-highlight clear SignColumn           " SignColumn should match background
-highlight clear LineNr               " Current line number row will have same background color in relative mode
+" highlight clear SignColumn           " SignColumn should match background
+" highlight clear LineNr               " Current line number row will have same background color in relative mode
 set viewoptions=folds,options,cursor,unix,slash " Better Unix / Windows compatibility
 
 " Directories
-set backupdir^=~/.vim/backup//
-set directory^=~/.vim/swapfiles//
 if has('persistent_undo')
-  set undodir=~/.vim/undodir
   set undofile                " So is persistent undo ...
   set undolevels=1000         " Maximum number of changes that can be undone
   set undoreload=10000        " Maximum number lines to save for undo on a buffer reload
