@@ -66,6 +66,7 @@ set history=1000                    " Store a ton of history (default is 20)
 set cursorline                      " Highlight current line
 set virtualedit=onemore             " Allow for cursor beyond last character
 set guifont=Source\ Code\ Pro\ 9
+filetype plugin indent on
 
 " Directories
 set undodir=~/.vim/undo//
@@ -176,6 +177,9 @@ endif
 vnoremap < <gv
 vnoremap > >gv
 vnoremap = =gv
+
+" Reload vim rc
+nmap <Leader>s :source $MYVIMRC
 
 " ----------------------------------------------------------------------------
 " <tab> / <s-tab> | Circular windows navigation
