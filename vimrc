@@ -35,6 +35,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'nathanaelkane/vim-indent-guides'
 
 " Languages
+Plug 'plasticboy/vim-markdown'
 Plug 'scrooloose/syntastic', { 'for': ['python', 'javascript'] }
 Plug 'moll/vim-node', { 'for': 'javascript' }
 Plug 'marijnh/tern_for_vim', { 'do': 'npm install', 'for': 'javascript' }
@@ -66,6 +67,8 @@ set cursorline                      " Highlight current line
 set virtualedit=onemore             " Allow for cursor beyond last character
 set guifont=Source\ Code\ Pro\ 9
 filetype plugin indent on
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
+set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
 
 " Directories
 set undodir=~/.vim/undo//
