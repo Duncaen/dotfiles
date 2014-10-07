@@ -22,7 +22,6 @@ Plug 'kien/ctrlp.vim'
 Plug 'bling/vim-airline'
 Plug 'majutsushi/tagbar'
 Plug 'bling/vim-bufferline'
-Plug 'rgarver/Kwbd.vim'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 
 " Search
