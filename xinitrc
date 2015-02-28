@@ -27,7 +27,7 @@ xset -b
 xrandr --dpi 92 &
 
 # hide cursor
-unclutter -root -visible -jitter 10 -idle 5 &
+unclutter -noevents -root -visible -jitter 10 -idle 5 &
 
 # statusbar
 repos/go-dwmstatus/go-dwmstatus &
@@ -38,3 +38,5 @@ while true; do
   # No logging
   dwm >/dev/null 2>&1
 done
+#exec dwm
+#echo "after"
