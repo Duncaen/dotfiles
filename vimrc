@@ -40,8 +40,9 @@ Plug 'scrooloose/syntastic', { 'for': ['python', 'javascript'] }
 Plug 'moll/vim-node', { 'for': 'javascript' }
 Plug 'marijnh/tern_for_vim', { 'do': 'npm install', 'for': 'javascript' }
 Plug 'klen/python-mode', { 'for': 'python' }
+Plug 'fatih/vim-go'
 Plug 'jmcantrell/vim-virtualenv', { 'for': 'python' }
-Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
+Plug 'Shougo/neocomplcache.vim'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'cakebaker/scss-syntax.vim', { 'for': 'scss' }
@@ -97,6 +98,12 @@ set foldmethod=indent
 " set listchars=tab:▸\ ,eol:¬,trail:⋅,extends:❯,precedes:❮
 " set showbreak=↪
 set diffopt=filler,vertical
+
+" The Silver Searcher
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+endif
 
 " Clipboard
 if has('clipboard')
