@@ -14,17 +14,12 @@ fi
 # start pulseaudio -.-
 start-pulseaudio-x11 &
 
-# keyboard layout
-setxkbmap de &
-
 xset +fp ~/.fonts/ &
 xset +fp /usr/share/fonts/misc/ &
 xset fp rehash &
-
-# nobeep
 xset -b
-
 xrandr --dpi 92 &
+setxkbmap de &
 
 # hide cursor
 unclutter -noevents -root -visible -jitter 10 -idle 5 &
@@ -33,10 +28,6 @@ unclutter -noevents -root -visible -jitter 10 -idle 5 &
 repos/go-dwmstatus/go-dwmstatus &
 
 while true; do
-  # Full logging
-  #dwm 2> ~/log/dwm.log
-  # No logging
   dwm >/dev/null 2>&1
 done
 #exec dwm
-#echo "after"
