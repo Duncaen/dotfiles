@@ -392,6 +392,10 @@ for p in ~/.etc/bin ~/bin; do
 	[[ :$PATH: = *:$p:* ]] || PATH=$p:$PATH
 done
 
+function psgrep {
+	ps u `pgrep "$1"`
+}
+
 export XBPS_DISTDIR=~/repos/github.com/Duncaen/void-packages
 export GOPATH=~/go
 export GOBIN=$GOPATH/bin
@@ -403,11 +407,22 @@ export LESS="-F -X -R"
 alias cls='print -n \\033c'
 alias ls="ls --color -F"
 
+alias wanip='curl ipinfo.io/ip'
+
 # git
 alias ga='git add'
 alias gc='git commit'
+alias gca='git commit --amend'
+alias gp='git pull'
+alias gpr='git pull --rebase'
 alias gs='git status -sb'
 alias gb='git branch'
+alias gd='git icdiff'
+
+# xbps
+alias xi='sudo xbps-install'
+alias xr='sudo xbps-remove'
+alias xq='xbps-query'
 
 # colors
 alias ld='grc -es --colour=auto ld'
@@ -422,21 +437,11 @@ alias df='grc -es --colour=auto df'
 alias usv='SVDIR=~/service/ sv'
 
 # Keychain
-# eval `keychain --eval --agents ssh id_rsa`
-if [ -f ~/.keychain/${HOSTNAME}-sh ]; then
-  . ~/.keychain/${HOSTNAME}-sh
-fi
-
-function eval_keychain() {
-  keychain --agents ssh id_rsa
-  if [ -f ~/.keychain/${HOSTNAME}-sh ]; then
-    . ~/.keychain/${HOSTNAME}-sh
-  fi
-}
+eval `keychain --eval --agents ssh id_rsa`
 
 alias check-updates="sudo sh -c 'cd /var/cache/void-packages && chpst -u voidupdates:voidupdates void-updates -p 20 -r git://github.com/voidlinux/void-packages.git -s /var/cache/void-packages -o /srv/http/void-updates'"
-
-alias keychain=eval_keychain
+alias bt='echo 0 | gdb -batch-silent -ex "run" -ex "set logging overwrite on" -ex "set logging file gdb.bt" -ex "set logging on" -ex "set pagination off" -ex "handle SIG33 pass nostop noprint" -ex "echo backtrace:\n" -ex "backtrace full" -ex "echo \n\nregisters:\n" -ex "info registers" -ex "echo \n\ncurrent instructions:\n" -ex "x/16i \$pc" -ex "echo \n\nthreads backtrace:\n" -ex "thread apply all backtrace" -ex "set logging off" -ex "quit" --args'
+# alias keychain=eval_keychain
 
 #unset LANGUAGE LC_ADDRESS LC_ALL LC_COLLATE LC_IDENTIFICATION LC_MONETARY \
 #    LC_NAME LC_NUMERIC LC_TELEPHONE LC_TIME
@@ -455,5 +460,14 @@ printf '\033[?1h\033=' >/dev/tty
 
 # 
 PS1='$(slcp $COLUMNS $?)'
+
+# If this is an xterm set the title to user@host:dir
+case "$TERM" in
+  dvtm*|xterm*|rxvt*)
+    PS1+='$(echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007")'
+    ;;
+  *)
+    ;;
+esac
 
 : place customisations above this line

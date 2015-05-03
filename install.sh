@@ -15,5 +15,11 @@ ln -sfv $dotfiles/xinitrc /home/$user/.xinitrc
 rm -v /home/$user/.mkshrc
 ln -sfv $dotfiles/mkshrc /home/$user/.mkshrc
 
+rm -v /home/$user/.stalonetrayrc
+ln -sfv $dotfiles/stalonetrayrc /home/$user/.stalonetrayrc
+
+rm -v /home/$user/.inputrc
+ln -sfv $dotfiles/inputrc /home/$user/.inputrc
+
 # install plugins
 # vim +PlugInstall +qall
