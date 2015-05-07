@@ -21,5 +21,8 @@ ln -sfv $dotfiles/stalonetrayrc /home/$user/.stalonetrayrc
 rm -v /home/$user/.inputrc
 ln -sfv $dotfiles/inputrc /home/$user/.inputrc
 
+rm -v /home/$user/.gitconfig
+ln -sfv $dotfiles/gitconfig /home/$user/.gitconfig
+
 # install plugins
 # vim +PlugInstall +qall
