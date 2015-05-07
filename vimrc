@@ -6,17 +6,12 @@ silent! if plug#begin('~/.vim/plugged')
 " Defaults
 Plug 'tpope/vim-sensible'
 
-if hostname() != "pi"
-  " Git
-  Plug 'tpope/vim-fugitive'
-  Plug 'airblade/vim-gitgutter'
+" Git
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
 
-  " Colors
-  Plug 'junegunn/seoul256.vim'
-  Plug 'chriskempson/vim-tomorrow-theme'
-  Plug 'jnurmine/Zenburn'
-  Plug 'fugalh/desert.vim', { 'dir': '~/.vim/plugged/desert.vim/colors' }
-endif
+" Colors
+Plug 'chriskempson/vim-tomorrow-theme'
 
 " Navigation
 Plug 'Lokaltog/vim-easymotion'
@@ -45,9 +40,7 @@ Plug 'klen/python-mode', { 'for': 'python' }
 Plug 'fatih/vim-go'
 Plug 'jmcantrell/vim-virtualenv', { 'for': 'python' }
 Plug 'Shougo/neocomplcache.vim'
-if hostname() != "pi"
-  Plug 'SirVer/ultisnips'
-endif
+Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'cakebaker/scss-syntax.vim', { 'for': 'scss' }
 
@@ -149,7 +142,7 @@ if has('gui_running')
   set guioptions-=L           " Remove the left-hand scroll bar
   set lines=40                " 40 lines of text instead of 24
 else
-  if &term == 'xterm' || &term == 'screen'
+  if hostname() != "pi" && &term == 'xterm' || &term == 'screen'
     set t_Co=256            " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
   endif
 endif
