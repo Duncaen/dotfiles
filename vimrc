@@ -6,15 +6,17 @@ silent! if plug#begin('~/.vim/plugged')
 " Defaults
 Plug 'tpope/vim-sensible'
 
-" Git
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
+if hostname() != "pi"
+  " Git
+  Plug 'tpope/vim-fugitive'
+  Plug 'airblade/vim-gitgutter'
 
-" Colors
-Plug 'junegunn/seoul256.vim'
-Plug 'chriskempson/vim-tomorrow-theme'
-Plug 'jnurmine/Zenburn'
-Plug 'fugalh/desert.vim', { 'dir': '~/.vim/plugged/desert.vim/colors' }
+  " Colors
+  Plug 'junegunn/seoul256.vim'
+  Plug 'chriskempson/vim-tomorrow-theme'
+  Plug 'jnurmine/Zenburn'
+  Plug 'fugalh/desert.vim', { 'dir': '~/.vim/plugged/desert.vim/colors' }
+endif
 
 " Navigation
 Plug 'Lokaltog/vim-easymotion'
@@ -43,7 +45,9 @@ Plug 'klen/python-mode', { 'for': 'python' }
 Plug 'fatih/vim-go'
 Plug 'jmcantrell/vim-virtualenv', { 'for': 'python' }
 Plug 'Shougo/neocomplcache.vim'
-Plug 'SirVer/ultisnips'
+if hostname() != "pi"
+  Plug 'SirVer/ultisnips'
+endif
 Plug 'honza/vim-snippets'
 Plug 'cakebaker/scss-syntax.vim', { 'for': 'scss' }
 
