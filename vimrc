@@ -14,15 +14,14 @@ Plug 'airblade/vim-gitgutter'
 Plug 'chriskempson/vim-tomorrow-theme'
 
 " Navigation
+if hostname() == "tux"
 Plug 'Lokaltog/vim-easymotion'
-Plug 'kien/ctrlp.vim'
 Plug 'bling/vim-airline'
 Plug 'majutsushi/tagbar'
+endif
+Plug 'kien/ctrlp.vim'
 Plug 'bling/vim-bufferline'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-
-" Search
-Plug 'mileszs/ack.vim', { 'on': 'Ack' }
 
 " Editing
 Plug 'tpope/vim-surround'
@@ -32,15 +31,17 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'nathanaelkane/vim-indent-guides'
 
 " Languages
-Plug 'plasticboy/vim-markdown'
-Plug 'scrooloose/syntastic', { 'for': ['python', 'javascript'] }
-Plug 'moll/vim-node', { 'for': 'javascript' }
-Plug 'marijnh/tern_for_vim', { 'do': 'npm install', 'for': 'javascript' }
-Plug 'klen/python-mode', { 'for': 'python' }
-Plug 'fatih/vim-go'
-Plug 'jmcantrell/vim-virtualenv', { 'for': 'python' }
-Plug 'Shougo/neocomplcache.vim'
+if hostname() == "tux"
 Plug 'SirVer/ultisnips'
+Plug 'marijnh/tern_for_vim', { 'do': 'npm install', 'for': 'javascript' }
+Plug 'scrooloose/syntastic', { 'for': ['python', 'javascript'] }
+Plug 'fatih/vim-go'
+Plug 'klen/python-mode', { 'for': 'python' }
+Plug 'jmcantrell/vim-virtualenv', { 'for': 'python' }
+endif
+Plug 'plasticboy/vim-markdown'
+Plug 'moll/vim-node', { 'for': 'javascript' }
+Plug 'Shougo/neocomplcache.vim'
 Plug 'honza/vim-snippets'
 Plug 'cakebaker/scss-syntax.vim', { 'for': 'scss' }
 
