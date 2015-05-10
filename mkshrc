@@ -424,8 +424,30 @@ alias xi='sudo xbps-install'
 alias xr='sudo xbps-remove'
 alias xq='xbps-query'
 
+# runit
+alias svls='sudo sv s /var/service/*'
+alias svu='sudo sv start'
+alias svd='sudo sv stop'
+alias svr='sudo sv restart'
+
+function sva {
+  if [ -r /etc/sv/$1 ]; then
+    sudo ln -sv /etc/sv/$1 /var/service
+  else
+    echo "Service $1 not found"
+  fi
+}
+
+function svrm {
+  if [ -r /var/service/$1 ]; then
+    sudo rm -v /var/service/$1
+  else
+    echo "Service $1 not found"
+  fi
+}
+
 # colors
-if [[ ${HOSTNAME} != 'pi' ]]; then
+if [ ${HOSTNAME} != "pi" ]; then
   alias ld='grc -es --colour=auto ld'
   alias ss='grc -es --colour=auto ss'
   alias ps='grc -es --colour=auto ps'
