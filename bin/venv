@@ -1,0 +1,73 @@
+#!/bin/mksh
+
+readonly PROGNAME=$(basename $0)
+
+function venv_create {
+  if [[ ! -d $VENV_PATH/$1 ]]; then
+    mkdir -pv $VENV_PATH/$1
+  fi
+  ${VENV_CMD} $VENV_PATH/$1
+}
+
+function venv_delete {
+  if [[ -d $VENV_PATH/$1 ]]; then
+    rm -rfv $VENV_PATH/$1
+  fi
+}
+
+function venv_activate {
+  if [[ ! -d $VENV_PATH/$1 ]]; then
+    echo "venv: $1 not found"
+    exit
+  fi
+  export _ORIG_PATH="$PATH"
+  export VIRTUAL_ENV="$VENV_PATH/$1"
+  export PATH="$VIRTUAL_ENV/bin:$PATH"
+  if [[ -n $PYTHONHOME ]]; then
+    export _ORIG_PYTHONHOME="$PYTHONHOME"
+    unset PYTHONHOME
+  fi
+}
+
+function venv_deactivate {
+  if [[ -z $VIRTUAL_ENV ]]; then
+    echo "venv: not active"
+    exit
+  fi
+  if [[ -n $_ORIG_PATH ]]; then
+    export PATH="$_ORIG_PATH"
+    unset _ORIG_PATH
+  fi
+  if [[ -n $_ORIG_PYTHONHOME ]]; then
+    export PYTHONHOME="$_ORIG_PYTHONHOME"
+    unset _ORIG_PYTHONHOME
+  fi
+}
+
+function usage {
+  cat <<_EOF
+ Usage: $PROGNAME <command> [<args>]
+
+ Commands:
+  create      <name>
+  delete      <name>
+  activate    <name>
+  deactivate
+_EOF
+}
+
+: ${CONFIG_FILE:=~/.venv/config}
+: ${VENV_PATH:=~/.venv}
+: ${VENV_CMD:=virtualenv-2.7}
+
+if [ -r ${CONFIG_FILE} ]; then
+  . $CONFIG_FILE
+fi
+
+case "$1" in
+  cr*) venv_create $2;;
+  del*) venv_delete $2;;
+  ac*) venv_activate $2;;
+  dea*) venv_deactivate;;
+  *) usage;;
+esac
