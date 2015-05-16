@@ -4,21 +4,45 @@ select_player() {
   echo $1 | tr ' ' '\n' | ${DMENU}
 }
 
-player_menu() {
-  PROMPT="$1:"
-  ARTIST=$(playerctl -p $1 metadata xesam:artist)
-  TITLE=$(playerctl -p $1 metadata xesam:title)
-  if [ -n "$ARTIST" -a -n "$TITLE" ]; then
-    PROMPT="$PROMPT $ARTIST - $TITLE"
-  fi
-  if [ $(playerctl -p $1 status) == "Playing" ]; then
-    CMDS="Pause\n"
+prompt() {
+  a=$(playerctl -p $1 metadata xesam:artist)
+  t=$(playerctl -p $1 metadata xesam:title)
+  if [ -n "$a" -a -n "$t" ]; then
+    echo "$1: $a - $t"
   else
-    CMDS="Play\n"
+    echo "$1:"
   fi
-  CMDS+="Stop\nNext\nPrevious"
-  ret=$(echo $CMDS | ${DMENU} -p "$PROMPT" -i | tr '[A-Z]' '[a-z]')
-  [ $ret ] && playerctl -p $1 $ret
+}
+
+play_pause() {
+  [ $(playerctl -p $1 status) == "Playing" ] && echo "Pause" || echo "Play"
+}
+
+player_menu() {
+  CMDS="$(play_pause $1)\nStop\nNext\nPrevious\nVolume"
+  ret=$(echo $CMDS | ${DMENU} -p "$(prompt $1)" -i | tr '[A-Z]' '[a-z]')
+  case "$ret" in
+    play|pause|next|previous) playerctl -p $1 $ret ;;
+    volume) volume_menu $1 ;;
+  esac
+}
+
+volume_menu() {
+  while :
+  do
+    VOL=$(echo "$(playerctl -p $1 volume) * 100" | bc)
+    VOL=${VOL%.*}
+    ret=$(echo "Up\nDown" | ${DMENU} -p "$1: $VOL" -i | tr '[A-Z]' '[a-z]')
+    case "$ret" in
+      up) playerctl -p $1 volume $(echo "($VOL + 5) / 100" | bc -l) ;;
+      down) playerctl -p $1 volume $(echo "($VOL - 5) / 100" | bc -l) ;;
+      *)
+        [ -z "$ret" ] && break
+        [ -n "$(echo $ret | tr -d '[[:digit:]]')" ] && break
+        playerctl -p $1 volume $(echo "$ret / 100" | bc -l)
+      ;;
+    esac
+  done
 }
 
 : ${DMENU:=dmenu}
