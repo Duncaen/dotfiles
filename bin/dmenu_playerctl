@@ -28,18 +28,30 @@ player_menu() {
 }
 
 volume_menu() {
+  cmds="Up\nDown"
   while :
   do
-    VOL=$(echo "$(playerctl -p $1 volume) * 100" | bc)
-    VOL=${VOL%.*}
-    ret=$(echo "Up\nDown" | ${DMENU} -p "$1: $VOL" -i | tr '[A-Z]' '[a-z]')
+    vol=$(echo "$(playerctl -p $1 volume) * 100" | bc)
+    vol=${vol%.*}
+    ret=$(echo "$cmds" | ${DMENU} -p "$1: $vol" -i | tr '[A-Z]' '[a-z]')
     case "$ret" in
-      up) playerctl -p $1 volume $(echo "($VOL + 5) / 100" | bc -l) ;;
-      down) playerctl -p $1 volume $(echo "($VOL - 5) / 100" | bc -l) ;;
+      up)
+        playerctl -p $1 volume $(echo "($vol + 5) / 100" | bc -l)
+        cmds="Up\nDown"
+      ;;
+      down)
+        playerctl -p $1 volume $(echo "($vol - 5) / 100" | bc -l)
+        cmds="Down\nUp"
+      ;;
       *)
         [ -z "$ret" ] && break
         [ -n "$(echo $ret | tr -d '[[:digit:]]')" ] && break
         playerctl -p $1 volume $(echo "$ret / 100" | bc -l)
+        if [ "$ret" -gt "$vol" ]; then
+          cmds="Up\nDown"
+        else
+          cmds="Down\nUp"
+        fi
       ;;
     esac
   done
