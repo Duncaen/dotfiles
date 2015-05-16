@@ -1,0 +1,30 @@
+#!/bin/mksh
+
+select_player() {
+  echo $1 | tr ' ' '\n' | ${DMENU}
+}
+
+player_menu() {
+  PROMPT="$1:"
+  ARTIST=$(playerctl -p $1 metadata xesam:artist)
+  TITLE=$(playerctl -p $1 metadata xesam:title)
+  if [ -n "$ARTIST" -a -n "$TITLE" ]; then
+    PROMPT="$PROMPT $ARTIST - $TITLE"
+  fi
+  if [ $(playerctl -p $1 status) == "Playing" ]; then
+    CMDS="Pause\n"
+  else
+    CMDS="Play\n"
+  fi
+  CMDS+="Stop\nNext\nPrevious"
+  ret=$(echo $CMDS | ${DMENU} -p "$PROMPT" -i | tr '[A-Z]' '[a-z]')
+  [ $ret ] && playerctl -p $1 $ret
+}
+
+: ${DMENU:=dmenu}
+: ${PLAYER:=$(playerctl -l)}
+case "$(echo ${PLAYER} | wc -w)" in
+  0) echo "No player running" && exit ;;
+  1) player_menu "$PLAYER" ;;
+  *) player_menu $(select_player "$PLAYER") ;;
+esac
