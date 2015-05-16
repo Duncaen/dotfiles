@@ -1,0 +1,10 @@
+#!/bin/mksh
+
+: ${DMENU:=dmenu}
+ret=$(echo "Suspend\nHibernate\nReboot\nShutdown" | ${DMENU} -p "Power:" -i | tr '[A-Z]' '[a-z]')
+case "$ret" in
+  suspend)   sudo zzz    ;;
+  hibernate) sudo ZZZ    ;;
+  reboot)    sudo reboot ;;
+  shutdown)  sudo halt   ;;
+esac
