@@ -418,6 +418,7 @@ alias gpr='git pull --rebase'
 alias gs='git status -sb'
 alias gb='git branch'
 alias gd='git icdiff'
+alias gl='git l'
 
 # xbps
 alias xi='sudo xbps-install'
