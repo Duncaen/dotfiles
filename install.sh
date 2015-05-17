@@ -12,6 +12,9 @@ ln -sfv $dotfiles/vim /home/$user/.vim
 rm -v /home/$user/.xinitrc
 ln -sfv $dotfiles/xinitrc /home/$user/.xinitrc
 
+rm -v /home/$user/.Xresources
+ln -sfv $dotfiles/Xresources /home/$user/.Xresources
+
 rm -v /home/$user/.mkshrc
 ln -sfv $dotfiles/mkshrc /home/$user/.mkshrc
 
