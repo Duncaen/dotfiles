@@ -1,0 +1,3 @@
+[submodule "z"]
+	path = z
+	url = git@github.com:rupa/z.git
