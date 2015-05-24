@@ -1,7 +1,17 @@
 #!/bin/mksh
 
 select_player() {
-  echo $1 | tr ' ' '\n' | ${DMENU}
+  playing=""
+  for p in $1; do
+    if [ $(playerctl -p "$p" status) == "Playing" ]; then
+      [ -z "$playing" ] && playing="$p" || playing="$playing\n$p"
+    fi
+  done
+  case $(echo "$playing" | wc -l) in
+    0) exit ;;
+    1) echo "$playing" ;;
+    *) echo $(echo "$playing" | ${DMENU}) ;;
+  esac
 }
 
 prompt() {
@@ -19,6 +29,7 @@ play_pause() {
 }
 
 player_menu() {
+  [ -z "$1" ] && exit
   CMDS="$(play_pause $1)\nStop\nNext\nPrevious\nVolume"
   ret=$(echo $CMDS | ${DMENU} -p "$(prompt $1)" -i | tr '[A-Z]' '[a-z]')
   case "$ret" in
