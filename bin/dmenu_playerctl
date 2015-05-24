@@ -33,7 +33,7 @@ player_menu() {
   CMDS="$(play_pause $1)\nStop\nNext\nPrevious\nVolume"
   ret=$(echo $CMDS | ${DMENU} -p "$(prompt $1)" -i | tr '[A-Z]' '[a-z]')
   case "$ret" in
-    play|pause|next|previous) playerctl -p $1 $ret ;;
+    play|pause|stop|next|previous) playerctl -p $1 $ret ;;
     volume) volume_menu $1 ;;
   esac
 }
