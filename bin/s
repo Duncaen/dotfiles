@@ -1,0 +1,54 @@
+#!/usr/bin/mksh
+
+fatal() {
+  msg "FATAL: $1"
+  exit 1
+}
+
+msg() {
+  printf "$1\n"
+}
+
+sv_enable() {
+  [ ! -e "${SVDIR}${1}" ] && fatal "service '${1}' not found."
+  [ -e "${SERVICEDIR}${1}" ] && fatal "service '${1}' already enabled."
+  ln -sfv "${SVDIR}${1}" "${SERVICEDIR}${1}"
+}
+
+sv_disable() {
+  [ ! -e "${SVDIR}${1}" ] && fatal "service '${1}' not found."
+  [ ! -e "${SERVICEDIR}${1}" ] && fatal "service '${1}' already disabled."
+  rm -rfv "${SERVICEDIR}${1}"
+}
+
+sv_list() {
+  sv s "${SERVICEDIR}"*
+}
+
+while getopts "u:v" opt; do
+  case "$opt" in
+    u) SVUSER="$OPTARG" ;;
+  esac
+done
+shift $(($OPTIND - 1))
+
+: ${SVUSER:=$USER}
+
+case "$SVUSER" in
+  root)
+    SVDIR="/etc/sv/"
+    SERVICEDIR="/var/service/"
+    ;;
+  *)
+    HOMEDIR=$(getent passwd "$SVUSER" | cut -d':' -f6)
+    SVDIR="${HOMEDIR}/sv/"
+    SERVICEDIR="${HOMEDIR}/service/"
+    ;;
+esac
+
+case "$1" in
+  ls|list) sv_list "$2" ;;
+  enable) sv_enable "$2" ;;
+  disable) sv_disable "$2" ;;
+  *) SVDIR="$SVDIR" sv "$@" ;;
+esac
