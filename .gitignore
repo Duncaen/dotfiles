@@ -1,3 +1,5 @@
 vim/.vim
 vim/.netrwhist
 vim/vim
+sv/*/supervise/
+sv/*/log/supervise/
