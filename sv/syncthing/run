@@ -1,0 +1,4 @@
+#!/bin/mksh
+
+exec 2>&1
+exec syncthing -logflags 0

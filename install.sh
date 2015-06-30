@@ -33,5 +33,11 @@ ln -sfv $dotfiles/gitconfig /home/$user/.gitconfig
 rm -v /home/$user/bin
 ln -sfv $dotfiles/bin /home/$user/bin
 
+rm -rfv /home/$user/sv
+ln -sfv $dotfiles/sv /home/$user/sv
+
+rm -rfv /home/$user/service
+ln -sfv $dotfiles/service /home/$user/service
+
 # install plugins
 # vim +PlugInstall +qall
