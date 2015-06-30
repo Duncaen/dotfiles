@@ -18,6 +18,9 @@ ln -sfv $dotfiles/Xresources /home/$user/.Xresources
 rm -v /home/$user/.mkshrc
 ln -sfv $dotfiles/mkshrc /home/$user/.mkshrc
 
+rm -v /home/$user/.profile
+ln -sfv $dotfiles/profile /home/$user/.profile
+
 rm -v /home/$user/.stalonetrayrc
 ln -sfv $dotfiles/stalonetrayrc /home/$user/.stalonetrayrc
 
