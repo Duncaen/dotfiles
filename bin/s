@@ -1,23 +1,23 @@
 #!/usr/bin/mksh
 
 fatal() {
-  msg "FATAL: $1"
+  msg "$@" >&2
   exit 1
 }
 
 msg() {
-  printf "$1\n"
+  printf "$@"
 }
 
 sv_enable() {
-  [ ! -e "${SVDIR}${1}" ] && fatal "service '${1}' not found."
-  [ -e "${SERVICEDIR}${1}" ] && fatal "service '${1}' already enabled."
+  [ ! -e "${SVDIR}${1}" ] && fatal "service '${1}' not found.\n"
+  [ -e "${SERVICEDIR}${1}" ] && fatal "service '${1}' already enabled.\n"
   ln -sfv "${SVDIR}${1}" "${SERVICEDIR}${1}"
 }
 
 sv_disable() {
   [ ! -e "${SVDIR}${1}" ] && fatal "service '${1}' not found."
-  [ ! -e "${SERVICEDIR}${1}" ] && fatal "service '${1}' already disabled."
+  [ ! -e "${SERVICEDIR}${1}" ] && fatal "service '${1}' already disabled.\n"
   rm -rfv "${SERVICEDIR}${1}"
 }
 
@@ -25,9 +25,56 @@ sv_list() {
   sv s "${SERVICEDIR}"*
 }
 
-while getopts "u:v" opt; do
+sv_deps() {
+  for service in "$@"; do
+    # TODO: check if service exists
+    case $(cat "${SVDIR}${service}/supervise/stat") in
+      run*)
+        /home/duncan/bin/s check "${service}" >/dev/null || wait+=" $service"
+        ;;
+      down*)
+        /home/duncan/bin/s u "${service}" >/dev/null && wait+=" $service"
+        ;;
+    esac
+  done
+  [ -z "$wait" ] || fatal "wait for dependencies:$wait.\n"
+  exit 0
+}
+
+sv_tree() {
+  services=$(ls -1 "$1" 2>/dev/null)
+  [ "$?" -ne "0" ] && return 1
+
+  set -A tree
+
+  for f in ${services}; do
+    for b in $(ls -1 "${SVDIR}${f}/before" 2> /dev/null); do
+      echo "$b>$f"
+      before="$before$b:$f\n"
+    done
+    for a in $(ls -1 "${SVDIR}${f}/after" 2> /dev/null); do
+      echo "$f<$a"
+      after="$after$a:$f\n"
+    done
+  done
+
+  for f in ${services}; do
+    echo "$f;"
+    for a in $(echo "$after" | grep "$f"'$'); do
+      echo "$f--$a"
+      after=$(echo "$after" | sed 's/^://g')
+    done
+  done
+
+  echo "before:\n$before"
+  echo "after:\n$after"
+
+}
+
+while getopts "u:w:v" opt; do
   case "$opt" in
     u) SVUSER="$OPTARG" ;;
+    w) export SVWAIT="$OPTARG" ;;
   esac
 done
 shift $(($OPTIND - 1))
@@ -50,5 +97,7 @@ case "$1" in
   ls|list) sv_list "$2" ;;
   enable) sv_enable "$2" ;;
   disable) sv_disable "$2" ;;
+  deps) shift 1; sv_deps "$@" ;;
+  tree) shift 1; sv_tree "$SVDIR" ;;
   *) SVDIR="$SVDIR" sv "$@" ;;
 esac

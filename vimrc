@@ -19,6 +19,7 @@ Plug 'Lokaltog/vim-easymotion'
 Plug 'bling/vim-airline'
 Plug 'majutsushi/tagbar'
 endif
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 Plug 'kien/ctrlp.vim'
 Plug 'bling/vim-bufferline'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }

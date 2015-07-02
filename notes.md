@@ -1,6 +1,7 @@
 # Terminal
 
 `CTRL+s` `CTRL+q` Pause/resume output
+`CTRL+i` complete file
 
 ## dvtm
 

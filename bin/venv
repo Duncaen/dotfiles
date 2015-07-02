@@ -2,11 +2,15 @@
 
 readonly PROGNAME=$(basename $0)
 
+function venv_list {
+  ls -l "$VENV_PATH"
+}
+
 function venv_create {
-  if [[ ! -d $VENV_PATH/$1 ]]; then
-    mkdir -pv $VENV_PATH/$1
+  if [[ ! -d "$VENV_PATH/$1" ]]; then
+    mkdir -pv "$VENV_PATH/$1"
   fi
-  ${VENV_CMD} $VENV_PATH/$1
+  ${VENV_CMD} "$VENV_PATH/$1"
 }
 
 function venv_delete {
@@ -65,6 +69,7 @@ if [ -r ${CONFIG_FILE} ]; then
 fi
 
 case "$1" in
+  l*) venv_list $2;;
   cr*) venv_create $2;;
   del*) venv_delete $2;;
   ac*) venv_activate $2;;
