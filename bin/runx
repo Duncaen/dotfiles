@@ -1,0 +1,20 @@
+#!/bin/mksh
+
+#  while $(~/bin/s -w 5 deps "x"); do
+#    (( RETRY=$RETRY+1 ))
+#    [ "$RETRY" -gt 3 ] && exit
+#  done
+
+(
+  sleep 3;
+  xset +fp ~/.fonts/
+  xset +fp /usr/share/fonts/misc/
+  xset fp rehash
+  xset -b
+  xrandr --dpi 96
+  setxkbmap de
+  xset -q >> /tmp/xset
+  echo "--" >> /tmp/xset
+)&
+
+exec Xorg "$DISPLAY" -nolisten tcp -noreset -verbose 2 -auth "$XAUTHORITY"
