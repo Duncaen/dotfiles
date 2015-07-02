@@ -1,0 +1,8 @@
+#!/bin/mksh
+
+dir="$PWD"
+while [ -n "$dir" ]; do
+  [ -d "$dir/.git" ] && break
+  [ "$dir" = "$HOME" ] && break
+  dir="${dir%/*}"
+done && echo "$dir" || return 1
