@@ -1,0 +1,6 @@
+#!/usr/bin/mksh
+
+~/bin/s deps "ck-session" || exit 1
+
+exec 2>&1
+exec chpst -e ./env -e ../ck-session/env ~/bin/runx

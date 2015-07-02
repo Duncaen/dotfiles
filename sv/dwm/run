@@ -1,0 +1,6 @@
+#!/bin/mksh
+
+~/bin/s deps "ck-session" "x" || exit 1
+
+exec 2>&1
+exec chpst -e ./env -e ../x/env -e ../ck-session/env dwm
