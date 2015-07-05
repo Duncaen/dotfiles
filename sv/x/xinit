@@ -1,0 +1,14 @@
+#!/bin/mksh
+
+exec 2>&1
+
+echo "setting up x environment"
+xset +fp ~/.fonts/
+xset +fp /usr/share/fonts/misc/
+xset fp rehash
+xset -b
+xrandr --dpi 96
+setxkbmap de
+
+echo "starting ~/service.x"
+exec /usr/bin/ck-launch-session dbus-launch runsvdir ~/service.x

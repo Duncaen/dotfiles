@@ -22,7 +22,7 @@ sv_disable() {
 }
 
 sv_list() {
-  sv s "${SERVICEDIR}"*
+  sv s "${SVDIR}"* 2>/dev/null
 }
 
 sv_deps() {
@@ -39,36 +39,6 @@ sv_deps() {
   done
   [ -z "$wait" ] || fatal "wait for dependencies:$wait.\n"
   exit 0
-}
-
-sv_tree() {
-  services=$(ls -1 "$1" 2>/dev/null)
-  [ "$?" -ne "0" ] && return 1
-
-  set -A tree
-
-  for f in ${services}; do
-    for b in $(ls -1 "${SVDIR}${f}/before" 2> /dev/null); do
-      echo "$b>$f"
-      before="$before$b:$f\n"
-    done
-    for a in $(ls -1 "${SVDIR}${f}/after" 2> /dev/null); do
-      echo "$f<$a"
-      after="$after$a:$f\n"
-    done
-  done
-
-  for f in ${services}; do
-    echo "$f;"
-    for a in $(echo "$after" | grep "$f"'$'); do
-      echo "$f--$a"
-      after=$(echo "$after" | sed 's/^://g')
-    done
-  done
-
-  echo "before:\n$before"
-  echo "after:\n$after"
-
 }
 
 while getopts "u:w:v" opt; do

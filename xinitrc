@@ -25,12 +25,11 @@ xrandr --dpi 96 &
 setxkbmap de &
 
 # hide cursor
-unclutter -noevents -root -visible -jitter 10 -idle 5 &
+# unclutter -noevents -root -visible -jitter 10 -idle 5 &
 
 # statusbar
-repos/go-dwmstatus/go-dwmstatus &
+# repos/go-dwmstatus/go-dwmstatus &
 
-while true; do
-  dwm >/dev/null 2>&1
-done
-# exec dwm
+# runsvdir ~/service/x/after/*
+
+exec runsvdir ~/service.x

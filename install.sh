@@ -39,5 +39,8 @@ ln -sfv $dotfiles/sv /home/$user/sv
 rm -rfv /home/$user/service
 ln -sfv $dotfiles/service /home/$user/service
 
+rm -rfv /home/$user/service.x
+ln -sfv $dotfiles/service.x /home/$user/service.x
+
 # install plugins
 # vim +PlugInstall +qall

@@ -1,6 +1,14 @@
-#!/usr/bin/mksh
-
-~/bin/s deps "ck-session" || exit 1
+#!/bin/mksh
 
 exec 2>&1
-exec chpst -e ./env -e ../ck-session/env ~/bin/runx
+
+export DISPLAY="${DISPLAY:-:0}"
+export XAUTHORITY="${XAUTHORITY:-~/.Xauthority}"
+
+mcookie=$(/usr/bin/mcookie)
+xserverauthfile=$(mktemp -p /tmp serverauth.XXXXXXXXXX)
+
+xauth -q -f "$xserverauthfile" add "$DISPLAY" . "$mcookie"
+xauth -q add "$DISPLAY" . "$mcookie"
+
+exec xinit "${PWD}/xinit" -- /etc/X11/xinit/xserverrc "$DISPLAY" -noreset -auth "${xserverauthfile}"
