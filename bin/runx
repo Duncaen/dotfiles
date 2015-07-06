@@ -1,18 +1,4 @@
 #!/bin/mksh
 
-#  while $(~/bin/s -w 5 deps "x"); do
-#    (( RETRY=$RETRY+1 ))
-#    [ "$RETRY" -gt 3 ] && exit
-#  done
-
-# create ConsoleKit2 session and save variables
-# /usr/bin/ck-launch-session env | while IFS= read -r var; do
-  # for name in "XDG_SESSION_COOKIE XDG_RUNTIME_DIR"; do
-    # [ "${var#*=}" != "$name" ] || continue
-    # echo "${var#*=}" >> "./env/${var%%=*}"
-  # done
-# done
-
-
-# exec Xorg "$DISPLAY" -nolisten tcp -noreset -verbose 2 -auth "$XAUTHORITY"
+cd ~/sv/x
 exec runsv ~/sv/x
