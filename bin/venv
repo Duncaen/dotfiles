@@ -2,77 +2,79 @@
 
 readonly PROGNAME=$(basename $0)
 
-function venv_list {
-  ls -l "$VENV_PATH"
+venv_list() {
+  ls -1 "$VENV_PATH"
 }
 
-function venv_create {
+venv_create() {
   if [[ ! -d "$VENV_PATH/$1" ]]; then
     mkdir -pv "$VENV_PATH/$1"
   fi
-  ${VENV_CMD} "$VENV_PATH/$1"
+  "${VENV_CMD}" "$VENV_PATH/$1"
 }
 
-function venv_delete {
+venv_delete() {
   if [[ -d $VENV_PATH/$1 ]]; then
     rm -rfv $VENV_PATH/$1
   fi
 }
 
-function venv_activate {
-  if [[ ! -d $VENV_PATH/$1 ]]; then
-    echo "venv: $1 not found"
-    exit
+venv_run() {
+  [ -n "$1" ] || usage
+
+  name="$1"
+  cmd="$2"
+
+  if [[ -z "$cmd" ]]; then
+    shift 1
+  else
+    shift 2
   fi
-  export _ORIG_PATH="$PATH"
-  export VIRTUAL_ENV="$VENV_PATH/$1"
+
+  if [[ ! -d "$VENV_PATH/$name" ]]; then
+    echo "venv: $name not found"
+    exit 1
+  fi
+
+  # virtualenv magic
+  unset PYTHONHOME
+  export VIRTUAL_ENV="$VENV_PATH/$name"
   export PATH="$VIRTUAL_ENV/bin:$PATH"
-  if [[ -n $PYTHONHOME ]]; then
-    export _ORIG_PYTHONHOME="$PYTHONHOME"
-    unset PYTHONHOME
-  fi
+
+  # run command with args or mksh
+  "${cmd:-mksh}" "${@}"
+
+  exit 0
 }
 
-function venv_deactivate {
-  if [[ -z $VIRTUAL_ENV ]]; then
-    echo "venv: not active"
-    exit
-  fi
-  if [[ -n $_ORIG_PATH ]]; then
-    export PATH="$_ORIG_PATH"
-    unset _ORIG_PATH
-  fi
-  if [[ -n $_ORIG_PYTHONHOME ]]; then
-    export PYTHONHOME="$_ORIG_PYTHONHOME"
-    unset _ORIG_PYTHONHOME
-  fi
-}
-
-function usage {
-  cat <<_EOF
+usage() {
+  cat <<EOF
  Usage: $PROGNAME <command> [<args>]
 
  Commands:
-  create      <name>
-  delete      <name>
-  activate    <name>
-  deactivate
-_EOF
+  l, list
+  c, create   <name>
+  d, delete   <name>
+  r, run      <name> [<cmd> [<args>...]]
+EOF
+  exit
 }
 
 : ${CONFIG_FILE:=~/.venv/config}
 : ${VENV_PATH:=~/.venv}
 : ${VENV_CMD:=virtualenv-2.7}
 
-if [ -r ${CONFIG_FILE} ]; then
-  . $CONFIG_FILE
+if [ -r "${CONFIG_FILE}" ]; then
+  . "$CONFIG_FILE"
 fi
 
-case "$1" in
-  l*) venv_list $2;;
-  cr*) venv_create $2;;
-  del*) venv_delete $2;;
-  ac*) venv_activate $2;;
-  dea*) venv_deactivate;;
-  *) usage;;
+command="$1"
+[ -z "$command" ] || shift 1
+
+case "$command" in
+  l*) venv_list ;;
+  c*) venv_create "$1" ;;
+  d*) venv_delete "$1" ;;
+  r*) venv_run "${@}" ;;
+  *) usage ;;
 esac
