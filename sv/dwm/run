@@ -1,7 +1,5 @@
 #!/bin/mksh
 
-# ~/bin/s deps "ck-session" "x" || exit 1
-
 exec 2>&1
 
 cd ~
