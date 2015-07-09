@@ -1,0 +1,4 @@
+#!/bin/sh
+
+sv -w600 force-stop /home/duncan/service/*
+sv exit /home/duncan/service/*

@@ -1,0 +1,5 @@
+#!/bin/sh
+
+exec 2>&1
+# exec chpst -u duncan -e ./env runsvdir /home/duncan/service
+exec su -l -c "exec runsvdir /home/duncan/service" duncan
