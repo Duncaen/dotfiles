@@ -42,7 +42,7 @@ Plug 'jmcantrell/vim-virtualenv', { 'for': 'python' }
 endif
 Plug 'plasticboy/vim-markdown'
 Plug 'moll/vim-node', { 'for': 'javascript' }
-Plug 'Shougo/neocomplcache.vim'
+Plug 'Shougo/neocomplete.vim'
 Plug 'honza/vim-snippets'
 Plug 'cakebaker/scss-syntax.vim', { 'for': 'scss' }
 
