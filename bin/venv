@@ -1,80 +1,30 @@
 #!/bin/mksh
 
-readonly PROGNAME=$(basename $0)
-
-venv_list() {
-  ls -1 "$VENV_PATH"
-}
-
-venv_create() {
-  if [[ ! -d "$VENV_PATH/$1" ]]; then
-    mkdir -pv "$VENV_PATH/$1"
-  fi
-  "${VENV_CMD}" "$VENV_PATH/$1"
-}
-
-venv_delete() {
-  if [[ -d $VENV_PATH/$1 ]]; then
-    rm -rfv $VENV_PATH/$1
-  fi
-}
-
-venv_run() {
-  [ -n "$1" ] || usage
-
-  name="$1"
-  cmd="$2"
-
-  if [[ -z "$cmd" ]]; then
-    shift 1
-  else
-    shift 2
-  fi
-
-  if [[ ! -d "$VENV_PATH/$name" ]]; then
-    echo "venv: $name not found"
-    exit 1
-  fi
-
-  # virtualenv magic
-  unset PYTHONHOME
-  export VIRTUAL_ENV="$VENV_PATH/$name"
-  export PATH="$VIRTUAL_ENV/bin:$PATH"
-
-  # run command with args or mksh
-  "${cmd:-mksh}" "${@}"
-
-  exit 0
-}
-
-usage() {
+function usage {
   cat <<EOF
- Usage: $PROGNAME <command> [<args>]
-
- Commands:
-  l, list
-  c, create   <name>
-  d, delete   <name>
-  r, run      <name> [<cmd> [<args>...]]
+ Usage: $(basename $0) <path> [<cmd> <args>]
 EOF
   exit
 }
 
-: ${CONFIG_FILE:=~/.venv/config}
-: ${VENV_PATH:=~/.venv}
-: ${VENV_CMD:=virtualenv-2.7}
-
-if [ -r "${CONFIG_FILE}" ]; then
-  . "$CONFIG_FILE"
+[ -n "$1" ] || 
+[ -d "$1" ] || echo "venv: $1 not found" & exit 1
+ 
+if [ -n "$1" || ! -d "$1" ]; then
+  echo "venv: <path> [<cmd> [<arg>...]]" & exit 1
 fi
 
-command="$1"
-[ -z "$command" ] || shift 1
+# virtualenv magic
+unset PYTHONHOME
+export VIRTUAL_ENV="$1"
+export PATH="$1/bin:$PATH"
 
-case "$command" in
-  l*) venv_list ;;
-  c*) venv_create "$1" ;;
-  d*) venv_delete "$1" ;;
-  r*) venv_run "${@}" ;;
-  *) usage ;;
-esac
+shift 1
+
+echo "$#"
+
+if [ "$#" -gt "1" ]; then
+  "${@}"
+else
+  /bin/mksh
+fi

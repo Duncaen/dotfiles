@@ -1,3 +1,3 @@
 #!/bin/mksh
 
-exec ~/repos/go-dwmstatus/go-dwmstatus
+exec go-dwmstatus

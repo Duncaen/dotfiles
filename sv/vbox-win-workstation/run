@@ -1,0 +1,3 @@
+#!/bin/mksh
+
+exec VBoxSDL --startvm "Windows 8.1"

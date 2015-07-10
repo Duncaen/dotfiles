@@ -390,7 +390,8 @@ function setenv {
 HISTFILE=$HOME/.mksh_history
 HISTSIZE=1000
 SHELL=$MKSH
-export HISTFILE HISTSIZE SHELL
+PATH="$HOME/bin:$PATH"
+export HISTFILE HISTSIZE SHELL PATH
 
 # fix del key
 printf '\033[?1h\033=' >/dev/tty
@@ -398,7 +399,7 @@ printf '\033[?1h\033=' >/dev/tty
 
 if [ -d ~/.mksh.d ]; then
   for f in ~/.mksh.d/*.sh; do
-    [ -x "$f" ] && source "$f"
+    [ -x "$f" ] && . "$f"
   done
 fi
 
