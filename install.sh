@@ -33,6 +33,10 @@ ln -sfv $dotfiles/gitconfig /home/$user/.gitconfig
 rm -v /home/$user/.xbps-src.conf
 ln -sfv $dotfiles/xbps-src.conf /home/$user/.xbps-src.conf
 
+rm -v /home/$user/.config/dunst/dunstrc
+mkdir -vp /home/$user/.config/dunst
+ln -sfv $dotfiles/dunstrc /home/$user/.config/dunst/dunstrc
+
 rm -v /home/$user/bin
 ln -sfv $dotfiles/bin /home/$user/bin
 
