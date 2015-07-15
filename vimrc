@@ -14,7 +14,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'chriskempson/vim-tomorrow-theme'
 
 " Navigation
-if hostname() == "tux"
+if hostname() != "pi"
 Plug 'Lokaltog/vim-easymotion'
 Plug 'bling/vim-airline'
 Plug 'majutsushi/tagbar'
@@ -32,13 +32,12 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'nathanaelkane/vim-indent-guides'
 
 " Languages
-if hostname() == "tux"
+if hostname() != "pi"
 Plug 'SirVer/ultisnips'
 Plug 'marijnh/tern_for_vim', { 'do': 'npm install', 'for': 'javascript' }
 Plug 'scrooloose/syntastic', { 'for': ['python', 'javascript'] }
 Plug 'fatih/vim-go'
 Plug 'klen/python-mode', { 'for': 'python' }
-Plug 'jmcantrell/vim-virtualenv', { 'for': 'python' }
 endif
 Plug 'plasticboy/vim-markdown'
 Plug 'moll/vim-node', { 'for': 'javascript' }
