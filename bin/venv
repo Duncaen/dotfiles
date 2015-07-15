@@ -1,27 +1,15 @@
 #!/bin/mksh
 
-function usage {
-  cat <<EOF
- Usage: $(basename $0) <path> [<cmd> <args>]
-EOF
-  exit
-}
-
-[ -n "$1" ] || 
-[ -d "$1" ] || echo "venv: $1 not found" & exit 1
- 
-if [ -n "$1" || ! -d "$1" ]; then
+if [ -z "$1" -o ! -d "$1" ]; then
   echo "venv: <path> [<cmd> [<arg>...]]" & exit 1
 fi
 
 # virtualenv magic
 unset PYTHONHOME
-export VIRTUAL_ENV="$1"
-export PATH="$1/bin:$PATH"
+export VIRTUAL_ENV=$(realpath "$1")
+export PATH="$VIRTUAL_ENV/bin:$PATH"
 
 shift 1
-
-echo "$#"
 
 if [ "$#" -gt "1" ]; then
   "${@}"
