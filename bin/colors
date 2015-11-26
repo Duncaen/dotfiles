@@ -1,0 +1,11 @@
+#!/bin/sh
+
+for x in 0 1 4 5 7 8; do
+	for i in $(seq 30 37); do
+		for a in $(seq 40 47); do
+			printf "\e[%d;%d;%dm\\\e[%d;%d;%dm\e[0;37;40m " "$x" "$i" "$a" "$x" "$i" "$a"
+		done
+		printf "\n"
+	done
+done
+printf "\n"

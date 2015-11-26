@@ -6,6 +6,6 @@ if [ -x /usr/bin/git ]; then
   alias gpr='git pull --rebase'
   alias gs='git status -sb'
   alias gb='git branch'
-  alias gd='git icdiff'
+  alias gd='git diff'
   alias gl='git l'
 fi

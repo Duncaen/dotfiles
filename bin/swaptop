@@ -1,0 +1,23 @@
+#!/bin/sh
+# swaptop - show most swap-using processes
+# 17sep2011  +chris+, portable 19sep2011  +chris+
+
+if grep -q VmSwap /proc/1/status; then
+    # Efficient interface since revision b084d435.
+    awk '/^Name:/ { name = $2 }
+         /^Pid:/ { pid = $2}
+         /^VmSwap:/ {
+             swap = $2
+             if (swap>0)
+                 printf "%8d  %s %d\n", swap, name, pid
+         }' /proc/[0-9]*/status | sort -nr
+else
+    for f in /proc/[0-9]*; do
+    # awk will fail on permission denied
+        awk 'BEGIN { swap=0 }
+             $30 { pid = $1; name = substr($2,2,length($2)-2) }
+             $1=="Swap:" {swap += $2}
+             END { if (swap>0) printf "%8d  %s %d\n", swap, name, pid }' \
+            $f/stat $f/smaps 2>/dev/null
+    done | sort -nr 
+fi

@@ -1,0 +1,14 @@
+#!/usr/bin/mksh
+# Script by Ypnose - http://ywstd.fr
+
+while IFS=$'\n' read -r LINE; do
+	CHAR="${LINE::1}"
+	case $CHAR in
+		\-) print -- "\033[1;31m${LINE}\033[0m" ;;
+		\+) print -- "\033[0;32m${LINE}\033[0m" ;;
+		\@) print -- "\033[1;35m${LINE}\033[0m" ;;
+		*) print -- "$LINE" ;;
+	esac
+done
+
+exit

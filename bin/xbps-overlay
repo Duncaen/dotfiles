@@ -1,0 +1,6 @@
+#!/bin/sh
+
+for pkg in "$@"; do
+  pkgver=$(xbps-uhelper getpkgversion "$pkg")
+  echo "$pkgver"
+done

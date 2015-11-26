@@ -1,0 +1,24 @@
+#!/bin/sh
+
+_youtube() {
+  grep '\(http[s]*://\)*\(www.\)*\(youtube\.com/watch\|youtu\.be\)*' || return 0
+  echo "$1"
+}
+
+_feh() {
+  grep '\.\(jpg\)*\(png\)*' || return 0
+  echo "test $1"
+  feh "$1"
+}
+
+_yt_REGEXP=""
+_feh_REGEXP=".(jpg|jpeg|png|tiff)$"
+_feh_CMD="feh %s"
+cmds="youtube feh"
+
+arg="$1"
+
+for n in ${cmds}; do
+  echo "$arg" | "_$n" && break
+  echo "check next"
+done

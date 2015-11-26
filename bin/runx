@@ -1,4 +1,3 @@
-#!/bin/mksh
+#!/bin/sh
 
-cd ~/sv/x
-exec runsv ~/sv/x
+sv once ~/service/x

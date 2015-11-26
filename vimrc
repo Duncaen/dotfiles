@@ -16,7 +16,7 @@ Plug 'chriskempson/vim-tomorrow-theme'
 " Navigation
 if hostname() != "pi"
 Plug 'Lokaltog/vim-easymotion'
-Plug 'bling/vim-airline'
+" Plug 'bling/vim-airline'
 Plug 'majutsushi/tagbar'
 endif
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
@@ -42,7 +42,7 @@ endif
 Plug 'plasticboy/vim-markdown'
 Plug 'moll/vim-node', { 'for': 'javascript' }
 Plug 'Shougo/neocomplete.vim'
-Plug 'honza/vim-snippets'
+" Plug 'honza/vim-snippets'
 Plug 'cakebaker/scss-syntax.vim', { 'for': 'scss' }
 
 call plug#end()

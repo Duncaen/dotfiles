@@ -1,3 +1,3 @@
-#!/usr/bin/mksh
+#!/usr/bin/sh
 
 exec unclutter -noevents -root -visible -jitter 10 -idle 5

@@ -1,4 +1,4 @@
-#!/usr/bin/mksh
+#!/bin/sh
 
 : ${DMENU:=dmenu}
 ret=$(echo "Suspend\nLock\nHibernate\nReboot\nShutdown" | ${DMENU} -p "Power:" -i | tr '[A-Z]' '[a-z]')

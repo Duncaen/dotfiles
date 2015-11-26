@@ -1,3 +1,4 @@
-#!/bin/mksh
+#!/bin/sh
 
-exec go-dwmstatus
+exec 2>&1
+exec /home/duncan/go/bin/go-dwmstatus

@@ -1,4 +1,4 @@
-if [ -x /usr/bin/slcp ]; then
+if [ -x "$(command -v slcp)" ]; then
   PS1='$(slcp $COLUMNS $?)'
 fi
 

@@ -1,4 +1,4 @@
-#!/bin/mksh
+#!/bin/sh
 
 . /home/duncan/repos/github.com/Duncaen/dotfiles/z/z.sh
 ret=$(z -l | sort -nr | awk '{print $2}' | dmenu -l 10)

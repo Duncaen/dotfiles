@@ -1,4 +1,4 @@
-#!/bin/mksh
+#!/bin/sh
 
 exec 2>&1
 
@@ -12,3 +12,4 @@ xauth -q -f "$xserverauthfile" add "$DISPLAY" . "$mcookie"
 xauth -q add "$DISPLAY" . "$mcookie"
 
 exec xinit "${PWD}/xinit" -- /etc/X11/xinit/xserverrc "$DISPLAY" -noreset -auth "${xserverauthfile}"
+# exec /usr/bin/Xorg "$DISPLAY" -nolisten tcp -noreset -verbose 2 "vt7"
