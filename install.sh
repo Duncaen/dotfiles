@@ -30,6 +30,9 @@ ln -sfv $dotfiles/inputrc /home/$user/.inputrc
 rm -v /home/$user/.gitconfig
 ln -sfv $dotfiles/gitconfig /home/$user/.gitconfig
 
+rm -v /home/$user/.gitignore_global
+ln -sfv $dotfiles/gitignore_global /home/$user/.gitignore_global
+
 rm -v /home/$user/.xbps-src.conf
 ln -sfv $dotfiles/xbps-src.conf /home/$user/.xbps-src.conf
 
