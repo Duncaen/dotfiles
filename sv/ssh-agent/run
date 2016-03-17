@@ -1,0 +1,4 @@
+#!/bin/sh
+
+[ -r ./conf ] && . ./conf
+exec ssh-agent -D > ${SSH_AGENT_INFO_FILE:=~/.cache/ssh-agent-info}

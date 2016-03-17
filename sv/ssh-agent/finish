@@ -1,0 +1,5 @@
+#!/bin/sh
+
+[ -r ./conf ] && . ./conf
+rm -f ${SSH_AGENT_INFO_FILE:=~/.cache/ssh-agent-info}
+exit 0
