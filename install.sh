@@ -18,8 +18,8 @@ ln -sfv $dotfiles/Xresources /home/$user/.Xresources
 rm -v /home/$user/.mkshrc
 ln -sfv $dotfiles/mkshrc /home/$user/.mkshrc
 
-rm -v /home/$user/.mksh.d
-ln -sfv $dotfiles/mksh.d /home/$user/.mksh.d
+rm -v /home/$user/.mkshrc.d
+ln -sfv $dotfiles/mkshrc.d /home/$user/.mkshrc.d
 
 rm -v /home/$user/.profile
 ln -sfv $dotfiles/profile /home/$user/.profile
