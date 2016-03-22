@@ -15,7 +15,7 @@ Plug 'chriskempson/vim-tomorrow-theme'
 " Navigation
 if hostname() != "pi"
 Plug 'Lokaltog/vim-easymotion'
-" Plug 'bling/vim-airline'
+Plug 'bling/vim-airline'
 Plug 'majutsushi/tagbar'
 endif
 Plug 'kien/ctrlp.vim'
