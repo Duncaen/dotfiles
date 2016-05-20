@@ -1,5 +1,8 @@
 #!/bin/sh
 
+[ ! -d /run/runit.duncan ] && \
+  mkdir -p /run/runit.duncan && \
+  chown duncan:duncan /run/runit.duncan
+
 exec 2>&1
-# exec chpst -u duncan -e ./env runsvdir /home/duncan/service
-exec su -l -c "exec runsvdir /home/duncan/service" duncan
+exec su -l -c "exec runsvdir /home/duncan/service 'log: ...........................................................................................................................................................................................................................................................................................................................................................................................................'" duncan

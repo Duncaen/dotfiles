@@ -1,6 +1,6 @@
 #!/bin/sh
 
+[ ! -p /tmp/dwm.fifo ] && mkfifo /tmp/dwm.fifo
 exec 2>&1
-
 cd ~
 exec dwm
