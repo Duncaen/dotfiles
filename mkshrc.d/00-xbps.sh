@@ -1,5 +1,5 @@
 if [ -x /usr/bin/xbps-install ]; then
-  alias xi='sudo xbps-install'
-  alias xr='sudo xbps-remove'
+  alias xi='doas -- xbps-install'
+  alias xr='doas -- xbps-remove'
   alias xq='xbps-query'
 fi
