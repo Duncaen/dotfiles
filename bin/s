@@ -1,8 +1,7 @@
 #!/bin/sh
 
-usage() {
-  cat <<EOUSAGE
-Usage: s [-u <user>] [-w <sec>] <COMMAND> [SERVICE...]
+usage() cat <<EOUSAGE
+usage: s [-u <user>] [-w <sec>] <COMMAND> [SERVICE...]
 COMMANDS
   enable
   disable
@@ -11,8 +10,6 @@ COMMANDS
   reload
   restart
 EOUSAGE
-  exit 1
-}
 
 fatal() {
   msg "$@" >&2
@@ -87,22 +84,22 @@ case "${SVUSER:=$USER}" in
     ;;
 esac
 
-[ -z "$1" ] && usage
+[ -z "$1" ] && usage && exit 1
 case "$1" in
   ls|list) sv_list "${ETCSVDIR}" ;;
   en)
-    [ -z "$2" ] && usage
+    [ -z "$2" ] && usage && exit 1
     [ -d "${ETCSVDIR}/$2" ] && fatal "service '$2' does not exist"
     [ -h "$2" ] && fatal "service '$2' is already enabled"
     ln -sfv "${ETCSVDIR}/${2}" "${SVDIR}/${2}"
     ;;
   dis)
-    [ -z "$2" ] && usage
+    [ -z "$2" ] && usage && exit 1
     [ -d "${ETCSVDIR}/$2" ] && fatal "service '$2' does not exist"
     [ ! -h "$2" ] && fatal "service '$2' is not enabled"
     rm -v "${SVDIR}/$2"
     ;;
   x|e|X|E|D|T|c|u|d|o|t|p|h|a|i|k|q|1|2|s|r|f|restart)
-    SVDIR="${SVDIR}" "${SVCMD}" "$@"
+    SVDIR="${ETCSVDIR}" "${SVCMD}" "$@"
     ;;
 esac
