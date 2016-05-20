@@ -9,6 +9,9 @@ ln -sfv $dotfiles/vimrc /home/$user/.vimrc
 rm -v /home/$user/.vim
 ln -sfv $dotfiles/vim /home/$user/.vim
 
+mkdir -p /home/$user/.vim/colors
+ln -sfv $dotfiles/vim/colors/shblah.vim
+
 rm -v /home/$user/.xinitrc
 ln -sfv $dotfiles/xinitrc /home/$user/.xinitrc
 
