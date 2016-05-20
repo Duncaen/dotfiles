@@ -23,17 +23,6 @@ xset fp rehash &
 xset -b
 xrandr --dpi 96 &
 setxkbmap de &
+sct 4400
 
-# hide cursor
-unclutter -noevents -root -visible -jitter 10 -idle 5 &
-
-# statusbar
-repos/go-dwmstatus/go-dwmstatus &
-
-runsvdir ~/service.x/
-
-# exec runsvdir ~/service.x
-# exec dwm
-# while dwm; do
-#   sleep 1;
-# done
+runsvdir -P $HOME/service.x 'log: ...........................................................................................................................................................................................................................................................................................................................................................................................................'
