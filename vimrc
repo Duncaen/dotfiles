@@ -13,13 +13,9 @@ Plug 'airblade/vim-gitgutter'
 Plug 'chriskempson/vim-tomorrow-theme'
 
 " Navigation
-if hostname() != "pi"
-Plug 'bling/vim-airline'
-endif
 Plug 'majutsushi/tagbar'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'bling/vim-bufferline'
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 
 " Editing
 Plug 'tpope/vim-surround'
@@ -31,17 +27,11 @@ Plug 'nathanaelkane/vim-indent-guides'
 " Languages
 if hostname() != "pi"
 " Plug 'SirVer/ultisnips'
-Plug 'marijnh/tern_for_vim', { 'do': 'npm install', 'for': 'javascript' }
 Plug 'scrooloose/syntastic', { 'for': ['python', 'javascript'] }
 Plug 'fatih/vim-go'
-" Plug 'klen/python-mode', { 'for': 'python' }
 Plug 'python-rope/ropevim', { 'do': 'python2 setup.py install --user && python3 setup.py install --user' }
 endif
-Plug 'plasticboy/vim-markdown'
-Plug 'moll/vim-node', { 'for': 'javascript' }
 Plug 'Shougo/neocomplete.vim'
-" Plug 'honza/vim-snippets'
-Plug 'cakebaker/scss-syntax.vim', { 'for': 'scss' }
 
 call plug#end()
 endif
@@ -75,6 +65,22 @@ set diffopt=filler,vertical " vertical vimdiff
 set incsearch               " match search while typing
 set hlsearch                " hightligt search results
 set smartcase               " search casesensitive if pattern contains uppercase chars
+
+function! StatusGit()
+	if empty(get(b:, 'gitgutter_gitgutter_signs', {}))
+		return ''
+	endif
+	let symbols = ['+', '~', '-']
+	let hunks = GitGutterGetHunkSummary()
+	let ret = []
+	for i in [0, 1, 2]
+		call add(ret, symbols[i] . hunks[i])
+	endfor
+	return join(ret, ' ')
+endfunction
+
+set statusline=%{StatusGit()}\ %f\ %{&ff}\ %y
+set statusline+=%=%l/%L
 
 " ignore
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.db
@@ -235,14 +241,6 @@ nmap <silent> <F11> :TagbarToggle<CR>
 nmap <leader>tt <F11>
 
 " ============================================================================
-" NERDTree
-" <F10> - toggle nerdtree
-" ,e - toggle nerdtree
-" ============================================================================
-nmap <silent> <F10> :NERDTreeToggle<CR>
-nmap <leader>e <F10>
-
-" ============================================================================
 " FILETYPES
 " ============================================================================
 
@@ -256,8 +254,8 @@ autocmd BufNewFile,BufRead template set ft=sh sts=0 sw=0 noet
 " too often i type W instead of w
 command! W w
 
-" For when you forget to sudo.. Really Write the file.
-cmap w!! w !sudo tee % >/dev/null
+" For when you forget to doas.. Really Write the file.
+cmap w!! w !doas tee % >/dev/null
 
 "to create a new line cmd mode without going to insert
 nmap <leader>k O<ESC>k0
