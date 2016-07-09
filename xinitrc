@@ -20,9 +20,6 @@ xrdb -merge $HOME/.Xresources
 # start pulseaudio -.-
 start-pulseaudio-x11 &
 
-xset +fp ~/.fonts/ &
-xset +fp /usr/share/fonts/misc/ &
-xset fp rehash &
 xset -b
 xrandr --dpi 96 &
 setxkbmap de &
