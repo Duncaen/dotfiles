@@ -18,11 +18,19 @@ fi
 xrdb -merge $HOME/.Xresources
 
 # start pulseaudio -.-
-start-pulseaudio-x11 &
+# start-pulseaudio-x11 &
 
 xset -b
 xrandr --dpi 96 &
 setxkbmap de &
 sct 4400
 
-runsvdir -P $HOME/service.x 'log: ...........................................................................................................................................................................................................................................................................................................................................................................................................'
+if [ "$(hostname)" = "fly" ]; then
+	xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation" 1
+	xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Button" 2
+	xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Timeout" 200
+	xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Axes" 6 7 4 5
+	xinput set-prop "TPPS/2 IBM TrackPoint" "Device Accel Constant Deceleration" 0.95
+fi
+
+exec $STARTUP runsvdir -P $HOME/service.x 'log: ...........................................................................................................................................................................................................................................................................................................................................................................................................'
