@@ -1,59 +1,64 @@
 #!/bin/sh
 
-user=duncan
-dotfiles=${PWD}
+msg() { t=$1; shift; printf '%s: %s\n' "$t" "$@"; }
 
-rm -v /home/$user/.vimrc
-ln -sfv $dotfiles/vimrc /home/$user/.vimrc
+_ln_home() {
+	[ -z "$2" ] && tgt="$HOME/$1" || tgt="$HOME/$2"
+	src="$PWD/$1"
+	rm -v "$tgt"
+	ln -sfv "$src" "$tgt"
+}
 
-rm -v /home/$user/.vim
-ln -sfv $dotfiles/vim /home/$user/.vim
+_vim() {
+	msg "INSTALL" "vim config"
+	_ln_home "vimrc" ".vimrc"
+	_ln_home "vim" ".vim"
+	# install plugins
+	# vim +PlugInstall +qall
+}
+_xorg() {
+	msg "INSTALL" "xorg config"
+	_ln_home "xinitrc" ".xinitrc"
+	_ln_home "Xresources" ".Xresources"
+}
+_mksh() {
+	msg "INSTALL" "mksh config"
+	_ln_home "mkshrc" ".mkshrc"
+	_ln_home "mkshrc.d" ".mkshrc.d"
+}
+_shell() {
+	msg "INSTALL" "shell config"
+	_ln_home "profile" ".profile"
+	_ln_home "inputrc" ".inputrc"
+}
+_git() {
+	msg "INSTALL" "git config"
+	_ln_home "gitconfig" ".gitconfig"
+	_ln_home "gitignore_global" ".gitignore_global"
+}
+_void() {
+	msg "INSTALL" "void config"
+	_ln_home "xbps-src.conf" ".xbps-src.conf"
+}
+_bin() {
+	msg "INSTALL" "user bin directory"
+	_ln_home "bin"
+}
+_sv() {
+	msg "INSTALL" "user services"
+	_ln_home "sv"
+	_ln_home "service"
+	_ln_home "service.x"
+}
 
-mkdir -p /home/$user/.vim/colors
-ln -sfv $dotfiles/vim/colors/shblah.vim
+: ${PWD:=$(pwd)}
+: ${HOME:=~}
 
-rm -v /home/$user/.xinitrc
-ln -sfv $dotfiles/xinitrc /home/$user/.xinitrc
-
-rm -v /home/$user/.Xresources
-ln -sfv $dotfiles/Xresources /home/$user/.Xresources
-
-rm -v /home/$user/.mkshrc
-ln -sfv $dotfiles/mkshrc /home/$user/.mkshrc
-
-rm -v /home/$user/.mkshrc.d
-ln -sfv $dotfiles/mkshrc.d /home/$user/.mkshrc.d
-
-rm -v /home/$user/.profile
-ln -sfv $dotfiles/profile /home/$user/.profile
-
-rm -v /home/$user/.inputrc
-ln -sfv $dotfiles/inputrc /home/$user/.inputrc
-
-rm -v /home/$user/.gitconfig
-ln -sfv $dotfiles/gitconfig /home/$user/.gitconfig
-
-rm -v /home/$user/.gitignore_global
-ln -sfv $dotfiles/gitignore_global /home/$user/.gitignore_global
-
-rm -v /home/$user/.xbps-src.conf
-ln -sfv $dotfiles/xbps-src.conf /home/$user/.xbps-src.conf
-
-rm -v /home/$user/.config/dunst/dunstrc
-mkdir -vp /home/$user/.config/dunst
-ln -sfv $dotfiles/dunstrc /home/$user/.config/dunst/dunstrc
-
-rm -v /home/$user/bin
-ln -sfv $dotfiles/bin /home/$user/bin
-
-rm -rfv /home/$user/sv
-ln -sfv $dotfiles/sv /home/$user/sv
-
-rm -rfv /home/$user/service
-ln -sfv $dotfiles/service /home/$user/service
-
-rm -rfv /home/$user/service.x
-ln -sfv $dotfiles/service.x /home/$user/service.x
-
-# install plugins
-# vim +PlugInstall +qall
+_mksh
+_shell
+_bin
+_sv
+_git
+_xorg
+_vim
+_void
