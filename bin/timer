@@ -1,0 +1,39 @@
+#!/bin/sh
+# timer [hh:mm[:ss]]... [[0-9]*[h|m|s]]... -- prog [args...]
+# Examples:
+# 	2 hours
+# 		timer 2h -- echo "hi"
+# 		timer 2:0 -- echo "hi"
+# 	1 minute and 10 seconds
+# 		timer 1m 10s -- echo "hi"
+# 		timer 0:1:10 -- echo "hi"
+
+err() {
+	printf 'Error: %s\n' "$1"
+	exit 1
+}
+usage() {
+	sed -n '2,9p' $0 | sed -e 's/^# //'
+	exit 1
+}
+
+for t; do
+	case "$t" in
+		-h|--help|help|usage) usage ;;
+		*:*:*) ;;
+		*:*) th=${t%:*}; tm=${t#*:}; h=$(( h + th )); m=$(( m + tm )) ;;
+		[0-9]*h*) t=${t%h*}; h=$(( h + t )) ;;
+		[0-9]*m*) t=${t%m*}; m=$(( m + t )) ;;
+		[0-9]*s*) t=${t%s*}; s=$(( s + t )) ;;
+		--) shift 1; break ;;
+		*) break ;;
+	esac
+	shift 1
+done
+
+[ $(command -v "$1") ] || err "couldn't find '$1'"
+prog=$1; shift 1; args=$@
+
+t=$(( s + (m * 60) + (h * 60 * 60) ))
+# echo "sleep $(( s + (m * 60) + (h * 60 * 60) )) && $prog $args"
+sleep $t && $prog $args
