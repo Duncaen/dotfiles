@@ -1,5 +1,0 @@
-#!/bin/sh
-
-sv -w600 force-stop ~/service.x/*
-sv exit ~/service.x/*
-rm -rf /tmp/serverauth.*
