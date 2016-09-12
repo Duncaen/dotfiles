@@ -13,7 +13,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'chriskempson/vim-tomorrow-theme'
 
 " Navigation
-Plug 'majutsushi/tagbar'
+Plug 'majutsushi/tagbar', { 'on':  'TagbarToggle' }
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'bling/vim-bufferline'
 
@@ -65,22 +65,7 @@ set diffopt=filler,vertical " vertical vimdiff
 set incsearch               " match search while typing
 set hlsearch                " hightligt search results
 set smartcase               " search casesensitive if pattern contains uppercase chars
-
-function! StatusGit()
-	if empty(get(b:, 'gitgutter_gitgutter_signs', {}))
-		return ''
-	endif
-	let symbols = ['+', '~', '-']
-	let hunks = GitGutterGetHunkSummary()
-	let ret = []
-	for i in [0, 1, 2]
-		call add(ret, symbols[i] . hunks[i])
-	endfor
-	return join(ret, ' ')
-endfunction
-
-set statusline=%{StatusGit()}\ %f\ %{&ff}\ %y
-set statusline+=%=%l/%L
+set ignorecase              "
 
 " ignore
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.db
@@ -109,6 +94,10 @@ silent! colorscheme Tomorrow-Night          " default colorscheme
 if executable('ag')
   " Use ag over grep
   set grepprg=ag\ --nogroup\ --nocolor
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
 endif
 
 
@@ -132,16 +121,6 @@ call s:map_change_option('t', 'textwidth',
 
 
 " ============================================================================
-" airline
-" ============================================================================
-let g:airline_powerline_fonts=1
-
-" ============================================================================
-" autoclose
-" ============================================================================
-let g:autoclose_vim_commentmode=1
-
-" ============================================================================
 " ctrlp
 " ============================================================================
 let g:ctrlp_map = '<c-p>'
@@ -149,30 +128,6 @@ let g:ctrlp_custom_ignore = {
 	\ 'dir':  '\v[\/]\.(git|hg|svn)$',
 	\ 'file': '\.pyc$\|\.pyo$\|\.rbc$|\.rbo$\|\.class$\|\.o$\|\~$\',
 \ }
-
-" The Silver Searcher
-if executable('ag')
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-  " ag is fast enough that CtrlP doesn't need to cache
-  let g:ctrlp_use_caching = 0
-endif
-
-" ============================================================================
-" fugitive
-" ============================================================================
-nnoremap <silent> <leader>gs :Gstatus<CR>
-nnoremap <silent> <leader>gd :Gdiff<CR>
-nnoremap <silent> <leader>gc :Gcommit<CR>
-nnoremap <silent> <leader>gb :Gblame<CR>
-nnoremap <silent> <leader>gl :Glog<CR>
-nnoremap <silent> <leader>gp :Git push<CR>
-nnoremap <silent> <leader>gr :Gread<CR>
-nnoremap <silent> <leader>gw :Gwrite<CR>
-nnoremap <silent> <leader>ge :Gedit<CR>
-" Mnemonic _i_nteractive
-nnoremap <silent> <leader>gi :Git add -p %<CR>
-nnoremap <silent> <leader>gg :SignifyToggle<CR>
 
 " ============================================================================
 " NERDcommenter
@@ -257,13 +212,6 @@ command! W w
 " For when you forget to doas.. Really Write the file.
 cmap w!! w !doas tee % >/dev/null
 
-"to create a new line cmd mode without going to insert
-nmap <leader>k O<ESC>k0
-nmap <leader>j o<ESC>j0
-
-"Break a line into two and retain cursor position
-nmap <leader>b i<CR><ESC>k$
-
 " Make Y behave like other capitals
 nnoremap Y y$
 
@@ -278,64 +226,12 @@ vnoremap = =gv
 " ,s - reload vim rc
 nmap <Leader>s :source $MYVIMRC<cr>
 
-" ,n - next buffer
-nmap <Leader>n :bnext<CR>
-" ,p - previous buffer
-nmap <Leader>p :bprev<CR>
-
 " ----------------------------------------------------------------------------
 " <tab> / <s-tab> | Circular windows navigation
 " ----------------------------------------------------------------------------
 
 nnoremap <tab>   <c-w>w
 nnoremap <S-tab> <c-w>W
-
-" ----------------------------------------------------------------------------
-" #!! | Shebang
-" ----------------------------------------------------------------------------
-inoreabbrev <expr> #!! "#!/usr/bin/env" . (empty(&filetype) ? '' : ' '.&filetype)
-
-" ============================================================================
-" FUNCTIONS & COMMANDS
-" ============================================================================
-
-" ----------------------------------------------------------------------------
-" <F8> | Color scheme selector from: https://github.com/junegunn/dotfiles
-" ----------------------------------------------------------------------------
-function! s:rotate_colors()
-  if !exists('s:colors_list')
-    let s:colors_list =
-          \ sort(map(
-          \   filter(split(globpath(&rtp, "colors/*.vim"), "\n"), 'v:val !~ "^/usr/"'),
-          \   "substitute(fnamemodify(v:val, ':t'), '\\..\\{-}$', '', '')"))
-  endif
-  if !exists('s:colors_index')
-    let s:colors_index = index(s:colors_list, g:colors_name)
-  endif
-  let s:colors_index = (s:colors_index + 1) % len(s:colors_list)
-  let name = s:colors_list[s:colors_index]
-  execute 'colorscheme' name
-  redraw
-  echo name
-endfunction
-nnoremap <silent> <F8> :call <SID>rotate_colors()<cr>
-
-
-" ----------------------------------------------------------------------------
-" :Root | Change directory to the root of the Git repository
-" ----------------------------------------------------------------------------
-function! s:root()
-  let me = expand('%:p:h')
-  let gitd = finddir('.git', me.';')
-  if empty(gitd)
-    echo "Not in git repo"
-  else
-    let gitp = fnamemodify(gitd, ':h')
-    echo "Change directory to: ".gitp
-    execute 'lcd' gitp
-  endif
-endfunction
-command! Root call s:root()
 
 " ----------------------------------------------------------------------------
 " Load plugin settings
