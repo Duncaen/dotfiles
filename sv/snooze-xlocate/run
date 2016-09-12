@@ -1,4 +1,4 @@
 #!/bin/sh
 
 exec 2>&1
-exec snooze -H13 -M20 'xlocate -u'
+exec snooze -H13 -s 1d -t ./timefile sh -c 'xlocate -S ; touch ./timefile'
