@@ -1,0 +1,42 @@
+#!/bin/sh
+# git merge-pr [PRNUM][@REMOTE] [GIT-AM FLAGS...] - list or apply GitHub pull request from command-line
+set -e
+
+PR=$1
+REMOTE=
+case "$PR" in
+*@*)
+	REMOTE=${PR#*@}
+	PR=${PR%%@*}
+esac
+
+URL=$(git ls-remote --get-url $REMOTE)
+
+PROJECT=${URL%.git}
+PROJECT=${PROJECT##*:}
+PROJECT=${PROJECT#//github.com/}
+
+if [ -z "$PR" ]; then
+	wget -q -O- --header 'Accept: application/json' \
+		"https://api.github.com/repos/${PROJECT}/pulls?direction=asc" |
+		jq -r 'if length > 0
+			then .[] | "\(.number) <\(.user.login)> \(.title)"
+			else "No open pull requests." end'
+	exit $?
+else
+	shift
+fi
+
+PATCH="$(mktemp)"
+trap "rm -f $PATCH" INT TERM EXIT
+wget -nv -O "$PATCH" https://github.com/$PROJECT/pull/"$PR".patch
+git am "$@" "$PATCH"
+
+if [ "$(git config --bool --get merge-pr.autoclose)" = false ]; then
+	exit 0
+fi
+
+# Rewrite last commit message to close GitHub issue.
+GIT_EDITOR="git -c trailer.closes.ifExists=replace interpret-trailers \
+	--trailer 'Closes: #$PR [via git-merge-pr]' --in-place" \
+git commit --quiet --amend
