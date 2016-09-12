@@ -40,6 +40,11 @@ _void() {
 	msg "INSTALL" "void config"
 	_ln_home "xbps-src.conf" ".xbps-src.conf"
 }
+_ssh() {
+	msg "INSTALL" "ssh config"
+	mkdir -pv "$HOME/.ssh"
+	_ln_home "ssh/config" ".ssh/config"
+}
 _bin() {
 	msg "INSTALL" "user bin directory"
 	_ln_home "bin"
@@ -62,3 +67,4 @@ _git
 _xorg
 _vim
 _void
+_ssh

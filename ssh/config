@@ -1,0 +1,4 @@
+AddKeysToAgent yes
+VisualHostKey yes
+
+Include config.secret
