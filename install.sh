@@ -5,7 +5,7 @@ msg() { t=$1; shift; printf '%s: %s\n' "$t" "$@"; }
 _ln_home() {
 	[ -z "$2" ] && tgt="$HOME/$1" || tgt="$HOME/$2"
 	src="$PWD/$1"
-	rm -v "$tgt"
+	rm -rv "$tgt"
 	ln -sfv "$src" "$tgt"
 }
 
@@ -55,6 +55,11 @@ _sv() {
 	_ln_home "service"
 	_ln_home "service.x"
 }
+_gtk() {
+	msg "INSTALL" "gtk config"
+	_ln_home "gtkrc-2.0" ".gtkrc-2.0"
+	_ln_home "gtk-3.0" ".config/gtk-3.0"
+}
 
 : ${PWD:=$(pwd)}
 : ${HOME:=~}
@@ -68,3 +73,4 @@ _xorg
 _vim
 _void
 _ssh
+_gtk
