@@ -1,36 +1,29 @@
 #!/bin/sh
-#
-# ~/.xinitrc
-#
-# Executed by startx (run your window manager from here)
 
-# set the random wallpaper as early as possible
-feh --recursive --randomize --bg-fill --no-fehbg ~/.wallpaper
+[ -d /etc/X11/xinit/xinitrc.d ]; && \
+	for f in /etc/X11/xinit/xinitrc.d/*; do; [ -x "$f" ] && . "$f"; done && \
+	unset f
 
-if [ -d /etc/X11/xinit/xinitrc.d ]; then
- for f in /etc/X11/xinit/xinitrc.d/*; do
-    [ -x "$f" ] && . "$f"
-  done
-  unset f
-fi
+[ -r ~/.wallpaper/default ] && \
+	feh --bg-fill --no-fehbg ~/.wallpaper/default || \
+	feh --recursive --randomize --bg-fill --no-fehbg ~/.wallpaper
 
-# Load local .Xresources
-xrdb -merge $HOME/.Xresources
+setxkbmap \
+	-layout 'us(altgr-intl),de(nodeadkeys)' \
+	-option 'grp:alt_shift_toggle,compose:menu'
+xmodmap ~/.us-intl-german.xmodmap
 
-# start pulseaudio -.-
-# start-pulseaudio-x11 &
+xrdb -merge ~/.Xresources
+xset b off
 
-xset -b
-xrandr --dpi 96 &
-setxkbmap de &
-sct 4400
+# display colors
+[ $(command -v sct 2>/dev/null) ] && sct 4400
 
-if [ "$(hostname)" = "fly" ]; then
-	xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation" 1
-	xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Button" 2
-	xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Timeout" 200
-	xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Axes" 6 7 4 5
-	xinput set-prop "TPPS/2 IBM TrackPoint" "Device Accel Constant Deceleration" 0.95
-fi
+[ "$(hostname)" = "fly" ] && xinput \
+	--set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation" 1 \
+	--set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Button" 2 \
+	--set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Timeout" 200 \
+	--set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Axes" 6 7 4 5 \
+	--set-prop "TPPS/2 IBM TrackPoint" "Device Accel Constant Deceleration" 0.95
 
-exec $STARTUP runsvdir -P $HOME/service.x 'log: ...........................................................................................................................................................................................................................................................................................................................................................................................................'
+exec $STARTUP runsvdir -P ~/service.x 'log: ...........................................................................................................................................................................................................................................................................................................................................................................................................'

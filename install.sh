@@ -20,6 +20,7 @@ _xorg() {
 	msg "INSTALL" "xorg config"
 	_ln_home "xinitrc" ".xinitrc"
 	_ln_home "Xresources" ".Xresources"
+	_ln_home "us-intl-german.xmodmap" ".us-intl-german.xmodmap"
 }
 _mksh() {
 	msg "INSTALL" "mksh config"

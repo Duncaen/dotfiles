@@ -1,0 +1,71 @@
+! us-intl-german.xmodmap - refinements for German users of us(altgr-intl)
+! 27feb2010  +chris+
+! 29mar2010  +chris+
+! 16sep2011  +chris+
+! 17nov2012  +chris+
+! 05feb2013  +chris+
+! 06dec2014  +chris+
+
+! Define the modifier key group_shift.
+! Only keys with this modifier will be changed by this file.
+! 66 is Caps Lock.
+keycode 66 = ISO_Group_Shift ISO_Group_Shift ISO_First_Group NoSymbol
+
+! Some notes to users of us(intl) or us(altgr-intl):
+!
+! With group_shift held these already do what they say if you press
+! them *as usual on the German* keyboard:
+!   ^ ä ö ü ß { [ ] } ! " § $ % & / ( ) = ? ` @ µ €
+!
+! What this layout does is define these shortcuts, so you only need
+! group_switch:
+!   q@ e€ aä AÄ oö OÖ uü uÜ sß mµ 5€ 8( 9)
+!
+! Additionally, we bind caps-hjkl to vi-style cursor keys, and HJKL to
+! Home, Next, Up, End.
+!
+! Additionally, these typographic features:
+! . is ellipsis, shift-. is midpoint, alt-. is irony.
+! - is en-dash, shift-- is em-dash.
+! ! is interrobang.
+! space is visible space, shift-space is nonbreaking space.
+! alt-s is long s, alt-y is ezh.
+!
+! Typographical quotes are already on altgr-caps-v/b/n „/“/”
+! (shift for single versions).
+
+! keycode NN = normal shift caps shift-caps altgr shift-altgr
+
+! umlauts on caps-aou, sharp s on caps-s.
+keycode  38 = a A adiaeresis Adiaeresis aacute Aacute ae AE
+keycode  39 = s S ssharp U017F ssharp section U017F U1E9E
+keycode  32 = o O odiaeresis Odiaeresis oacute Oacute oslash Oslash
+keycode  30 = u U udiaeresis Udiaeresis uacute Uacute downarrow uparrow
+
+! at on caps-q, euro on caps-e, mu on caps-m
+keycode  24 = q Q at Q adiaeresis Adiaeresis at Greek_OMEGA
+keycode  26 = e E EuroSign EuroSign eacute Eacute EuroSign EuroSign
+keycode  58 = m M mu M mu mu mu masculine
+
+! cursor keys on caps-hjkl
+keycode  43 = h H Left Home hstroke Hstroke
+keycode  44 = j J Down Next idiaeresis Idiaeresis dead_belowdot dead_abovedot
+keycode  45 = k K Up Prior oe OE kra ampersand
+keycode  46 = l L Right End oslash Oslash lstroke Lstroke
+
+! 5 is €, 8 is (, 9 is )
+keycode  14 = 5 percent EuroSign percent EuroSign dead_cedilla onehalf threeeighths
+keycode  17 = 8 asterisk parenleft parenleft dead_ogonek threequarters bracketleft trademark
+keycode  18 = 9 parenleft parenright parenright leftsinglequotemark dead_breve bracketright plusminus
+
+! Typographic features:
+! . is ellipsis, shift-. is midpoint, alt-. is irony.
+! - is en-dash, shift-- is em-dash.
+! ! is interrobang.
+! space is visible space, shift-space is nonbreaking space.
+! alt-s is long s, alt-y is ezh.
+keycode  60 = period greater ellipsis periodcentered dead_abovedot dead_caron U2026 division
+keycode  61 = slash question endash emdash questiondown dead_hook U061F abovedot
+keycode  10 = 1 exclam 1 U203D onesuperior exclamdown onesuperior exclamdown
+keycode  65 = space NoSymbol U2423 U00A0 space
+keycode  29 = y Y z Z udiaeresis Udiaeresis U0292 yen
