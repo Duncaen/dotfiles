@@ -1,9 +1,1 @@
-if [ -x "$(command -v slcp)" ]; then
-  PS1='$(slcp $COLUMNS $?)'
-fi
-
-case "$TERM" in
-  dvtm*|xterm*|rxvt*)
-    PS1+='$(echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007")'
-    ;;
-esac
+PS1='$(d=${PWD/$HOME/\~};print ${d##*/})$(((r=$?))&&print "?\e[0;31;40m$r\e[0m")$(((USER_ID))&&print \$||print \#) '
