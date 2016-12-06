@@ -1,0 +1,23 @@
+alias ga='git add'
+alias gc='git commit'
+alias gp='git pull'
+alias gs='git status -sb'
+alias gb='git branch'
+alias gd='git diff'
+alias gl='git l'
+
+alias ls='ls -hF --color'
+alias sl='ls'
+alias ltoday='lr -1 -t "mtime >= \"00:00:00\"" -t "! name =~ \"^[.]{1,2}$\""'
+alias lftoday='ltoday -t "type == f"'
+
+alias portscan='nmap -Pn'
+alias wanip='curl ipinfo.io/ip'
+
+alias xi='doas xbps-install'
+alias xr='doas xbps-remove'
+alias xlock='doas xbps-pkgdb -m repolock'
+alias xunlock='doas xbps-pkgdb -m repounlock'
+alias xhold='doas xbps-pkgdb -m hold'
+alias xunhold='doas xbps-pkgdb -m unhold'
+alias xq='xbps-query'

@@ -25,12 +25,12 @@ _xorg() {
 _mksh() {
 	msg "INSTALL" "mksh config"
 	_ln_home "mkshrc" ".mkshrc"
-	_ln_home "mkshrc.d" ".mkshrc.d"
 }
 _shell() {
 	msg "INSTALL" "shell config"
 	_ln_home "profile" ".profile"
 	_ln_home "inputrc" ".inputrc"
+	_ln_home "aliases" ".aliases"
 }
 _git() {
 	msg "INSTALL" "git config"

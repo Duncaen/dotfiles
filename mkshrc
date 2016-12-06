@@ -390,17 +390,13 @@ function setenv {
 HISTFILE=$HOME/.mksh_history
 HISTSIZE=1000
 SHELL=$MKSH
-PATH="$HOME/bin:$PATH"
-export HISTFILE HISTSIZE SHELL PATH
+export HISTFILE HISTSIZE SHELL
 
-# fix del key
-# printf '\033[?1h\033=' >/dev/tty
+[ -z "$SSH_AUTH_SOCK" ] && [ -r ~/.cache/ssh-agent-info ] && \
+	. ~/.cache/ssh-agent-info
 
+[ -r ~/.aliases ] && . ~/.aliases
 
-if [ -d ~/.mkshrc.d ]; then
-	for f in ~/.mkshrc.d/*.sh; do
-		[ -x "$f" ] && . "$f"
-	done
-fi
+PS1='$(d=${PWD/$HOME/\~};print ${d##*/})$([ "$SSH_CONNECTION" ]&&print "@${HOSTNAME:=$(hostname)}")$(((r=$?))&&print "?\e[0;31;40m$r\e[0m")$(((USER_ID))&&print \$||print \#) '
 
 : place customisations above this line
