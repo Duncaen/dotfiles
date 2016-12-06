@@ -1,8 +1,6 @@
 #!/bin/mksh
 
-if [ -z "$1" -o ! -d "$1" ]; then
-  echo "venv: <path> [<cmd> [<arg>...]]" & exit 1
-fi
+[ -z "$1" -o ! -d "$1" ] && echo "venv: <path> [<cmd> [<arg>...]]" && exit 1
 
 # virtualenv magic
 unset PYTHONHOME
@@ -12,7 +10,7 @@ export PATH="$VIRTUAL_ENV/bin:$PATH"
 shift 1
 
 if [ "$#" -gt "1" ]; then
-  "${@}"
+	"${@}"
 else
-  /bin/mksh
+	$(command -v mksh)
 fi
