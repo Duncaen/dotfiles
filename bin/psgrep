@@ -1,0 +1,4 @@
+#!/bin/sh
+# psgrep [pattern]
+
+exec ps up $(pgrep -f $@) 2>&-;

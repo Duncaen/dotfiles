@@ -1,0 +1,46 @@
+#!/bin/sh
+# nginx-here [DIR] [PORT] - serve current directory (or DIR) on PORT (or 8080)
+
+DIR=$(realpath ${1:-.})
+PORT=${2:-8080}
+
+mkdir -p /tmp/.nginx-here.$$
+cat >/tmp/.nginx-here.$$/cfg <<EOF
+worker_processes 1;
+error_log "/dev/stdout";
+daemon off;
+pid "/tmp/.nginx-here.$$/pid";
+events {
+  worker_connections 1024;
+}
+
+http {
+  access_log "/dev/stdout";
+  client_body_temp_path "/tmp/.nginx-here.$$";
+  scgi_cache off;
+  scgi_temp_path "/tmp/.nginx-here.$$";
+  uwsgi_cache off;
+  uwsgi_temp_path "/tmp/.nginx-here.$$";
+  fastcgi_cache off;
+  #fastcgi_cache_path "/tmp/.nginx-here.$$" 1;
+  fastcgi_temp_path "/tmp/.nginx-here.$$";
+  proxy_temp_path "/tmp/.nginx-here.$$";
+
+  include /etc/nginx/mime.types;
+  default_type application/octet-stream;
+
+  server {
+    listen $PORT;
+    sendfile on;
+    gzip on;
+
+    location / {
+      root "$DIR";
+      autoindex on;
+      index index.html index.htm;
+    }
+  }
+}
+EOF
+nginx -p /tmp/.nginx-here.$$ -c cfg
+rm -r /tmp/.nginx-here.$$

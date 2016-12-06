@@ -1,0 +1,12 @@
+#!/bin/sh
+# sprunge FILES... - paste to sprunge.us
+
+if [ $# -lt 2 ]; then
+  cat "$@"
+else
+  for f; do
+    echo "## $f"
+    cat "$f"
+    echo
+  done  
+fi | curl -sF 'sprunge=<-' http://sprunge.us | tr -d ' '

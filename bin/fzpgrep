@@ -1,0 +1,9 @@
+#!/bin/sh
+# fzpsgrep [pattern] - psgrep with fzy selection
+
+psgrep "$@" | \
+	while read -r l; do
+		printf '%s\n' "$l" >2
+		fzy | awk '{print $2}'
+		break
+	done

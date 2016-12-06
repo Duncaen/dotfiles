@@ -1,0 +1,40 @@
+#!/bin/sh
+# unpatch [-pN] FILES... - re-generate patch from files and their .orig version
+
+STRIP=0
+case "$1" in
+	-p*) STRIP=${1#-p}; shift;;
+esac
+
+pstrip() {
+	i=0 p=$1
+	while [ "$i" -lt "$STRIP" ]; do
+	      i=$((i+1)) p=${p#*/}
+	done
+	printf %s "$p"
+}
+
+match() {
+	case "$1" in
+	     $2) true;;
+	     *) false;;
+	esac
+}
+
+if [ "$#" -eq 0 ]; then
+	set -- .
+	STRIP=$((STRIP+1))
+fi
+for f; do
+	if [ -f "$f" ] && [ -f "$f.orig" ]; then
+		diff -u --label "$(pstrip "$f.orig")" "$f.orig" \
+			--label "$(pstrip "$f")" "$f"
+	elif match "$f" "*.orig" && [ -f "$f" ] && [ -f "${f%.orig}" ]; then
+		diff -u --label "$(pstrip "$f")" "$f" \
+			--label "$(pstrip "${f%.orig}")" "${f%.orig}"
+	elif [ -d "$f" ]; then
+		find "$f" -type f -name '*.orig' -exec "$0" "-p$STRIP" {} ';'
+	else
+		printf "Can't unpatch '%s'.\n" "$f" 1>&2
+	fi
+done
