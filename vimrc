@@ -9,9 +9,6 @@ Plug 'tpope/vim-sensible'
 " Git
 Plug 'airblade/vim-gitgutter'
 
-" Colors
-Plug 'chriskempson/vim-tomorrow-theme'
-
 " Navigation
 Plug 'majutsushi/tagbar', { 'on':  'TagbarToggle' }
 Plug 'ctrlpvim/ctrlp.vim'
@@ -22,7 +19,6 @@ Plug 'tpope/vim-surround'
 Plug 'spf13/vim-autoclose'
 Plug 'godlygeek/tabular'
 Plug 'scrooloose/nerdcommenter'
-Plug 'nathanaelkane/vim-indent-guides'
 
 " Languages
 if hostname() != "pi"
@@ -88,7 +84,7 @@ set smartindent
 set foldlevelstart=99
 set foldmethod=indent
 
-silent! colorscheme Tomorrow-Night          " default colorscheme
+silent! colorscheme shblah          " default colorscheme
 
 " The Silver Searcher
 if executable('ag')
