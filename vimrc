@@ -10,7 +10,6 @@ Plug 'tpope/vim-sensible'
 Plug 'airblade/vim-gitgutter'
 
 " Navigation
-Plug 'majutsushi/tagbar', { 'on':  'TagbarToggle' }
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'bling/vim-bufferline'
 
@@ -19,25 +18,17 @@ Plug 'tpope/vim-surround'
 Plug 'spf13/vim-autoclose'
 Plug 'godlygeek/tabular'
 Plug 'scrooloose/nerdcommenter'
+Plug 'vim-scripts/AutoComplPop'
 
 " Languages
 if hostname() != "pi"
-" Plug 'SirVer/ultisnips'
-Plug 'scrooloose/syntastic', { 'for': ['python', 'javascript'] }
-Plug 'fatih/vim-go'
+Plug 'fatih/vim-go', { 'for': ['go'] }
 Plug 'python-rope/ropevim', { 'do': 'python2 setup.py install --user && python3 setup.py install --user' }
 endif
-Plug 'Shougo/neocomplete.vim'
+" Plug 'Shougo/neocomplete.vim'
 
 call plug#end()
 endif
-
-" nmap < [
-" nmap > ]
-" omap < [
-" omap > ]
-" xmap < [
-" xmap > ]
 
 " ============================================================================
 " Basic settings
@@ -62,6 +53,8 @@ set incsearch               " match search while typing
 set hlsearch                " hightligt search results
 set smartcase               " search casesensitive if pattern contains uppercase chars
 set ignorecase              "
+
+set completeopt=longest,menuone
 
 " ignore
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.db
@@ -229,7 +222,4 @@ nmap <Leader>s :source $MYVIMRC<cr>
 nnoremap <tab>   <c-w>w
 nnoremap <S-tab> <c-w>W
 
-" ----------------------------------------------------------------------------
-" Load plugin settings
-" ----------------------------------------------------------------------------
-silent! so ~/.vim/settings.vim
+let g:acp_behaviorKeywordLength=3
