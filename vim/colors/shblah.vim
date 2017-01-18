@@ -52,6 +52,9 @@ hi VertSplit    term=NONE cterm=NONE ctermfg=7    ctermbg=NONE
 hi Visual       term=NONE cterm=NONE ctermfg=0    ctermbg=7
 hi WarningMsg   term=NONE cterm=NONE ctermfg=3    ctermbg=NONE
 
+hi Pmenu        term=NONE cterm=NONE ctermfg=7    ctermbg=8
+hi PmenuSel     term=NONE cterm=NONE ctermfg=2    ctermbg=8
+
 " General highlighting group links.
 hi! link diffAdded       DiffAdd
 hi! link diffRemoved     DiffDelete
