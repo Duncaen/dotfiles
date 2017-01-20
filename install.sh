@@ -5,8 +5,11 @@ msg() { t=$1; shift; printf '%s: %s\n' "$t" "$@"; }
 _ln_home() {
 	[ -z "$2" ] && tgt="$HOME/$1" || tgt="$HOME/$2"
 	src="$PWD/$1"
-	rm -rv "$tgt"
+	[ -e "$tgt" ] && mv -v "$tgt" "$tgt.bak"
 	ln -sfv "$src" "$tgt"
+}
+_mkdir() {
+	mkdir -vp $@
 }
 
 _vim() {
@@ -21,6 +24,11 @@ _xorg() {
 	_ln_home "xinitrc" ".xinitrc"
 	_ln_home "Xresources" ".Xresources"
 	_ln_home "us-intl-german.xmodmap" ".us-intl-german.xmodmap"
+}
+_fonts() {
+	msg "INSTALL" "fontconfig config"
+	_mkdir ".config/fontconfig"
+	_ln_home "fonts.conf" ".config/fontconfig/fonts.conf"
 }
 _mksh() {
 	msg "INSTALL" "mksh config"
@@ -71,6 +79,7 @@ _bin
 _sv
 _git
 _xorg
+_fonts
 _vim
 _void
 _ssh
