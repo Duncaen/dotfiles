@@ -223,3 +223,6 @@ nnoremap <tab>   <c-w>w
 nnoremap <S-tab> <c-w>W
 
 let g:acp_behaviorKeywordLength=3
+
+" ksh syntax by default
+let g:is_kornshell = 1
