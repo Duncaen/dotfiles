@@ -25,19 +25,25 @@ deps
 bin/
 ----
 
+- colors - terminal color and attribute escape sequences
 - diffed [-CHT] [-pN] [-s SUBST -r REPL] [-x EXCLUDE] - filter for unified diffs 
 - dmoji - dmenu based emoji picker
 - fzpsgrep [pattern] - psgrep with fzy selection
 - git merge-pr [PRNUM][@REMOTE] [GIT-AM FLAGS...] - list or apply GitHub pull request from command-line
 - grurls - substitute and group urls
+- h - print the current paths vcs root or home
+- hex2rgb [hex ...] - converts hex colors to rgb
 - nginx-here [DIR] [PORT] - serve current directory (or DIR) on PORT (or 8080)
 - oomtop - lists processes by oom score
-- psgrep [pattern]
+- psgrep [pattern] - `ps` for matching processes
+- rgb2hex red green blue - converts rgb to hex colors
 - sprunge FILES... - paste to sprunge.us
 - ssh-copy-term - copy terminfo via ssh
 - swaptop - show most swap-using processes
 - timer [hh:mm[:ss]]... [[0-9]*[h|m|s]]... -- prog [args...]
+- twoman CMD... - show comment at line >2
 - unpatch [-pN] FILES... - re-generate patch from files and their .orig version
+- venv - small POSIX shell script for python virtualenv
 - yiff - colored diff
 
 Proudly presented by
