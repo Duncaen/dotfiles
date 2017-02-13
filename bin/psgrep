@@ -1,4 +1,3 @@
 #!/bin/sh
-# psgrep [pattern]
-
-exec ps up $(pgrep -f $@) 2>&-;
+# psgrep [pattern] - `ps` for matching processes
+exec ps up $(pgrep -f $@)
