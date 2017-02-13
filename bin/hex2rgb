@@ -1,0 +1,9 @@
+#!/bin/sh
+# hex2rgb [hex ...] - converts hex colors to rgb
+for x; do
+	case "$x" in \#*) x=${x#*#};; esac
+	a=$(echo "$x" | cut -c-2)
+	b=$(echo "$x" | cut -c3-4)
+	c=$(echo "$x" | cut -c5-6)
+	printf "%d %d %d\n" "0x$a" "0x$b" "0x$c"
+done
