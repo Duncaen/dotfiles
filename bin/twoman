@@ -1,0 +1,17 @@
+#!/bin/sh
+# twoman CMD... - show comment at line >2
+for x; do
+	path=$(command -v "$x" 2>/dev/null)
+	[ -z "$path" ] && continue
+	magic="$(dd if="$path" bs=2 count=1 2>/dev/null | od -An)"
+	magic=$(printf '%d' "$magic")
+	case "$magic" in 8483) ;; *) continue;; esac
+	awk '
+BEGIN {x=1}
+END {print "--"}
+NR>=2 && x {
+	x=sub("^#[ ]?","")
+	if(x){print}
+}
+' "$path"
+done
