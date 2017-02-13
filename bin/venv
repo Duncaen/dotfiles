@@ -1,16 +1,11 @@
-#!/bin/mksh
+#!/bin/sh
+# venv - small POSIX shell script for python virtualenv
 
 [ -z "$1" -o ! -d "$1" ] && echo "venv: <path> [<cmd> [<arg>...]]" && exit 1
 
 # virtualenv magic
 unset PYTHONHOME
-export VIRTUAL_ENV=$(realpath "$1")
-export PATH="$VIRTUAL_ENV/bin:$PATH"
+export VIRTUAL_ENV=$(realpath "$1") PATH="$VIRTUAL_ENV/bin:$PATH"
 
-shift 1
-
-if [ "$#" -gt "1" ]; then
-	"${@}"
-else
-	$(command -v mksh)
-fi
+shift
+[ "$#" -gt "1" ] && "${@}" || "${SHELL:-/bin/sh}"
