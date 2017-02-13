@@ -1,8 +1,10 @@
 #!/bin/sh
+# h - print the current paths vcs root or home
 
-dir="$PWD"
-while [ -n "$dir" ]; do
-  [ -d "$dir/.git" ] && break
-  [ "$dir" = "$HOME" ] && break
-  dir="${dir%/*}"
-done && echo "$dir" || return 1
+while \
+	[ -n "${d:=$PWD}" ] && \
+	[ ! -d "$d/.git" ] && \
+	[ ! -d "$d/CVSROOT" ] && \
+	[ "$d" != "$HOME" ]
+	do d="${d%/*}"
+done && printf "%s\n" "$d"
