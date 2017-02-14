@@ -10,7 +10,7 @@
 
 setxkbmap \
 	-layout 'us(altgr-intl),de(nodeadkeys)' \
-	-option 'grp:alt_shift_toggle,compose:menu'
+	-option 'grp:shifts_toggle,compose:menu'
 xmodmap ~/.us-intl-german.xmodmap
 
 xrdb -merge ~/.Xresources
