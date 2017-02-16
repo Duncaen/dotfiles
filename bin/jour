@@ -1,0 +1,18 @@
+#!/bin/sh
+# jour [-d YYYY.MM.DD] [ls|read|write] - simple text journal
+
+: ${JOURNAL_DIR:=~/journal}
+: ${DAY:=$(date +%Y.%m.%d)}
+[ -d "${JOURNAL_DIR}" ] || mkdir -p "${JOURNAL_DIR}"
+while getopts "d:" opt; do
+	case "$opt" in
+	d) DAY=$OPTARG ;;
+	esac
+done
+shift $((OPTIND-1))
+case "${1:-write}" in
+l|ls) ls -1 "${JOURNAL_DIR}" ;;
+r|read) ${PAGER:-more} "${JOURNAL_DIR}/${DAY}" ;;
+w|write) ${EDITOR:-vi} "${JOURNAL_DIR}/${DAY}" ;;
+*) false ;;
+esac
