@@ -33,6 +33,7 @@ bin/
 - grurls - substitute and group urls
 - h - print the current paths vcs root or home
 - hex2rgb [hex ...] - converts hex colors to rgb
+- jour [-d YYYY.MM.DD] [ls|read|write] - simple text journal
 - nginx-here [DIR] [PORT] - serve current directory (or DIR) on PORT (or 8080)
 - oomtop - lists processes by oom score
 - psgrep [pattern] - `ps` for matching processes
@@ -41,7 +42,7 @@ bin/
 - ssh-copy-term - copy terminfo via ssh
 - swaptop - show most swap-using processes
 - timer [hh:mm[:ss]]... [[0-9]*[h|m|s]]... -- prog [args...]
-- twoman CMD... - show comment at line >2
+- twoman CMD... - show comments at the beginning of a script
 - unpatch [-pN] FILES... - re-generate patch from files and their .orig version
 - venv - small POSIX shell script for python virtualenv
 - yiff - colored diff
