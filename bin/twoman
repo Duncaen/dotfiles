@@ -1,17 +1,7 @@
 #!/bin/sh
-# twoman CMD... - show comment at line >2
-for x; do
-	path=$(command -v "$x" 2>/dev/null)
-	[ -z "$path" ] && continue
-	magic="$(dd if="$path" bs=2 count=1 2>/dev/null | od -An)"
-	magic=$(printf '%d' "$magic")
-	case "$magic" in 8483) ;; *) continue;; esac
-	awk '
-BEGIN {x=1}
-END {print "--"}
-NR>=2 && x {
-	x=sub("^#[ ]?","")
-	if(x){print}
-}
-' "$path"
+# twoman CMD... - show comments at the beginning of a script
+for cmd; do
+	cmd=$(command -v "$cmd" 2>/dev/null)
+	[ -z "$cmd" ] && continue
+	sed -n '1{/^[^#][^!]/q;d};0,/^$\|^[^#]/s/^# //p' $cmd
 done
