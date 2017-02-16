@@ -3,8 +3,9 @@ filetype off
 
 silent! if plug#begin('~/.vim/plugged')
 
-" Defaults
-Plug 'tpope/vim-sensible'
+if v:version >= 800
+	Plug 'maralla/completor.vim'
+endif
 
 " Git
 Plug 'airblade/vim-gitgutter'
@@ -16,16 +17,13 @@ Plug 'bling/vim-bufferline'
 " Editing
 Plug 'tpope/vim-surround'
 Plug 'spf13/vim-autoclose'
-Plug 'godlygeek/tabular'
-Plug 'scrooloose/nerdcommenter'
-Plug 'vim-scripts/AutoComplPop'
+Plug 'tpope/vim-commentary'
 
 " Languages
 if hostname() != "pi"
-Plug 'fatih/vim-go', { 'for': ['go'] }
-Plug 'python-rope/ropevim', { 'do': 'python2 setup.py install --user && python3 setup.py install --user' }
+	Plug 'fatih/vim-go', { 'for': ['go'] }
+	Plug 'python-rope/ropevim', { 'for': ['python'], 'do': 'python2 setup.py install --user && python3 setup.py install --user' }
 endif
-" Plug 'Shougo/neocomplete.vim'
 
 call plug#end()
 endif
@@ -38,22 +36,33 @@ endif
 let mapleader      = ','
 let maplocalleader = ','
 
+" interface {{{
 set showcmd                 " show current command
 set number                  " show line numbers
 set list                    " show tabs, whitespaces etc
-" set lazyredraw            " foo
-set timeoutlen=500          " time to wait for key code, mapped key sequence
-set history=1000            " store a ton of history (default is 20)
 set cursorline              " highlight current line
 set scrolloff=5             " scroll 5 lines before reaching top/bottom
-set textwidth=0             " dont wrap text automatically
 silent! set colorcolumn=80  " show line after 80 chars
 set diffopt=filler,vertical " vertical vimdiff
+set ruler                   " cursor position in status line
+set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
+set laststatus=2            " always show the statusline
+" set lazyredraw            " foo
+" }}}
+
+set timeoutlen=500          " time to wait for key code, mapped key sequence
+set history=1000            " store a ton of history (default is 20)
+
+
 set incsearch               " match search while typing
 set hlsearch                " hightligt search results
 set smartcase               " search casesensitive if pattern contains uppercase chars
 set ignorecase              "
 
+set autoread                " automatically read changed files
+set backspace=indent,eol,start
+
+set complete-=i
 set completeopt=longest,menuone
 
 " ignore
@@ -68,25 +77,27 @@ set undofile                " So is persistent undo ...
 set undolevels=1000         " Maximum number of changes that can be undone
 set undoreload=10000        " Maximum number lines to save for undo on a buffer reload
 
-
 " Formating
 filetype plugin indent on
+set autoindent
 set tabstop=2
 set shiftwidth=2
 set smartindent
+set smarttab
 set foldlevelstart=99
 set foldmethod=indent
+set textwidth=0             " dont wrap text automatically
 
-silent! colorscheme shblah          " default colorscheme
+silent! colorscheme shblah  " default colorscheme
 
 " The Silver Searcher
 if executable('ag')
-  " Use ag over grep
-  set grepprg=ag\ --nogroup\ --nocolor
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-  " ag is fast enough that CtrlP doesn't need to cache
-  let g:ctrlp_use_caching = 0
+	" Use ag over grep
+	set grepprg=ag\ --nogroup\ --nocolor
+	" Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+	let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+	" ag is fast enough that CtrlP doesn't need to cache
+	let g:ctrlp_use_caching = 0
 endif
 
 
@@ -95,9 +106,9 @@ endif
 " co? : Toggle options (inspired by unimpaired.vim) from: https://github.com/junegunn/dotfiles
 " ----------------------------------------------------------------------------
 function! s:map_change_option(...)
-  let [key, opt] = a:000[0:1]
-  let op = get(a:, 3, 'set '.opt.'!')
-  execute printf("nnoremap co%s :%s<BAR>echo '%s: '. &%s<CR>", key, op, opt, opt)
+	let [key, opt] = a:000[0:1]
+	let op = get(a:, 3, 'set '.opt.'!')
+	execute printf("nnoremap co%s :%s<BAR>echo '%s: '. &%s<CR>", key, op, opt, opt)
 endfunction
 
 call s:map_change_option('n', 'number', 'setlocal number!')
@@ -106,7 +117,7 @@ call s:map_change_option('l', 'list', 'setlocal list!')
 call s:map_change_option('p', 'paste')
 call s:map_change_option('w', 'wrap', 'setlocal wrap!')
 call s:map_change_option('t', 'textwidth',
-		\ 'let &l:textwidth = input("textwidth (". &l:textwidth ."): ")<bar>redraw')
+	\ 'let &l:textwidth = input("textwidth (". &l:textwidth ."): ")<bar>redraw')
 
 
 " ============================================================================
@@ -117,11 +128,6 @@ let g:ctrlp_custom_ignore = {
 	\ 'dir':  '\v[\/]\.(git|hg|svn)$',
 	\ 'file': '\.pyc$\|\.pyo$\|\.rbc$|\.rbo$\|\.class$\|\.o$\|\~$\',
 \ }
-
-" ============================================================================
-" NERDcommenter
-" ============================================================================
-let g:NERDSpaceDelims=1 " add a space before comments, pep8 etc.
 
 " ============================================================================
 " python-mode
@@ -155,41 +161,14 @@ let g:NERDSpaceDelims=1 " add a space before comments, pep8 etc.
 " let b:surround_{char2nr("c")} = "{% comment %}\r{% endcomment %}"
 
 " ============================================================================
-" tabular
-" ============================================================================
-nmap <Leader>a& :Tabularize /&<CR>
-vmap <Leader>a& :Tabularize /&<CR>
-nmap <Leader>a" :Tabularize /"<CR>
-vmap <Leader>a" :Tabularize /"<CR>
-nmap <Leader>a= :Tabularize /=<CR>
-vmap <Leader>a= :Tabularize /=<CR>
-nmap <Leader>a=> :Tabularize /=><CR>
-vmap <Leader>a=> :Tabularize /=><CR>
-nmap <Leader>a: :Tabularize /:<CR>
-vmap <Leader>a: :Tabularize /:<CR>
-nmap <Leader>a:: :Tabularize /:\zs<CR>
-vmap <Leader>a:: :Tabularize /:\zs<CR>
-nmap <Leader>a, :Tabularize /,<CR>
-vmap <Leader>a, :Tabularize /,<CR>
-nmap <Leader>a,, :Tabularize /,\zs<CR>
-vmap <Leader>a,, :Tabularize /,\zs<CR>
-nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
-vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
-
-" ============================================================================
-" tagbar
-" <F11> - toggle tagbar
-" ,tt - toggle tagbar
-" ============================================================================
-nmap <silent> <F11> :TagbarToggle<CR>
-nmap <leader>tt <F11>
-
-" ============================================================================
 " FILETYPES
 " ============================================================================
 
 " void-packages template file
 autocmd BufNewFile,BufRead template set ft=sh sts=0 sw=0 noet
+
+" ksh syntax by default
+let g:is_kornshell = 1
 
 " ============================================================================
 " MAPPINGS
@@ -198,8 +177,12 @@ autocmd BufNewFile,BufRead template set ft=sh sts=0 sw=0 noet
 " too often i type W instead of w
 command! W w
 
-" For when you forget to doas.. Really Write the file.
-cmap w!! w !doas tee % >/dev/null
+if executable('doas')
+	" For when you forget to doas.. Really Write the file.
+	cmap w!! w !doas tee % >/dev/null
+else
+	cmap w!! w !sudo tee % >/dev/null
+endif
 
 " Make Y behave like other capitals
 nnoremap Y y$
@@ -215,14 +198,10 @@ vnoremap = =gv
 " ,s - reload vim rc
 nmap <Leader>s :source $MYVIMRC<cr>
 
-" ----------------------------------------------------------------------------
 " <tab> / <s-tab> | Circular windows navigation
-" ----------------------------------------------------------------------------
-
 nnoremap <tab>   <c-w>w
 nnoremap <S-tab> <c-w>W
 
-let g:acp_behaviorKeywordLength=3
-
-" ksh syntax by default
-let g:is_kornshell = 1
+" ,c - toggle comment
+nmap <Leader>c <Plug>Commentary
+vmap <Leader>c <Plug>Commentary
