@@ -28,240 +28,6 @@ case $KSH_VERSION in
 *) return 0 ;;
 esac
 
-PS1='#'; (( USER_ID )) && PS1='$'; [[ ${HOSTNAME:=$(ulimit -c 0; hostname -s \
-    2>/dev/null)} = *([	 ]|localhost) ]] && HOSTNAME=$(ulimit -c 0; hostname \
-    2>/dev/null); : ${EDITOR:=/bin/ed} ${HOSTNAME:=nil} ${TERM:=vt100}
-: ${MKSH:=$(whence -p mksh)}; PS4='[$EPOCHREALTIME] '; PS1=$'\001\r''${|
-
-	local e=$?
-
-	(( e )) && REPLY+="$e|"
-	REPLY+=${USER:=$(ulimit -c 0; id -un 2>/dev/null || echo \?)}
-	REPLY+=@${HOSTNAME%%.*}:
-
-	local d=${PWD:-?} p=~; [[ $p = ?(*/) ]] || d=${d/#$p/~}
-	local m=${%d} n p=...; (( m > 0 )) || m=${#d}
-	(( m > (n = (COLUMNS/3 < 7 ? 7 : COLUMNS/3)) )) && d=${d:(-n)} || p=
-	REPLY+=$p$d
-
-	return $e
-} '"$PS1 "; export EDITOR HOSTNAME MKSH TERM USER
-alias ls=ls
-unalias ls
-alias l='ls -F'
-alias la='l -a'
-alias ll='l -l'
-alias lo='l -alo'
-alias doch='sudo mksh -c "$(fc -ln -1)"'
-whence -p rot13 >/dev/null || alias rot13='tr \
-    abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ \
-    nopqrstuvwxyzabcdefghijklmNOPQRSTUVWXYZABCDEFGHIJKLM'
-if whence -p hd >/dev/null; then :; elif whence -p hexdump >/dev/null; then
-	function hd {
-		hexdump -e '"%08.8_ax  " 8/1 "%02X " " - " 8/1 "%02X "' \
-		    -e '"  |" "%_p"' -e '"|\n"' "$@"
-	}
-else
-	function hd {
-		local -Uui16 -Z11 pos=0
-		local -Uui16 -Z5 hv=2147483647
-		local dasc line i
-
-		cat "$@" | { set +U; if read -arN -1 line; then
-			typeset -i1 line
-			i=0
-			while (( i < ${#line[*]} )); do
-				hv=${line[i++]}
-				if (( (pos & 15) == 0 )); then
-					(( pos )) && print -r -- "$dasc|"
-					print -n "${pos#16#}  "
-					dasc=' |'
-				fi
-				print -n "${hv#16#} "
-				if (( (hv < 32) || (hv > 126) )); then
-					dasc+=.
-				else
-					dasc+=${line[i-1]#1#}
-				fi
-				(( (pos++ & 15) == 7 )) && print -n -- '- '
-			done
-			while (( pos & 15 )); do
-				print -n '   '
-				(( (pos++ & 15) == 7 )) && print -n -- '- '
-			done
-			(( hv == 2147483647 )) || print -r -- "$dasc|"
-		fi; }
-	}
-fi
-
-# Berkeley C shell compatible dirs, popd, and pushd functions
-# Z shell compatible chpwd() hook, used to update DIRSTACK[0]
-DIRSTACKBASE=$(realpath ~/. 2>/dev/null || print -nr -- "${HOME:-/}")
-set -A DIRSTACK
-function chpwd {
-	DIRSTACK[0]=$(realpath . 2>/dev/null || print -r -- "$PWD")
-	[[ $DIRSTACKBASE = ?(*/) ]] || \
-	    DIRSTACK[0]=${DIRSTACK[0]/#$DIRSTACKBASE/~}
-	:
-}
-chpwd .
-function cd {
-	builtin cd "$@" || return $?
-	chpwd "$@"
-}
-function cd_csh {
-	local d t=${1/#~/$DIRSTACKBASE}
-
-	if ! d=$(builtin cd "$t" 2>&1); then
-		print -u2 "${1}: ${d##*cd: $t: }."
-		return 1
-	fi
-	cd "$t"
-}
-function dirs {
-	local d dwidth
-	local -i fl=0 fv=0 fn=0 cpos=0
-
-	while getopts ":lvn" d; do
-		case $d {
-		(l)	fl=1 ;;
-		(v)	fv=1 ;;
-		(n)	fn=1 ;;
-		(*)	print -u2 'Usage: dirs [-lvn].'
-			return 1 ;;
-		}
-	done
-	shift $((OPTIND - 1))
-	if (( $# > 0 )); then
-		print -u2 'Usage: dirs [-lvn].'
-		return 1
-	fi
-	if (( fv )); then
-		fv=0
-		while (( fv < ${#DIRSTACK[*]} )); do
-			d=${DIRSTACK[fv]}
-			(( fl )) && d=${d/#~/$DIRSTACKBASE}
-			print -r -- "$fv	$d"
-			let fv++
-		done
-	else
-		fv=0
-		while (( fv < ${#DIRSTACK[*]} )); do
-			d=${DIRSTACK[fv]}
-			(( fl )) && d=${d/#~/$DIRSTACKBASE}
-			(( dwidth = (${%d} > 0 ? ${%d} : ${#d}) ))
-			if (( fn && (cpos += dwidth + 1) >= 79 && \
-			    dwidth < 80 )); then
-				print
-				(( cpos = dwidth + 1 ))
-			fi
-			print -nr -- "$d "
-			let fv++
-		done
-		print
-	fi
-	return 0
-}
-function popd {
-	local d fa
-	local -i n=1
-
-	while getopts ":0123456789lvn" d; do
-		case $d {
-		(l|v|n)	fa+=" -$d" ;;
-		(+*)	n=2
-			break ;;
-		(*)	print -u2 'Usage: popd [-lvn] [+<n>].'
-			return 1 ;;
-		}
-	done
-	shift $((OPTIND - n))
-	n=0
-	if (( $# > 1 )); then
-		print -u2 popd: Too many arguments.
-		return 1
-	elif [[ $1 = ++([0-9]) && $1 != +0 ]]; then
-		if (( (n = ${1#+}) >= ${#DIRSTACK[*]} )); then
-			print -u2 popd: Directory stack not that deep.
-			return 1
-		fi
-	elif [[ -n $1 ]]; then
-		print -u2 popd: Bad directory.
-		return 1
-	fi
-	if (( ${#DIRSTACK[*]} < 2 )); then
-		print -u2 popd: Directory stack empty.
-		return 1
-	fi
-	unset DIRSTACK[n]
-	set -A DIRSTACK -- "${DIRSTACK[@]}"
-	cd_csh "${DIRSTACK[0]}" || return 1
-	dirs $fa
-}
-function pushd {
-	local d fa
-	local -i n=1
-
-	while getopts ":0123456789lvn" d; do
-		case $d {
-		(l|v|n)	fa+=" -$d" ;;
-		(+*)	n=2
-			break ;;
-		(*)	print -u2 'Usage: pushd [-lvn] [<dir>|+<n>].'
-			return 1 ;;
-		}
-	done
-	shift $((OPTIND - n))
-	if (( $# == 0 )); then
-		if (( ${#DIRSTACK[*]} < 2 )); then
-			print -u2 pushd: No other directory.
-			return 1
-		fi
-		d=${DIRSTACK[1]}
-		DIRSTACK[1]=${DIRSTACK[0]}
-		cd_csh "$d" || return 1
-	elif (( $# > 1 )); then
-		print -u2 pushd: Too many arguments.
-		return 1
-	elif [[ $1 = ++([0-9]) && $1 != +0 ]]; then
-		if (( (n = ${1#+}) >= ${#DIRSTACK[*]} )); then
-			print -u2 pushd: Directory stack not that deep.
-			return 1
-		fi
-		while (( n-- )); do
-			d=${DIRSTACK[0]}
-			unset DIRSTACK[0]
-			set -A DIRSTACK -- "${DIRSTACK[@]}" "$d"
-		done
-		cd_csh "${DIRSTACK[0]}" || return 1
-	else
-		set -A DIRSTACK -- placeholder "${DIRSTACK[@]}"
-		cd_csh "$1" || return 1
-	fi
-	dirs $fa
-}
-
-# pager (not control character safe)
-function smores {
-	(
-		set +m
-		cat "$@" |&
-		trap "rv=\$?; kill $! >/dev/null 2>&1; exit \$rv" EXIT
-		while IFS= read -pr line; do
-			llen=${%line}
-			(( llen == -1 )) && llen=${#line}
-			(( llen = llen ? (llen + COLUMNS - 1) / COLUMNS : 1 ))
-			if (( (curlin += llen) >= LINES )); then
-				print -n -- '\033[7m--more--\033[0m'
-				read -u1 || exit $?
-				[[ $REPLY = [Qq]* ]] && exit 0
-				curlin=$llen
-			fi
-			print -r -- "$line"
-		done
-	)
-}
-
 # base64 encoder and decoder, RFC compliant, NUL safe
 function Lb64decode {
 	[[ -o utf8-mode ]]; local u=$?
@@ -370,23 +136,15 @@ function Lbafh_finish {
 	    (Lbafh_v >>> 16) ^ (Lbafh_v >>> 24) ))
 	:
 }
+if \command -v hd >/dev/null; then \:; elif \command -v hexdump >/dev/null; then
+	function hd {
+		hexdump -e '"%08.8_ax  " 8/1 "%02X " " - " 8/1 "%02X "' \
+			-e '"  |" "%_p"' -e '"|\n"' "$@"
+	}
+fi
 
-# strip comments (and leading/trailing whitespace if IFS is set) from
-# any file(s) given as argument, or stdin if none, and spew to stdout
-function Lstripcom {
-	cat "$@" | { set -o noglob; while read _line; do
-		_line=${_line%%#*}
-		[[ -n $_line ]] && print -r -- $_line
-	done; }
-}
-
-# give MidnightBSD's laffer1 a bit of csh feeling
-function setenv {
-	eval export "\"$1\""'="$2"'
-}
-
-: place customisations below this line
-
+# mksh-specific from here
+\: "${MKSH:=$(\builtin whence -p mksh)}"; \: "${MKSH:=/bin/mksh}"; \export MKSH
 HISTFILE=$HOME/.mksh_history
 HISTSIZE=1000
 SHELL=$MKSH
@@ -397,6 +155,22 @@ export HISTFILE HISTSIZE SHELL
 
 [ -r ~/.aliases ] && . ~/.aliases
 
-PS1='$(d=${PWD/$HOME/\~};print ${d##*/})$([ "$SSH_CONNECTION" ]&&print "@${HOSTNAME:=$(hostname)}")$(((r=$?))&&print "?\e[0;31;40m$r\e[0m")$(((USER_ID))&&print \$||print \#) '
-
-: place customisations above this line
+case "$TERM" in
+network|dump)
+	PS1=$'\001\r''$(\
+((r=$?)) && e="?$r" || e=;\
+d=${PWD/$HOME/\~}; d=${d##*/};\
+[ "$SSH_CONNECTION" ] && s="@${HOSTNAME:=$(hostname)}" || s=;\
+((USER_ID)) && i=\$ || i=\#;\
+print "$d$s$e$i ")'
+;;
+xterm|*-256color)
+	alias weechat='print "\033]0;weechat\a$d$s$e$i " && weechat'
+	PS1=$'\001\r''$(\
+((e=$?)) && e="?\e[0;31;40m$e\e[0m" || e=
+d=${PWD/$HOME/\~}; d=${d##*/};\
+[ "$SSH_CONNECTION" ] && s="@${HOSTNAME:=$(hostname)}" || s=;\
+i=\#; ((USER_ID)) && i=\$;\
+\print "\033]0;$d$s$i\a$d$s$e$i") '
+;;
+esac
