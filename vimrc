@@ -80,8 +80,8 @@ set undoreload=10000        " Maximum number lines to save for undo on a buffer 
 " Formating
 filetype plugin indent on
 set autoindent
-set tabstop=2
-set shiftwidth=2
+set tabstop=8
+set shiftwidth=8
 set smartindent
 set smarttab
 set foldlevelstart=99
