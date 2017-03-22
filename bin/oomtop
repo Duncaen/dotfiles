@@ -1,9 +1,8 @@
 #!/bin/sh
 # oomtop - lists processes by oom score
 
-printf "SCORE\tPID\tCOMMAND\n" >&2
 for f in /proc/[0-9]*; do
 	s=$(cat "$f/oom_score")
 	[ "$s" -eq 0 ] && continue
-	printf "%d\t%d\t%s\n" "$s" "${f#*/proc/}" "$(cat "$f/comm")"
+	printf "%8d  %s %d\n" "$s" "$(cat "$f/comm")" "${f#*/proc/}"
 done | sort -nr
