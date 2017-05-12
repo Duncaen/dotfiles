@@ -2,10 +2,14 @@
 # dmoji - dmenu based emoji picker
 
 # GNU cut doesn't grok UTF-8.
-w="$(xdotool getactivewindow)"
-xdotool type --window "$w" "$(sed '0,/^exit/d' $0 | dmenu -l "${1:-10}" -fn Symbola:size=20 | grep -Po '^.')"
-
-exit $?
+EMOJI=$(sed '0,/^exit/d' $0 | dmenu -i -l 10 -fn Symbola:size=20 | grep -Po '^.')
+if [ "$EMOJI" ]; then
+	printf %s "$EMOJI" | xclip -i
+	sleep 0.1
+	xdotool click 2
+	exit $?
+fi
+exit 1
 😀  GRINNING FACE  #face #grin #person
 😁  GRINNING FACE WITH SMILING EYES  #eye #face #grin #person #smile
 😂  FACE WITH TEARS OF JOY  #face #joy #laugh #person #tear
@@ -30,7 +34,7 @@ exit $?
 🤔  THINKING FACE  #face #person #thinking
 😐  NEUTRAL FACE  #deadpan #face #neutral #person
 😑  EXPRESSIONLESS FACE  #expressionless #face #inexpressive #person #unexpressive
-😶  FACE WITHOUT MOUTH  #face #mouth #person #quiet #silent
+😶  FACE WITHOUT MOUTH	#face #mouth #person #quiet #silent
 🙄  FACE WITH ROLLING EYES  #eyes #face #person #rolling
 😏  SMIRKING FACE  #face #person #smirk
 😣  PERSEVERING FACE  #face #persevere #person
@@ -39,12 +43,12 @@ exit $?
 🤐  ZIPPER-MOUTH FACE  #face #mouth #person #zipper
 😯  HUSHED FACE  #face #hushed #person #stunned #surprised
 😪  SLEEPY FACE  #face #person #sleep
-😫  TIRED FACE  #face #person #tired
+😫  TIRED FACE	#face #person #tired
 😴  SLEEPING FACE  #face #person #sleep #zzz
 😌  RELIEVED FACE  #face #person #relieved
-😛  FACE WITH STUCK-OUT TONGUE  #face #person #tongue
-😜  FACE WITH STUCK-OUT TONGUE AND WINKING EYE  #eye #face #joke #person #tongue #wink
-😝  FACE WITH STUCK-OUT TONGUE AND TIGHTLY-CLOSED EYES  #eye #face #horrible #person #taste #tongue
+😛  FACE WITH STUCK-OUT TONGUE	#face #person #tongue
+😜  FACE WITH STUCK-OUT TONGUE AND WINKING EYE	#eye #face #joke #person #tongue #wink
+😝  FACE WITH STUCK-OUT TONGUE AND TIGHTLY-CLOSED EYES	#eye #face #horrible #person #taste #tongue
 😒  UNAMUSED FACE  #face #person #unamused #unhappy
 😓  FACE WITH COLD SWEAT  #cold #face #person #sweat
 😔  PENSIVE FACE  #dejected #face #pensive #person
@@ -55,25 +59,25 @@ exit $?
 😷  FACE WITH MEDICAL MASK  #cold #doctor #face #mask #medicine #person #sick
 🤒  FACE WITH THERMOMETER  #face #ill #person #sick #thermometer
 🤕  FACE WITH HEAD-BANDAGE  #bandage #face #hurt #injury #person
-☹  WHITE FROWNING FACE  #face #frown #person
+☹  WHITE FROWNING FACE	#face #frown #person
 🙁  SLIGHTLY FROWNING FACE  #face #frown #person
 😖  CONFOUNDED FACE  #confounded #face #person
 😞  DISAPPOINTED FACE  #disappointed #face #person
 😟  WORRIED FACE  #face #person #worried
 😤  FACE WITH LOOK OF TRIUMPH  #face #person #triumph #won
 😢  CRYING FACE  #cry #face #person #sad #tear
-😭  LOUDLY CRYING FACE  #cry #face #person #sad #sob #tear
+😭  LOUDLY CRYING FACE	#cry #face #person #sad #sob #tear
 😦  FROWNING FACE WITH OPEN MOUTH  #face #frown #mouth #open #person
 😧  ANGUISHED FACE  #anguished #face #person
 😨  FEARFUL FACE  #face #fear #fearful #person #scared
-😩  WEARY FACE  #face #person #tired #weary
+😩  WEARY FACE	#face #person #tired #weary
 😬  GRIMACING FACE  #face #grimace #person
 😰  FACE WITH OPEN MOUTH AND COLD SWEAT  #blue #cold #face #mouth #open #person #rushed #sweat
 😱  FACE SCREAMING IN FEAR  #face #fear #fearful #munch #person #scared #scream
 😳  FLUSHED FACE  #dazed #face #flushed #person
-😵  DIZZY FACE  #dizzy #face #person
+😵  DIZZY FACE	#dizzy #face #person
 😡  POUTING FACE  #angry #face #mad #person #pouting #rage #red
-😠  ANGRY FACE  #angry #face #mad #person
+😠  ANGRY FACE	#angry #face #mad #person
 😈  SMILING FACE WITH HORNS  #face #fairy_tale #fantasy #horns #person #smile
 👿  IMP  #demon #devil #face #fairy_tale #fantasy #imp #person
 👹  JAPANESE OGRE  #creature #face #fairy_tale #fantasy #japanese #monster #ogre #person
@@ -87,14 +91,14 @@ exit $?
 💩  PILE OF POO  #comic #dung #face #monster #nature #object #poo #poop
 😺  SMILING CAT FACE WITH OPEN MOUTH  #animal #cat #face #mouth #nature #open #smile
 😸  GRINNING CAT FACE WITH SMILING EYES  #animal #cat #eye #face #grin #nature #smile
-😹  CAT FACE WITH TEARS OF JOY  #animal #cat #face #joy #nature #tear
+😹  CAT FACE WITH TEARS OF JOY	#animal #cat #face #joy #nature #tear
 😻  SMILING CAT FACE WITH HEART-SHAPED EYES  #animal #cat #eye #face #heart #love #nature #smile
 😼  CAT FACE WITH WRY SMILE  #animal #cat #face #ironic #nature #smile #wry
 😽  KISSING CAT FACE WITH CLOSED EYES  #animal #cat #eye #face #kiss #nature
 🙀  WEARY CAT FACE  #animal #cat #face #nature #oh #surprised #weary
 😿  CRYING CAT FACE  #animal #cat #cry #face #nature #sad #tear
 😾  POUTING CAT FACE  #animal #cat #face #nature #pouting
-🙈  SEE-NO-EVIL MONKEY  #animal #evil #face #forbidden #gesture #monkey #nature #no #not #prohibited #see
+🙈  SEE-NO-EVIL MONKEY	#animal #evil #face #forbidden #gesture #monkey #nature #no #not #prohibited #see
 🙉  HEAR-NO-EVIL MONKEY  #animal #evil #face #forbidden #gesture #hear #monkey #nature #no #not #prohibited
 🙊  SPEAK-NO-EVIL MONKEY  #animal #evil #face #forbidden #gesture #monkey #nature #no #not #prohibited #speak
 👦  BOY  #boy #person
@@ -115,7 +119,7 @@ exit $?
 🕵  SLEUTH OR SPY  #detective #person #sleuth #spy
 🎅  FATHER CHRISTMAS  #activity #celebration #christmas #fairy_tale #fantasy #father #person #santa
 👰  BRIDE WITH VEIL  #bride #person #veil #wedding
-👼  BABY ANGEL  #angel #baby #face #fairy_tale #fantasy #person
+👼  BABY ANGEL	#angel #baby #face #fairy_tale #fantasy #person
 💆  FACE MASSAGE  #massage #person #salon
 💇  HAIRCUT  #barber #beauty #haircut #parlor #person
 🙍  PERSON FROWNING  #frown #gesture #person
@@ -127,10 +131,10 @@ exit $?
 🙇  PERSON BOWING DEEPLY  #apology #bow #gesture #person #sorry
 🙌  PERSON RAISING BOTH HANDS IN CELEBRATION  #body #celebration #gesture #hand #hooray #person #raised
 🙏  PERSON WITH FOLDED HANDS  #ask #body #bow #folded #gesture #hand #person #please #pray #thanks
-🗣  SPEAKING HEAD IN SILHOUETTE  #face #head #person #silhouette #speak #speaking
-👤  BUST IN SILHOUETTE  #bust #person #silhouette
+🗣  SPEAKING HEAD IN SILHOUETTE	#face #head #person #silhouette #speak #speaking
+👤  BUST IN SILHOUETTE	#bust #person #silhouette
 👥  BUSTS IN SILHOUETTE  #bust #person #silhouette
-🚶  PEDESTRIAN  #hike #pedestrian #person #walk #walking
+🚶  PEDESTRIAN	#hike #pedestrian #person #walk #walking
 🏃  RUNNER  #marathon #person #runner #running
 👯  WOMAN WITH BUNNY EARS  #bunny #dancer #ear #girl #person #woman
 💃  DANCER  #dancer #person
@@ -141,7 +145,7 @@ exit $?
 💏  KISS  #couple #kiss #person #romance
 👩  Kiss: WOMAN, MAN  #kiss #man #woman
 👨  Kiss: MAN, MAN  #kiss #man
-👩  Kiss: WOMAN, WOMAN  #kiss #woman
+👩  Kiss: WOMAN, WOMAN	#kiss #woman
 💑  COUPLE WITH HEART  #couple #heart #love #person #romance
 👩  Couple with heart: WOMAN, MAN  #couple #man #woman
 👨  Couple with heart: MAN, MAN  #couple #man
@@ -155,34 +159,34 @@ exit $?
 👨  Family: MAN, MAN, BOY  #boy #family #man
 👨  Family: MAN, MAN, GIRL  #family #girl #man
 👨  Family: MAN, MAN, GIRL, BOY  #boy #family #girl #man
-👨  Family: MAN, MAN, BOY, BOY  #boy #family #man
+👨  Family: MAN, MAN, BOY, BOY	#boy #family #man
 👨  Family: MAN, MAN, GIRL, GIRL  #family #girl #man
 👩  Family: WOMAN, WOMAN, BOY  #boy #family #woman
-👩  Family: WOMAN, WOMAN, GIRL  #family #girl #woman
+👩  Family: WOMAN, WOMAN, GIRL	#family #girl #woman
 👩  Family: WOMAN, WOMAN, GIRL, BOY  #boy #family #girl #woman
 👩  Family: WOMAN, WOMAN, BOY, BOY  #boy #family #woman
 👩  Family: WOMAN, WOMAN, GIRL, GIRL  #family #girl #woman
-🏻  EMOJI MODIFIER FITZPATRICK TYPE-1-2  #emoji_modifier #fitzpatrick #skin #symbol #tone
+🏻  EMOJI MODIFIER FITZPATRICK TYPE-1-2	#emoji_modifier #fitzpatrick #skin #symbol #tone
 🏼  EMOJI MODIFIER FITZPATRICK TYPE-3  #emoji_modifier #fitzpatrick #skin #symbol #tone
 🏽  EMOJI MODIFIER FITZPATRICK TYPE-4  #emoji_modifier #fitzpatrick #skin #symbol #tone
 🏾  EMOJI MODIFIER FITZPATRICK TYPE-5  #emoji_modifier #fitzpatrick #skin #symbol #tone
 🏿  EMOJI MODIFIER FITZPATRICK TYPE-6  #emoji_modifier #fitzpatrick #skin #symbol #tone
 💪  FLEXED BICEPS  #biceps #body #comic #flex #muscle #person
-👈  WHITE LEFT POINTING BACKHAND INDEX  #backhand #body #finger #hand #index #person #point
+👈  WHITE LEFT POINTING BACKHAND INDEX	#backhand #body #finger #hand #index #person #point
 👉  WHITE RIGHT POINTING BACKHAND INDEX  #backhand #body #finger #hand #index #person #point
 ☝  WHITE UP POINTING INDEX  #body #finger #hand #index #person #point #up
 👆  WHITE UP POINTING BACKHAND INDEX  #backhand #body #finger #hand #index #person #point #up
 🖕  REVERSED HAND WITH MIDDLE FINGER EXTENDED  #body #finger #hand #middle_finger #person
-👇  WHITE DOWN POINTING BACKHAND INDEX  #backhand #body #down #finger #hand #index #person #point
+👇  WHITE DOWN POINTING BACKHAND INDEX	#backhand #body #down #finger #hand #index #person #point
 ✌  VICTORY HAND  #body #hand #person #v #victory
 🖖  RAISED HAND WITH PART BETWEEN MIDDLE AND RING FINGERS  #body #finger #hand #person #spock #vulcan
 🤘  SIGN OF THE HORNS  #body #finger #hand #horns #person #rock
 🖐  RAISED HAND WITH FINGERS SPLAYED  #body #finger #hand #person #splayed
-✋  RAISED HAND  #body #hand #person
+✋  RAISED HAND	#body #hand #person
 👌  OK HAND SIGN  #body #hand #ok #person
 👍  THUMBS UP SIGN  #body #hand #person #thumb #thumbs_up #up
 👎  THUMBS DOWN SIGN  #body #down #hand #person #thumb #thumbs_down
-✊  RAISED FIST  #body #clenched #fist #hand #person #punch
+✊  RAISED FIST	#body #clenched #fist #hand #person #punch
 👊  FISTED HAND SIGN  #body #clenched #fist #hand #person #punch
 👋  WAVING HAND SIGN  #body #hand #person #wave #waving
 👏  CLAPPING HANDS SIGN  #body #clap #hand #person
@@ -191,9 +195,9 @@ exit $?
 💅  NAIL POLISH  #body #care #cosmetics #manicure #nail #person #polish
 👂  EAR  #body #ear #person
 👃  NOSE  #body #nose #person
-👣  FOOTPRINTS  #body #clothing #footprint #person #print
+👣  FOOTPRINTS	#body #clothing #footprint #person #print
 👀  EYES  #body #eye #face #person
-👁  EYE  #body #eye #person
+👁  EYE	#body #eye #person
 👁  EYE, LEFT SPEECH BUBBLE  #bubble #eye #speech #witness
 👅  TONGUE  #body #person #tongue
 👄  MOUTH  #body #lips #mouth #person
@@ -202,10 +206,10 @@ exit $?
 ❤  HEAVY BLACK HEART  #emotion #heart #person
 💓  BEATING HEART  #beating #emotion #heart #heartbeat #person #pulsating
 💔  BROKEN HEART  #break #broken #emotion #heart #person
-💕  TWO HEARTS  #emotion #heart #love #person
+💕  TWO HEARTS	#emotion #heart #love #person
 💖  SPARKLING HEART  #emotion #excited #heart #person #sparkle
 💗  GROWING HEART  #emotion #excited #growing #heart #heartpulse #nervous #person
-💙  BLUE HEART  #blue #emotion #heart #person
+💙  BLUE HEART	#blue #emotion #heart #person
 💚  GREEN HEART  #emotion #green #heart #person
 💛  YELLOW HEART  #emotion #heart #person #yellow
 💜  PURPLE HEART  #emotion #heart #person #purple
@@ -226,7 +230,7 @@ exit $?
 🗯  RIGHT ANGER BUBBLE  #angry #balloon #bubble #emotion #mad #symbol
 💭  THOUGHT BALLOON  #balloon #bubble #comic #emotion #object #person #thought
 🕳  HOLE  #hole #symbol
-👓  EYEGLASSES  #clothing #eye #eyeglasses #eyewear #glasses #object #person
+👓  EYEGLASSES	#clothing #eye #eyeglasses #eyewear #glasses #object #person
 🕶  DARK SUNGLASSES  #dark #eye #eyewear #glasses #object #sunglasses
 👔  NECKTIE  #clothing #necktie #object #person
 👕  T-SHIRT  #clothing #object #person #shirt #tshirt
@@ -246,7 +250,7 @@ exit $?
 👡  WOMANS SANDAL  #clothing #object #person #sandal #shoe #woman
 👢  WOMANS BOOTS  #boot #clothing #object #person #shoe #woman
 👑  CROWN  #clothing #crown #king #object #person #queen
-👒  WOMANS HAT  #clothing #hat #object #person #woman
+👒  WOMANS HAT	#clothing #hat #object #person #woman
 🎩  TOP HAT  #activity #clothing #entertainment #hat #object #person #top #tophat
 🎓  GRADUATION CAP  #activity #cap #celebration #clothing #education #graduation #hat #object
 📿  PRAYER BEADS  #beads #clothing #necklace #object #person #prayer #religion
@@ -262,14 +266,14 @@ exit $?
 🐱  CAT FACE  #animal #cat #face #nature #pet
 🐈  CAT  #animal #cat #nature #pet
 🦁  LION FACE  #animal #face #leo #lion #nature #zodiac
-🐯  TIGER FACE  #animal #face #nature #tiger
+🐯  TIGER FACE	#animal #face #nature #tiger
 🐅  TIGER  #animal #nature #tiger
 🐆  LEOPARD  #animal #leopard #nature
-🐴  HORSE FACE  #animal #face #horse #nature
+🐴  HORSE FACE	#animal #face #horse #nature
 🐎  HORSE  #animal #horse #nature #place #racehorse #racing
 🦄  UNICORN FACE  #animal #face #nature #unicorn
 🐮  COW FACE  #animal #cow #face #nature
-🐂  OX  #animal #bull #nature #ox #taurus #zodiac
+🐂  OX	#animal #bull #nature #ox #taurus #zodiac
 🐃  WATER BUFFALO  #animal #buffalo #nature #water
 🐄  COW  #animal #cow #nature
 🐷  PIG FACE  #animal #face #nature #pig
@@ -282,7 +286,7 @@ exit $?
 🐪  DROMEDARY CAMEL  #animal #camel #dromedary #hump #nature
 🐫  BACTRIAN CAMEL  #animal #bactrian #camel #hump #nature
 🐘  ELEPHANT  #animal #elephant #nature
-🐭  MOUSE FACE  #animal #face #mouse #nature
+🐭  MOUSE FACE	#animal #face #mouse #nature
 🐁  MOUSE  #animal #mouse #nature
 🐀  RAT  #animal #nature #rat
 🐹  HAMSTER FACE  #animal #face #hamster #nature #pet
@@ -291,13 +295,13 @@ exit $?
 🐿  CHIPMUNK  #animal #chipmunk #nature
 🐻  BEAR FACE  #animal #bear #face #nature
 🐨  KOALA  #animal #bear #koala #nature
-🐼  PANDA FACE  #animal #face #nature #panda
-🐾  PAW PRINTS  #animal #feet #nature #paw #print
+🐼  PANDA FACE	#animal #face #nature #panda
+🐾  PAW PRINTS	#animal #feet #nature #paw #print
 🦃  TURKEY  #animal #nature #turkey
 🐔  CHICKEN  #animal #chicken #nature
 🐓  ROOSTER  #animal #nature #rooster
 🐣  HATCHING CHICK  #animal #baby #chick #hatching #nature
-🐤  BABY CHICK  #animal #baby #chick #nature
+🐤  BABY CHICK	#animal #baby #chick #nature
 🐥  FRONT-FACING BABY CHICK  #animal #baby #chick #nature
 🐦  BIRD  #animal #bird #nature
 🐧  PENGUIN  #animal #nature #penguin
@@ -343,12 +347,12 @@ exit $?
 🌿  HERB  #herb #leaf #nature #plant
 ☘  SHAMROCK  #nature #plant #shamrock
 🍀  FOUR LEAF CLOVER  #4 #clover #four #leaf #nature #plant
-🍁  MAPLE LEAF  #falling #leaf #maple #nature #plant
+🍁  MAPLE LEAF	#falling #leaf #maple #nature #plant
 🍂  FALLEN LEAF  #falling #leaf #nature #plant
 🍃  LEAF FLUTTERING IN WIND  #blow #flutter #leaf #nature #plant #wind
 🍇  GRAPES  #food #fruit #grape #nature #object #plant
 🍈  MELON  #food #fruit #melon #nature #object #plant
-🍉  WATERMELON  #food #fruit #nature #object #plant #watermelon
+🍉  WATERMELON	#food #fruit #nature #object #plant #watermelon
 🍊  TANGERINE  #food #fruit #nature #object #orange #plant #tangerine
 🍋  LEMON  #citrus #food #fruit #lemon #nature #object #plant
 🍌  BANANA  #banana #food #fruit #nature #object #plant
@@ -358,7 +362,7 @@ exit $?
 🍐  PEAR  #food #fruit #nature #object #pear #plant
 🍑  PEACH  #food #fruit #nature #object #peach #plant
 🍒  CHERRIES  #cherry #food #fruit #nature #object #plant
-🍓  STRAWBERRY  #berry #food #fruit #nature #object #plant #strawberry
+🍓  STRAWBERRY	#berry #food #fruit #nature #object #plant #strawberry
 🍅  TOMATO  #food #nature #object #plant #tomato #vegetable
 🍆  AUBERGINE  #aubergine #eggplant #food #nature #object #plant #vegetable
 🌽  EAR OF MAIZE  #corn #ear #maize #maze #nature #object #plant
@@ -392,7 +396,7 @@ exit $?
 🍥  FISH CAKE WITH SWIRL DESIGN  #cake #fish #food #nature #object #pastry #swirl
 🍡  DANGO  #dango #dessert #food #japanese #nature #object #skewer #stick #sweet
 🍦  SOFT ICE CREAM  #cream #dessert #food #ice #icecream #nature #object #soft #sweet
-🍧  SHAVED ICE  #dessert #food #ice #nature #object #shaved #sweet
+🍧  SHAVED ICE	#dessert #food #ice #nature #object #shaved #sweet
 🍨  ICE CREAM  #cream #dessert #food #ice #nature #object #sweet
 🍩  DOUGHNUT  #dessert #donut #doughnut #food #nature #object #sweet
 🍪  COOKIE  #cookie #dessert #food #nature #object #sweet
@@ -408,27 +412,27 @@ exit $?
 🍵  TEACUP WITHOUT HANDLE  #beverage #cup #drink #nature #object #tea #teacup
 🍶  SAKE BOTTLE AND CUP  #bar #beverage #bottle #cup #drink #nature #object #sake
 🍾  BOTTLE WITH POPPING CORK  #bar #bottle #cork #drink #nature #popping
-🍷  WINE GLASS  #bar #beverage #drink #glass #nature #object #wine
+🍷  WINE GLASS	#bar #beverage #drink #glass #nature #object #wine
 🍸  COCKTAIL GLASS  #bar #cocktail #drink #glass #nature #object
 🍹  TROPICAL DRINK  #bar #drink #nature #object #tropical
 🍺  BEER MUG  #bar #beer #drink #mug #nature #object
-🍻  CLINKING BEER MUGS  #bar #beer #clink #drink #mug #nature #object
+🍻  CLINKING BEER MUGS	#bar #beer #clink #drink #mug #nature #object
 🍽  FORK AND KNIFE WITH PLATE  #cooking #food #fork #knife #object #place #plate
 🍴  FORK AND KNIFE  #cooking #food #fork #knife #nature #object
 🔪  HOCHO  #cooking #hocho #knife #object #tool #weapon
 🏺  AMPHORA  #amphora #aquarius #cooking #drink #jug #nature #tool #weapon #zodiac
 🌍  EARTH GLOBE EUROPE-AFRICA  #africa #earth #europe #globe #nature #place #world
 🌎  EARTH GLOBE AMERICAS  #americas #earth #globe #nature #place #world
-🌏  EARTH GLOBE ASIA-AUSTRALIA  #asia #australia #earth #globe #nature #place #world
+🌏  EARTH GLOBE ASIA-AUSTRALIA	#asia #australia #earth #globe #nature #place #world
 🌐  GLOBE WITH MERIDIANS  #earth #globe #meridians #nature #place #world
 🗺  WORLD MAP  #map #place #world
 🗾  SILHOUETTE OF JAPAN  #japan #map #place
 🏔  SNOW CAPPED MOUNTAIN  #cold #mountain #nature #place #snow
 ⛰  MOUNTAIN  #mountain #place
 🌋  VOLCANO  #eruption #mountain #nature #place #volcano #weather
-🗻  MOUNT FUJI  #fuji #mountain #nature #place
+🗻  MOUNT FUJI	#fuji #mountain #nature #place
 🏕  CAMPING  #camping #nature #place
-🏖  BEACH WITH UMBRELLA  #beach #nature #place #umbrella
+🏖  BEACH WITH UMBRELLA	#beach #nature #place #umbrella
 🏜  DESERT  #desert #nature #place
 🏝  DESERT ISLAND  #desert #island #nature #place
 🏞  NATIONAL PARK  #national_park #nature #park #place
@@ -446,7 +450,7 @@ exit $?
 🏥  HOSPITAL  #building #doctor #hospital #medicine #place
 🏦  BANK  #bank #building #place
 🏨  HOTEL  #building #hotel #place
-🏩  LOVE HOTEL  #building #hotel #love #place
+🏩  LOVE HOTEL	#building #hotel #love #place
 🏪  CONVENIENCE STORE  #building #convenience #place #store
 🏫  SCHOOL  #building #education #place #school
 🏬  DEPARTMENT STORE  #building #department #place #store
@@ -470,7 +474,7 @@ exit $?
 🌆  CITYSCAPE AT DUSK  #building #city #dusk #evening #landscape #nature #place #sun #sunset #time #weather
 🌇  SUNSET OVER BUILDINGS  #building #dusk #nature #place #sun #sunset #time #weather
 🌉  BRIDGE AT NIGHT  #bridge #nature #night #place #weather
-♨  HOT SPRINGS  #hot #hotsprings #place #springs #steaming
+♨  HOT SPRINGS	#hot #hotsprings #place #springs #steaming
 🌌  MILKY WAY  #milky_way #nature #place #space #weather
 🎠  CAROUSEL HORSE  #activity #carousel #entertainment #horse #place
 🎡  FERRIS WHEEL  #activity #amusement_park #entertainment #ferris #place #wheel
@@ -487,7 +491,7 @@ exit $?
 🚅  HIGH-SPEED TRAIN WITH BULLET NOSE  #bullet #place #railway #shinkansen #speed #train #travel #vehicle
 🚆  TRAIN  #place #railway #train #travel #vehicle
 🚇  METRO  #metro #place #subway #travel #vehicle
-🚈  LIGHT RAIL  #place #railway #travel #vehicle
+🚈  LIGHT RAIL	#place #railway #travel #vehicle
 🚉  STATION  #place #railway #station #train #travel #vehicle
 🚊  TRAM  #place #tram #travel #trolleybus #vehicle
 🚝  MONORAIL  #monorail #place #travel #vehicle
@@ -495,16 +499,16 @@ exit $?
 🚋  TRAM CAR  #car #place #tram #travel #trolleybus #vehicle
 🚌  BUS  #bus #place #travel #vehicle
 🚍  ONCOMING BUS  #bus #oncoming #place #travel #vehicle
-🚎  TROLLEYBUS  #bus #place #tram #travel #trolley #trolleybus #vehicle
+🚎  TROLLEYBUS	#bus #place #tram #travel #trolley #trolleybus #vehicle
 🚏  BUS STOP  #bus #busstop #place #stop #travel
 🚐  MINIBUS  #bus #minibus #place #travel #vehicle
 🚑  AMBULANCE  #ambulance #place #travel #vehicle
 🚒  FIRE ENGINE  #engine #fire #place #travel #truck #vehicle
-🚓  POLICE CAR  #car #patrol #place #police #travel #vehicle
+🚓  POLICE CAR	#car #patrol #place #police #travel #vehicle
 🚔  ONCOMING POLICE CAR  #car #oncoming #place #police #travel #vehicle
 🚕  TAXI  #place #taxi #travel #vehicle
 🚖  ONCOMING TAXI  #oncoming #place #taxi #travel #vehicle
-🚗  AUTOMOBILE  #automobile #car #place #travel #vehicle
+🚗  AUTOMOBILE	#automobile #car #place #travel #vehicle
 🚘  ONCOMING AUTOMOBILE  #automobile #car #oncoming #place #travel #vehicle
 🚙  RECREATIONAL VEHICLE  #place #recreational #rv #travel #vehicle
 🚚  DELIVERY TRUCK  #delivery #place #travel #truck #vehicle
@@ -531,8 +535,8 @@ exit $?
 🛫  AIRPLANE DEPARTURE  #airplane #check #departure #departures #place #travel #vehicle
 🛬  AIRPLANE ARRIVING  #airplane #arrivals #arriving #landing #place #travel #vehicle
 💺  SEAT  #chair #object #office #place #seat #travel
-🚁  HELICOPTER  #helicopter #place #travel #vehicle
-🚟  SUSPENSION RAILWAY  #place #railway #suspension #travel #vehicle
+🚁  HELICOPTER	#helicopter #place #travel #vehicle
+🚟  SUSPENSION RAILWAY	#place #railway #suspension #travel #vehicle
 🚠  MOUNTAIN CABLEWAY  #cable #gondola #mountain #place #travel #vehicle
 🚡  AERIAL TRAMWAY  #aerial #cable #car #gondola #place #ropeway #tramway #travel #vehicle
 🚀  ROCKET  #place #rocket #space #travel #vehicle
@@ -540,18 +544,18 @@ exit $?
 🛎  BELLHOP BELL  #bell #bellhop #hotel #object
 🚪  DOOR  #door #object #travel
 🛌  SLEEPING ACCOMMODATION  #hotel #object #sleep
-🛏  BED  #bed #hotel #object #sleep
+🛏  BED	#bed #hotel #object #sleep
 🛋  COUCH AND LAMP  #couch #hotel #lamp #object
 🚽  TOILET  #object #place #toilet #travel
 🚿  SHOWER  #object #place #shower #travel #water
 🛀  BATH  #bath #bathtub #object #place #travel
 🛁  BATHTUB  #bath #bathtub #object #place #travel
 ⌛  HOURGLASS  #hourglass #object #sand #time #timer
-⏳  HOURGLASS WITH FLOWING SAND  #hourglass #object #sand #time #timer
+⏳  HOURGLASS WITH FLOWING SAND	#hourglass #object #sand #time #timer
 ⌚  WATCH  #clock #object #time #watch
-⏰  ALARM CLOCK  #alarm #clock #object #time
+⏰  ALARM CLOCK	#alarm #clock #object #time
 ⏱  STOPWATCH  #clock #object #stopwatch #time
-⏲  TIMER CLOCK  #clock #object #time #timer
+⏲  TIMER CLOCK	#clock #object #time #timer
 🕰  MANTELPIECE CLOCK  #clock #object
 🕛  CLOCK FACE TWELVE OCLOCK  #00 #12 #12 #clock #o #symbol #time #twelve
 🕧  CLOCK FACE TWELVE-THIRTY  #12 #12 #30 #clock #symbol #thirty #time #twelve
@@ -580,17 +584,17 @@ exit $?
 🌑  NEW MOON SYMBOL  #dark #moon #nature #place #space #time #weather
 🌒  WAXING CRESCENT MOON SYMBOL  #crescent #moon #nature #place #space #time #waxing #weather
 🌓  FIRST QUARTER MOON SYMBOL  #moon #nature #place #quarter #space #time #weather
-🌔  WAXING GIBBOUS MOON SYMBOL  #gibbous #moon #nature #place #space #time #waxing #weather
+🌔  WAXING GIBBOUS MOON SYMBOL	#gibbous #moon #nature #place #space #time #waxing #weather
 🌕  FULL MOON SYMBOL  #full #moon #nature #place #space #time #weather
-🌖  WANING GIBBOUS MOON SYMBOL  #gibbous #moon #nature #place #space #time #waning #weather
+🌖  WANING GIBBOUS MOON SYMBOL	#gibbous #moon #nature #place #space #time #waning #weather
 🌗  LAST QUARTER MOON SYMBOL  #moon #nature #place #quarter #space #time #weather
 🌘  WANING CRESCENT MOON SYMBOL  #crescent #moon #nature #place #space #time #waning #weather
 🌙  CRESCENT MOON  #crescent #moon #nature #place #space #time #weather
-🌚  NEW MOON WITH FACE  #face #moon #nature #place #space #time #weather
+🌚  NEW MOON WITH FACE	#face #moon #nature #place #space #time #weather
 🌛  FIRST QUARTER MOON WITH FACE  #face #moon #nature #place #quarter #space #weather
 🌜  LAST QUARTER MOON WITH FACE  #face #moon #nature #place #quarter #space #weather
-🌡  THERMOMETER  #nature #thermometer #weather
-☀  BLACK SUN WITH RAYS  #bright #nature #rays #space #sun #sunny #weather
+🌡  THERMOMETER	#nature #thermometer #weather
+☀  BLACK SUN WITH RAYS	#bright #nature #rays #space #sun #sunny #weather
 🌝  FULL MOON WITH FACE  #bright #face #full #moon #nature #place #space #weather
 🌞  SUN WITH FACE  #bright #face #nature #place #space #sun #weather
 ⭐  WHITE MEDIUM STAR  #nature #place #star
@@ -606,7 +610,7 @@ exit $?
 🌨  CLOUD WITH SNOW  #cloud #cold #nature #snow #weather
 🌩  CLOUD WITH LIGHTNING  #cloud #lightning #nature #weather
 🌪  CLOUD WITH TORNADO  #cloud #nature #tornado #weather #whirlwind
-🌫  FOG  #cloud #fog #nature #weather
+🌫  FOG	#cloud #fog #nature #weather
 🌬  WIND BLOWING FACE  #blow #cloud #face #nature #weather #wind
 🌀  CYCLONE  #cyclone #dizzy #nature #twister #typhoon #weather
 🌈  RAINBOW  #nature #rain #rainbow #weather
@@ -621,7 +625,7 @@ exit $?
 ☄  COMET  #comet #object #space
 🔥  FIRE  #fire #flame #object #tool
 💧  DROPLET  #cold #comic #drop #emotion #nature #object #person #sweat #weather
-🌊  WATER WAVE  #nature #ocean #place #water #wave #weather
+🌊  WATER WAVE	#nature #ocean #place #water #wave #weather
 🎃  JACK-O-LANTERN  #activity #celebration #entertainment #halloween #jack #lantern #object
 🎄  CHRISTMAS TREE  #activity #celebration #christmas #entertainment #object #tree
 🎆  FIREWORKS  #activity #celebration #entertainment #fireworks #object
@@ -634,7 +638,7 @@ exit $?
 🎍  PINE DECORATION  #activity #bamboo #celebration #japanese #object #pine #plant
 🎎  JAPANESE DOLLS  #activity #celebration #doll #entertainment #festival #japanese #object
 🎏  CARP STREAMER  #activity #carp #celebration #entertainment #flag #object #streamer
-🎐  WIND CHIME  #activity #bell #celebration #chime #entertainment #object #wind
+🎐  WIND CHIME	#activity #bell #celebration #chime #entertainment #object #wind
 🎑  MOON VIEWING CEREMONY  #activity #celebration #ceremony #entertainment #moon #nature #object
 🎀  RIBBON  #celebration #emotion #object #person #ribbon
 🎁  WRAPPED PRESENT  #box #celebration #entertainment #gift #object #present #wrapped
@@ -644,7 +648,7 @@ exit $?
 🎖  MILITARY MEDAL  #celebration #medal #military #object
 🏆  TROPHY  #object #place #prize #sport #trophy
 🏅  SPORTS MEDAL  #medal #object #sport
-⚽  SOCCER BALL  #ball #object #place #soccer #sport
+⚽  SOCCER BALL	#ball #object #place #soccer #sport
 ⚾  BASEBALL  #ball #baseball #object #place #sport
 🏀  BASKETBALL AND HOOP  #ball #basketball #hoop #object #place #sport
 🏐  VOLLEYBALL  #ball #game #object #sport #volleyball
@@ -654,7 +658,7 @@ exit $?
 🎱  BILLIARDS  #8 #8_ball #ball #billiard #eight #game #object #place #sport
 🎳  BOWLING  #ball #bowling #game #object #place #sport
 🏏  CRICKET BAT AND BALL  #ball #bat #cricket #game #object #sport
-🏑  FIELD HOCKEY STICK AND BALL  #ball #field #game #hockey #object #sport #stick
+🏑  FIELD HOCKEY STICK AND BALL	#ball #field #game #hockey #object #sport #stick
 🏒  ICE HOCKEY STICK AND PUCK  #game #hockey #ice #object #puck #sport #stick
 🏓  TABLE TENNIS PADDLE AND BALL  #ball #bat #game #object #paddle #sport #table_tennis
 🏸  BADMINTON RACQUET AND SHUTTLECOCK  #badminton #birdie #game #object #racquet #shuttlecock #sport
@@ -672,11 +676,11 @@ exit $?
 ⛹  PERSON WITH BALL  #ball #person #sport #travel
 🏋  WEIGHT LIFTER  #lifter #person #sport #weight
 🚴  BICYCLIST  #bicycle #bicyclist #bike #cyclist #person #place #sport #travel
-🚵  MOUNTAIN BICYCLIST  #bicycle #bicyclist #bike #cyclist #mountain #person #place #sport #travel
+🚵  MOUNTAIN BICYCLIST	#bicycle #bicyclist #bike #cyclist #mountain #person #place #sport #travel
 🏎  RACING CAR  #car #place #racing #sport #travel
 🏍  RACING MOTORCYCLE  #motorcycle #person #racing #sport #travel
-🎯  DIRECT HIT  #activity #bull #bullseye #dart #entertainment #eye #game #hit #object #target
-🎮  VIDEO GAME  #controller #entertainment #game #object #video_game
+🎯  DIRECT HIT	#activity #bull #bullseye #dart #entertainment #eye #game #hit #object #target
+🎮  VIDEO GAME	#controller #entertainment #game #object #video_game
 🕹  JOYSTICK  #entertainment #game #joystick #object #video_game
 🎲  GAME DIE  #dice #die #entertainment #game #object
 ♠  BLACK SPADE SUIT  #card #game #spade #suit #symbol
@@ -690,8 +694,8 @@ exit $?
 🔈  SPEAKER  #object #sound #speaker #volume
 🔉  SPEAKER WITH ONE SOUND WAVE  #low #object #sound #speaker #volume #wave
 🔊  SPEAKER WITH THREE SOUND WAVES  #3 #entertainment #high #loud #object #sound #speaker #three #volume
-📢  PUBLIC ADDRESS LOUDSPEAKER  #communication #loud #loudspeaker #object #public_address #sound
-📣  CHEERING MEGAPHONE  #cheering #communication #megaphone #object #sound
+📢  PUBLIC ADDRESS LOUDSPEAKER	#communication #loud #loudspeaker #object #public_address #sound
+📣  CHEERING MEGAPHONE	#cheering #communication #megaphone #object #sound
 📯  POSTAL HORN  #communication #entertainment #horn #object #post #postal #sound
 🔔  BELL  #bell #object #sound
 🔕  BELL WITH CANCELLATION STROKE  #bell #forbidden #mute #no #not #object #prohibited #quiet #silent #sound
@@ -701,7 +705,7 @@ exit $?
 🎙  STUDIO MICROPHONE  #mic #microphone #music #object #sound #studio
 🎚  LEVEL SLIDER  #level #music #object #slider #sound
 🎛  CONTROL KNOBS  #control #knobs #music #object #sound
-🎤  MICROPHONE  #activity #entertainment #karaoke #mic #microphone #object #sound
+🎤  MICROPHONE	#activity #entertainment #karaoke #mic #microphone #object #sound
 🎧  HEADPHONE  #activity #earbud #entertainment #headphone #object #sound
 📻  RADIO  #entertainment #object #radio #video
 🎷  SAXOPHONE  #activity #entertainment #instrument #music #object #sax #saxophone #sound
@@ -710,9 +714,9 @@ exit $?
 🎺  TRUMPET  #activity #entertainment #instrument #music #object #sound #trumpet
 🎻  VIOLIN  #activity #entertainment #instrument #music #object #sound #violin
 📱  MOBILE PHONE  #cell #communication #mobile #object #phone #telephone
-📲  MOBILE PHONE WITH RIGHTWARDS ARROW AT LEFT  #arrow #call #cell #communication #mobile #object #phone #receive #telephone
+📲  MOBILE PHONE WITH RIGHTWARDS ARROW AT LEFT	#arrow #call #cell #communication #mobile #object #phone #receive #telephone
 ☎  BLACK TELEPHONE  #object #office #phone #sound #telephone
-📞  TELEPHONE RECEIVER  #communication #object #phone #receiver #sound #telephone
+📞  TELEPHONE RECEIVER	#communication #object #phone #receiver #sound #telephone
 📟  PAGER  #communication #object #office #pager
 📠  FAX MACHINE  #communication #fax #object #office
 🔋  BATTERY  #battery #object
@@ -728,17 +732,17 @@ exit $?
 💿  OPTICAL DISC  #blu #cd #computer #disk #dvd #object #office #optical
 📀  DVD  #blu #cd #computer #disk #dvd #entertainment #object #office #optical
 🎥  MOVIE CAMERA  #activity #camera #cinema #entertainment #movie #object
-🎞  FILM FRAMES  #cinema #entertainment #film #frames #movie #object
+🎞  FILM FRAMES	#cinema #entertainment #film #frames #movie #object
 📽  FILM PROJECTOR  #cinema #entertainment #film #movie #object #projector #video
 🎬  CLAPPER BOARD  #activity #clapper #entertainment #movie #object
-📺  TELEVISION  #entertainment #object #television #tv #video
+📺  TELEVISION	#entertainment #object #television #tv #video
 📷  CAMERA  #camera #entertainment #object #video
 📸  CAMERA WITH FLASH  #camera #flash #object #video
 📹  VIDEO CAMERA  #camera #entertainment #object #video
 📼  VIDEOCASSETTE  #entertainment #object #tape #vhs #video #videocassette
 🔍  LEFT-POINTING MAGNIFYING GLASS  #glass #magnifying #object #search #tool
 🔎  RIGHT-POINTING MAGNIFYING GLASS  #glass #magnifying #object #search #tool
-🔬  MICROSCOPE  #microscope #object #tool
+🔬  MICROSCOPE	#microscope #object #tool
 🔭  TELESCOPE  #object #telescope #tool
 📡  SATELLITE ANTENNA  #antenna #communication #dish #object #office #satellite
 🕯  CANDLE  #candle #light #object
@@ -748,7 +752,7 @@ exit $?
 📔  NOTEBOOK WITH DECORATIVE COVER  #book #cover #decorated #education #notebook #object #office
 📕  CLOSED BOOK  #book #closed #education #object #office
 📖  OPEN BOOK  #book #education #object #office #open
-📗  GREEN BOOK  #book #education #green #object #office
+📗  GREEN BOOK	#book #education #green #object #office
 📘  BLUE BOOK  #blue #book #education #object #office
 📙  ORANGE BOOK  #book #education #object #office #orange
 📚  BOOKS  #book #books #education #object #office
@@ -758,7 +762,7 @@ exit $?
 📜  SCROLL  #object #office #paper #scroll
 📄  PAGE FACING UP  #document #object #office #page
 📰  NEWSPAPER  #communication #news #newspaper #object #paper
-🗞  ROLLED-UP NEWSPAPER  #news #newspaper #object #paper #rolled
+🗞  ROLLED-UP NEWSPAPER	#news #newspaper #object #paper #rolled
 📑  BOOKMARK TABS  #bookmark #mark #marker #object #office #tabs
 🔖  BOOKMARK  #bookmark #mark #object
 🏷  LABEL  #label #object
@@ -777,7 +781,7 @@ exit $?
 📨  INCOMING ENVELOPE  #communication #e #email #envelope #incoming #letter #mail #object #office #receive
 📩  ENVELOPE WITH DOWNWARDS ARROW ABOVE  #arrow #communication #down #e #email #envelope #letter #mail #object #office #outgoing #sent
 📤  OUTBOX TRAY  #box #communication #letter #mail #object #office #outbox #sent #tray
-📥  INBOX TRAY  #box #communication #inbox #letter #mail #object #office #receive #tray
+📥  INBOX TRAY	#box #communication #inbox #letter #mail #object #office #receive #tray
 📦  PACKAGE  #box #communication #object #office #package #parcel
 📫  CLOSED MAILBOX WITH RAISED FLAG  #closed #communication #flag #mail #mailbox #object #office #postbox
 📪  CLOSED MAILBOX WITH LOWERED FLAG  #closed #communication #flag #lowered #mail #mailbox #object #office #postbox
@@ -795,14 +799,14 @@ exit $?
 💼  BRIEFCASE  #briefcase #object #office #person
 📁  FILE FOLDER  #file #folder #object #office
 📂  OPEN FILE FOLDER  #file #folder #object #office #open
-🗂  CARD INDEX DIVIDERS  #card #dividers #index #object #office
+🗂  CARD INDEX DIVIDERS	#card #dividers #index #object #office
 📅  CALENDAR  #calendar #date #object #office
 📆  TEAR-OFF CALENDAR  #calendar #object #office
 🗒  SPIRAL NOTE PAD  #note #object #office #pad #spiral
-🗓  SPIRAL CALENDAR PAD  #calendar #object #office #pad #spiral
-📇  CARD INDEX  #card #index #object #office #rolodex
+🗓  SPIRAL CALENDAR PAD	#calendar #object #office #pad #spiral
+📇  CARD INDEX	#card #index #object #office #rolodex
 📈  CHART WITH UPWARDS TREND  #chart #graph #growth #object #office #trend #upward
-📉  CHART WITH DOWNWARDS TREND  #chart #down #graph #object #office #trend
+📉  CHART WITH DOWNWARDS TREND	#chart #down #graph #object #office #trend
 📊  BAR CHART  #bar #chart #graph #object #office
 📋  CLIPBOARD  #clipboard #object #office
 📌  PUSHPIN  #object #office #pin #pushpin
@@ -814,7 +818,7 @@ exit $?
 ✂  BLACK SCISSORS  #object #office #scissors #tool
 🗃  CARD FILE BOX  #box #card #file #object #office
 🗄  FILE CABINET  #cabinet #file #object #office
-🗑  WASTEBASKET  #object #office #wastebasket
+🗑  WASTEBASKET	#object #office #wastebasket
 🔒  LOCK  #closed #lock #object
 🔓  OPEN LOCK  #lock #object #open #unlock
 🔏  LOCK WITH INK PEN  #ink #lock #nib #object #pen #privacy
@@ -833,7 +837,7 @@ exit $?
 🔧  WRENCH  #object #tool #wrench
 🔩  NUT AND BOLT  #bolt #nut #object #tool
 ⚙  GEAR  #gear #object #tool
-🗜  COMPRESSION  #compression #object #tool #vice
+🗜  COMPRESSION	#compression #object #tool #vice
 ⚗  ALEMBIC  #alembic #chemistry #object #tool
 ⚖  SCALES  #balance #justice #libra #object #scales #tool #weight #zodiac
 🔗  LINK SYMBOL  #link #object #symbol
@@ -842,7 +846,7 @@ exit $?
 💊  PILL  #doctor #medicine #object #pill #sick
 🚬  SMOKING SYMBOL  #activity #object #smoking
 ⚰  COFFIN  #coffin #death #object
-⚱  FUNERAL URN  #death #funeral #object #urn
+⚱  FUNERAL URN	#death #funeral #object #urn
 🗿  MOYAI  #face #moyai #place #statue #travel
 🛢  OIL DRUM  #drum #object #oil
 🔮  CRYSTAL BALL  #ball #crystal #fairy_tale #fantasy #fortune #object #tool
@@ -872,7 +876,7 @@ exit $?
 🔞  NO ONE UNDER EIGHTEEN SYMBOL  #18 #age_restriction #eighteen #forbidden #no #not #prohibited #symbol #underage #word
 ☢  RADIOACTIVE SIGN  #radioactive #sign #symbol
 ☣  BIOHAZARD SIGN  #biohazard #sign #symbol
-⬆  UPWARDS BLACK ARROW  #arrow #cardinal #direction #north #symbol
+⬆  UPWARDS BLACK ARROW	#arrow #cardinal #direction #north #symbol
 ↗  NORTH EAST ARROW  #arrow #direction #intercardinal #northeast #symbol
 ➡  BLACK RIGHTWARDS ARROW  #arrow #cardinal #direction #east #symbol
 ↘  SOUTH EAST ARROW  #arrow #direction #intercardinal #southeast #symbol
@@ -886,7 +890,7 @@ exit $?
 ↪  RIGHTWARDS ARROW WITH HOOK  #arrow #symbol
 ⤴  ARROW POINTING RIGHTWARDS THEN CURVING UPWARDS  #arrow #symbol
 ⤵  ARROW POINTING RIGHTWARDS THEN CURVING DOWNWARDS  #arrow #down #symbol
-🔃  CLOCKWISE DOWNWARDS AND UPWARDS OPEN CIRCLE ARROWS  #arrow #clockwise #reload #symbol
+🔃  CLOCKWISE DOWNWARDS AND UPWARDS OPEN CIRCLE ARROWS	#arrow #clockwise #reload #symbol
 🔄  ANTICLOCKWISE DOWNWARDS AND UPWARDS OPEN CIRCLE ARROWS  #anticlockwise #arrow #counterclockwise #symbol #withershins
 🔙  BACK WITH LEFTWARDS ARROW ABOVE  #arrow #back #symbol
 🔚  END WITH LEFTWARDS ARROW ABOVE  #arrow #end #symbol
@@ -894,19 +898,19 @@ exit $?
 🔜  SOON WITH RIGHTWARDS ARROW ABOVE  #arrow #soon #symbol
 🔝  TOP WITH UPWARDS ARROW ABOVE  #arrow #symbol #top #up
 🛐  PLACE OF WORSHIP  #place #religion #worship
-⚛  ATOM SYMBOL  #atheist #atom #symbol
+⚛  ATOM SYMBOL	#atheist #atom #symbol
 🕉  OM SYMBOL  #hindu #om #religion #symbol
 ✡  STAR OF DAVID  #david #jew #jewish #religion #star #symbol
 ☸  WHEEL OF DHARMA  #buddhist #dharma #religion #symbol #wheel
 ☯  YIN YANG  #religion #sign #symbol #tao #taoist #yang #yin
-✝  LATIN CROSS  #christian #cross #religion #symbol
+✝  LATIN CROSS	#christian #cross #religion #symbol
 ☦  ORTHODOX CROSS  #christian #cross #religion #symbol
 ☪  STAR AND CRESCENT  #islam #muslim #religion #symbol
 ☮  PEACE SYMBOL  #peace #sign #symbol
 🕎  MENORAH WITH NINE BRANCHES  #candelabrum #candlestick #menorah #object #place #religion
 🔯  SIX POINTED STAR WITH MIDDLE DOT  #fortune #object #star #symbol
 ♻  BLACK UNIVERSAL RECYCLING SYMBOL  #recycle #sign #symbol
-📛  NAME BADGE  #badge #name #object #office
+📛  NAME BADGE	#badge #name #object #office
 ⚜  FLEUR-DE-LIS  #fleur #symbol
 🔰  JAPANESE SYMBOL FOR BEGINNER  #beginner #chevron #green #japanese #leaf #object #tool #yellow
 🔱  TRIDENT EMBLEM  #anchor #emblem #object #ship #symbol #tool #trident
@@ -916,10 +920,10 @@ exit $?
 ✔  HEAVY CHECK MARK  #check #mark #sign #symbol
 ✖  HEAVY MULTIPLICATION X  #cancel #multiplication #multiply #sign #symbol #x
 ❌  CROSS MARK  #cancel #mark #multiplication #multiply #sign #symbol #x
-❎  NEGATIVE SQUARED CROSS MARK  #mark #sign #square #symbol
+❎  NEGATIVE SQUARED CROSS MARK	#mark #sign #square #symbol
 ➕  HEAVY PLUS SIGN  #math #plus #sign #symbol
 ➖  HEAVY MINUS SIGN  #math #minus #sign #symbol
-➗  HEAVY DIVISION SIGN  #division #math #sign #symbol
+➗  HEAVY DIVISION SIGN	#division #math #sign #symbol
 ➰  CURLY LOOP  #curl #loop #sign #symbol
 ➿  DOUBLE CURLY LOOP  #curl #double #loop #sign #symbol
 〽  PART ALTERNATION MARK  #mark #part #sign #symbol
@@ -940,11 +944,11 @@ exit $?
 ♉  TAURUS  #bull #ox #symbol #taurus #time #zodiac
 ♊  GEMINI  #gemini #symbol #time #twins #zodiac
 ♋  CANCER  #cancer #crab #symbol #time #zodiac
-♌  LEO  #leo #lion #symbol #time #zodiac
+♌  LEO	#leo #lion #symbol #time #zodiac
 ♍  VIRGO  #maiden #symbol #time #virgin #virgo #zodiac
 ♎  LIBRA  #balance #justice #libra #scales #symbol #time #zodiac
 ♏  SCORPIUS  #scorpio #scorpion #scorpius #symbol #time #zodiac
-♐  SAGITTARIUS  #archer #sagittarius #symbol #time #zodiac
+♐  SAGITTARIUS	#archer #sagittarius #symbol #time #zodiac
 ♑  CAPRICORN  #capricorn #goat #symbol #time #zodiac
 ♒  AQUARIUS  #aquarius #bearer #symbol #time #water #zodiac
 ♓  PISCES  #fish #pisces #symbol #time #zodiac
@@ -957,13 +961,13 @@ exit $?
 ⏭  BLACK RIGHT-POINTING DOUBLE TRIANGLE WITH VERTICAL BAR  #arrow #next_scene #next_track #sound #symbol #triangle
 ⏯  BLACK RIGHT-POINTING TRIANGLE WITH DOUBLE VERTICAL BAR  #arrow #pause #play #right #sound #symbol #triangle
 ◀  BLACK LEFT-POINTING TRIANGLE  #arrow #left #reverse #sound #symbol #triangle
-⏪  BLACK LEFT-POINTING DOUBLE TRIANGLE  #arrow #double #rewind #sound #symbol
+⏪  BLACK LEFT-POINTING DOUBLE TRIANGLE	#arrow #double #rewind #sound #symbol
 ⏮  BLACK LEFT-POINTING DOUBLE TRIANGLE WITH VERTICAL BAR  #arrow #previous_scene #previous_track #sound #symbol #triangle
 🔼  UP-POINTING SMALL RED TRIANGLE  #arrow #button #red #symbol
 ⏫  BLACK UP-POINTING DOUBLE TRIANGLE  #arrow #double #sound #symbol
 🔽  DOWN-POINTING SMALL RED TRIANGLE  #arrow #button #down #red #symbol
-⏬  BLACK DOWN-POINTING DOUBLE TRIANGLE  #arrow #double #down #sound #symbol
-⏸  DOUBLE VERTICAL BAR  #bar #double #pause #sound #symbol #vertical
+⏬  BLACK DOWN-POINTING DOUBLE TRIANGLE	#arrow #double #down #sound #symbol
+⏸  DOUBLE VERTICAL BAR	#bar #double #pause #sound #symbol #vertical
 ⏹  BLACK SQUARE FOR STOP  #sound #square #stop #symbol
 ⏺  BLACK CIRCLE FOR RECORD  #circle #record #sound #symbol
 ⏏  EJECT SYMBOL  #eject #sound #symbol
@@ -985,7 +989,7 @@ exit $?
 7  Keycap DIGIT SEVEN  #7 #keycap #seven #symbol #word
 8  Keycap DIGIT EIGHT  #8 #eight #keycap #symbol #word
 9  Keycap DIGIT NINE  #9 #keycap #nine #symbol #word
-🔟  KEYCAP TEN  #10 #keycap #symbol #ten #word
+🔟  KEYCAP TEN	#10 #keycap #symbol #ten #word
 💯  HUNDRED POINTS SYMBOL  #100 #full #hundred #office #score #symbol
 🔠  INPUT SYMBOL FOR LATIN CAPITAL LETTERS  #input #latin #letters #symbol #uppercase #word
 🔡  INPUT SYMBOL FOR LATIN SMALL LETTERS  #abcd #input #latin #letters #lowercase #symbol #word
@@ -993,7 +997,7 @@ exit $?
 🔣  INPUT SYMBOL FOR SYMBOLS  #input #symbol #word
 🔤  INPUT SYMBOL FOR LATIN LETTERS  #abc #alphabet #input #latin #letters #symbol #word
 🅰  NEGATIVE SQUARED LATIN CAPITAL LETTER A  #a #blood #symbol #word
-🆎  NEGATIVE SQUARED AB  #ab #blood #symbol #word
+🆎  NEGATIVE SQUARED AB	#ab #blood #symbol #word
 🅱  NEGATIVE SQUARED LATIN CAPITAL LETTER B  #b #blood #symbol #word
 🆑  SQUARED CL  #cl #symbol #word
 🆒  SQUARED COOL  #cool #symbol #word
@@ -1001,51 +1005,51 @@ exit $?
 ℹ  INFORMATION SOURCE  #i #information #symbol #word
 🆔  SQUARED ID  #id #identity #symbol #word
 Ⓜ  CIRCLED LATIN CAPITAL LETTER M  #circle #m #place #symbol #word
-🆕  SQUARED NEW  #new #symbol #word
+🆕  SQUARED NEW	#new #symbol #word
 🆖  SQUARED NG  #ng #symbol #word
 🅾  NEGATIVE SQUARED LATIN CAPITAL LETTER O  #blood #o #symbol #word
 🆗  SQUARED OK  #ok #symbol #word
 🅿  NEGATIVE SQUARED LATIN CAPITAL LETTER P  #parking #place #sign #symbol #word
-🆘  SQUARED SOS  #help #sos #symbol #word
+🆘  SQUARED SOS	#help #sos #symbol #word
 🆙  SQUARED UP WITH EXCLAMATION MARK  #mark #symbol #up #word
 🆚  SQUARED VS  #symbol #versus #vs #word
 🈁  SQUARED KATAKANA KOKO  #japanese #symbol #word
 🈂  SQUARED KATAKANA SA  #japanese #symbol #word
-🈷  SQUARED CJK UNIFIED IDEOGRAPH-6708  #japanese #symbol #word
-🈶  SQUARED CJK UNIFIED IDEOGRAPH-6709  #japanese #symbol #word
-🈯  SQUARED CJK UNIFIED IDEOGRAPH-6307  #japanese #symbol #word
+🈷  SQUARED CJK UNIFIED IDEOGRAPH-6708	#japanese #symbol #word
+🈶  SQUARED CJK UNIFIED IDEOGRAPH-6709	#japanese #symbol #word
+🈯  SQUARED CJK UNIFIED IDEOGRAPH-6307	#japanese #symbol #word
 🉐  CIRCLED IDEOGRAPH ADVANTAGE  #japanese #symbol #word
-🈹  SQUARED CJK UNIFIED IDEOGRAPH-5272  #japanese #symbol #word
-🈚  SQUARED CJK UNIFIED IDEOGRAPH-7121  #japanese #symbol #word
-🈲  SQUARED CJK UNIFIED IDEOGRAPH-7981  #japanese #symbol #word
+🈹  SQUARED CJK UNIFIED IDEOGRAPH-5272	#japanese #symbol #word
+🈚  SQUARED CJK UNIFIED IDEOGRAPH-7121	#japanese #symbol #word
+🈲  SQUARED CJK UNIFIED IDEOGRAPH-7981	#japanese #symbol #word
 🉑  CIRCLED IDEOGRAPH ACCEPT  #chinese #symbol #word
-🈸  SQUARED CJK UNIFIED IDEOGRAPH-7533  #chinese #symbol #word
-🈴  SQUARED CJK UNIFIED IDEOGRAPH-5408  #chinese #symbol #word
-🈳  SQUARED CJK UNIFIED IDEOGRAPH-7A7A  #chinese #symbol #word
+🈸  SQUARED CJK UNIFIED IDEOGRAPH-7533	#chinese #symbol #word
+🈴  SQUARED CJK UNIFIED IDEOGRAPH-5408	#chinese #symbol #word
+🈳  SQUARED CJK UNIFIED IDEOGRAPH-7A7A	#chinese #symbol #word
 ㊗  CIRCLED IDEOGRAPH CONGRATULATION  #chinese #congratulation #congratulations #ideograph #symbol #word
 ㊙  CIRCLED IDEOGRAPH SECRET  #chinese #ideograph #secret #symbol #word
-🈺  SQUARED CJK UNIFIED IDEOGRAPH-55B6  #chinese #symbol #word
-🈵  SQUARED CJK UNIFIED IDEOGRAPH-6E80  #chinese #symbol #word
+🈺  SQUARED CJK UNIFIED IDEOGRAPH-55B6	#chinese #symbol #word
+🈵  SQUARED CJK UNIFIED IDEOGRAPH-6E80	#chinese #symbol #word
 ▪  BLACK SMALL SQUARE  #geometric #sign #square #symbol
 ▫  WHITE SMALL SQUARE  #geometric #sign #square #symbol
-◻  WHITE MEDIUM SQUARE  #geometric #sign #square #symbol
-◼  BLACK MEDIUM SQUARE  #geometric #sign #square #symbol
+◻  WHITE MEDIUM SQUARE	#geometric #sign #square #symbol
+◼  BLACK MEDIUM SQUARE	#geometric #sign #square #symbol
 ◽  WHITE MEDIUM SMALL SQUARE  #geometric #sign #square #symbol
 ◾  BLACK MEDIUM SMALL SQUARE  #geometric #sign #square #symbol
 ⬛  BLACK LARGE SQUARE  #geometric #sign #square #symbol
 ⬜  WHITE LARGE SQUARE  #geometric #sign #square #symbol
 🔶  LARGE ORANGE DIAMOND  #diamond #geometric #orange #sign #symbol
-🔷  LARGE BLUE DIAMOND  #blue #diamond #geometric #sign #symbol
+🔷  LARGE BLUE DIAMOND	#blue #diamond #geometric #sign #symbol
 🔸  SMALL ORANGE DIAMOND  #diamond #geometric #orange #sign #symbol
-🔹  SMALL BLUE DIAMOND  #blue #diamond #geometric #sign #symbol
+🔹  SMALL BLUE DIAMOND	#blue #diamond #geometric #sign #symbol
 🔺  UP-POINTING RED TRIANGLE  #geometric #red #sign #symbol
-🔻  DOWN-POINTING RED TRIANGLE  #down #geometric #red #sign #symbol
+🔻  DOWN-POINTING RED TRIANGLE	#down #geometric #red #sign #symbol
 💠  DIAMOND SHAPE WITH A DOT INSIDE  #comic #diamond #geometric #inside #sign #symbol
 🔘  RADIO BUTTON  #button #geometric #radio #sign #symbol
 🔲  BLACK SQUARE BUTTON  #button #geometric #sign #square #symbol
 🔳  WHITE SQUARE BUTTON  #button #geometric #outlined #sign #square #symbol
-⚪  MEDIUM WHITE CIRCLE  #circle #geometric #sign #symbol
-⚫  MEDIUM BLACK CIRCLE  #circle #geometric #sign #symbol
+⚪  MEDIUM WHITE CIRCLE	#circle #geometric #sign #symbol
+⚫  MEDIUM BLACK CIRCLE	#circle #geometric #sign #symbol
 🔴  LARGE RED CIRCLE  #circle #geometric #red #sign #symbol
 🔵  LARGE BLUE CIRCLE  #blue #circle #geometric #sign #symbol
 🏁  CHEQUERED FLAG  #checkered #chequered #flag #object #place #racing #sport
@@ -1057,16 +1061,16 @@ exit $?
 🇦  Flag for Andorra  #andorra #flag #other
 🇦  Flag for United Arab Emirates  #emirates #flag #other #uae #united
 🇦  Flag for Afghanistan  #afghanistan #flag #other
-🇦  Flag for Antigua & Barbuda  #antigua #barbuda #flag #other
+🇦  Flag for Antigua & Barbuda	#antigua #barbuda #flag #other
 🇦  Flag for Anguilla  #anguilla #flag #other
 🇦  Flag for Albania  #albania #flag #other
 🇦  Flag for Armenia  #armenia #flag #other
 🇦  Flag for Angola  #angola #flag #other
 🇦  Flag for Antarctica  #antarctica #flag #other
-🇦  Flag for Argentina  #argentina #flag #other
+🇦  Flag for Argentina	#argentina #flag #other
 🇦  Flag for American Samoa  #american #flag #other #samoa
 🇦  Flag for Austria  #austria #flag #other
-🇦  Flag for Australia  #australia #flag #other
+🇦  Flag for Australia	#australia #flag #other
 🇦  Flag for Aruba  #aruba #flag #other
 🇦  Flag for Åland Islands  #flag #other
 🇦  Flag for Azerbaijan  #azerbaijan #flag #other
@@ -1103,7 +1107,7 @@ exit $?
 🇨  Flag for Cameroon  #cameroon #flag #other
 🇨  Flag for China  #china #flag #other
 🇨  Flag for Colombia  #colombia #flag #other
-🇨  Flag for Clipperton Island  #clipperton #flag #island #other
+🇨  Flag for Clipperton Island	#clipperton #flag #island #other
 🇨  Flag for Costa Rica  #costa_rica #flag #other
 🇨  Flag for Cuba  #cuba #flag #other
 🇨  Flag for Cape Verde  #cabo #cape #flag #other #verde
@@ -1140,26 +1144,26 @@ exit $?
 🇬  Flag for French Guiana  #flag #french #guiana #other
 🇬  Flag for Guernsey  #flag #guernsey #other
 🇬  Flag for Ghana  #flag #ghana #other
-🇬  Flag for Gibraltar  #flag #gibraltar #other
-🇬  Flag for Greenland  #flag #greenland #other
+🇬  Flag for Gibraltar	#flag #gibraltar #other
+🇬  Flag for Greenland	#flag #greenland #other
 🇬  Flag for Gambia  #flag #gambia #other
 🇬  Flag for Guinea  #flag #guinea #other
 🇬  Flag for Guadeloupe  #flag #guadeloupe #other
-🇬  Flag for Equatorial Guinea  #equatorial_guinea #flag #guinea #other
+🇬  Flag for Equatorial Guinea	#equatorial_guinea #flag #guinea #other
 🇬  Flag for Greece  #flag #greece #other
 🇬  Flag for South Georgia & South Sandwich Islands  #flag #georgia #island #other #south #south_georgia #south_sandwich
-🇬  Flag for Guatemala  #flag #guatemala #other
+🇬  Flag for Guatemala	#flag #guatemala #other
 🇬  Flag for Guam  #flag #guam #other
 🇬  Flag for Guinea-Bissau  #bissau #flag #guinea #other
 🇬  Flag for Guyana  #flag #guyana #other
-🇭  Flag for Hong Kong  #china #flag #hong_kong #other
+🇭  Flag for Hong Kong	#china #flag #hong_kong #other
 🇭  Flag for Heard & McDonald Islands  #flag #heard #island #mcdonald #other
 🇭  Flag for Honduras  #flag #honduras #other
 🇭  Flag for Croatia  #croatia #flag #other
 🇭  Flag for Haiti  #flag #haiti #other
 🇭  Flag for Hungary  #flag #hungary #other
 🇮  Flag for Canary Islands  #canary #flag #island #other
-🇮  Flag for Indonesia  #flag #indonesia #other
+🇮  Flag for Indonesia	#flag #indonesia #other
 🇮  Flag for Ireland  #flag #ireland #other
 🇮  Flag for Israel  #flag #israel #other
 🇮  Flag for Isle of Man  #flag #isle_of_man #other
@@ -1178,7 +1182,7 @@ exit $?
 🇰  Flag for Cambodia  #cambodia #flag #other
 🇰  Flag for Kiribati  #flag #kiribati #other
 🇰  Flag for Comoros  #comoros #flag #other
-🇰  Flag for St. Kitts & Nevis  #flag #kitts #nevis #other #saint
+🇰  Flag for St. Kitts & Nevis	#flag #kitts #nevis #other #saint
 🇰  Flag for North Korea  #flag #korea #north #north_korea #other
 🇰  Flag for South Korea  #flag #korea #other #south #south_korea
 🇰  Flag for Kuwait  #flag #kuwait #other
@@ -1186,12 +1190,12 @@ exit $?
 🇰  Flag for Kazakhstan  #flag #kazakhstan #other
 🇱  Flag for Laos  #flag #laos #other
 🇱  Flag for Lebanon  #flag #lebanon #other
-🇱  Flag for St. Lucia  #flag #lucia #other #saint
+🇱  Flag for St. Lucia	#flag #lucia #other #saint
 🇱  Flag for Liechtenstein  #flag #liechtenstein #other
-🇱  Flag for Sri Lanka  #flag #other #sri_lanka
+🇱  Flag for Sri Lanka	#flag #other #sri_lanka
 🇱  Flag for Liberia  #flag #liberia #other
 🇱  Flag for Lesotho  #flag #lesotho #other
-🇱  Flag for Lithuania  #flag #lithuania #other
+🇱  Flag for Lithuania	#flag #lithuania #other
 🇱  Flag for Luxembourg  #flag #luxembourg #other
 🇱  Flag for Latvia  #flag #latvia #other
 🇱  Flag for Libya  #flag #libya #other
@@ -1202,7 +1206,7 @@ exit $?
 🇲  Flag for St. Martin  #flag #french #martin #other #saint
 🇲  Flag for Madagascar  #flag #madagascar #other
 🇲  Flag for Marshall Islands  #flag #island #marshall #other
-🇲  Flag for Macedonia  #flag #macedonia #other
+🇲  Flag for Macedonia	#flag #macedonia #other
 🇲  Flag for Mali  #flag #mali #other
 🇲  Flag for Myanmar  #burma #flag #myanmar #other
 🇲  Flag for Mongolia  #flag #mongolia #other
@@ -1212,7 +1216,7 @@ exit $?
 🇲  Flag for Mauritania  #flag #mauritania #other
 🇲  Flag for Montserrat  #flag #montserrat #other
 🇲  Flag for Malta  #flag #malta #other
-🇲  Flag for Mauritius  #flag #mauritius #other
+🇲  Flag for Mauritius	#flag #mauritius #other
 🇲  Flag for Maldives  #flag #maldives #other
 🇲  Flag for Malawi  #flag #malawi #other
 🇲  Flag for Mexico  #flag #mexico #other
@@ -1223,7 +1227,7 @@ exit $?
 🇳  Flag for Niger  #flag #niger #other
 🇳  Flag for Norfolk Island  #flag #island #norfolk #other
 🇳  Flag for Nigeria  #flag #nigeria #other
-🇳  Flag for Nicaragua  #flag #nicaragua #other
+🇳  Flag for Nicaragua	#flag #nicaragua #other
 🇳  Flag for Netherlands  #flag #netherlands #other
 🇳  Flag for Norway  #flag #norway #other
 🇳  Flag for Nepal  #flag #nepal #other
@@ -1256,7 +1260,7 @@ exit $?
 🇸  Flag for Seychelles  #flag #other #seychelles
 🇸  Flag for Sudan  #flag #other #sudan
 🇸  Flag for Sweden  #flag #other #sweden
-🇸  Flag for Singapore  #flag #other #singapore
+🇸  Flag for Singapore	#flag #other #singapore
 🇸  Flag for St. Helena  #flag #helena #other #saint
 🇸  Flag for Slovenia  #flag #other #slovenia
 🇸  Flag for Svalbard & Jan Mayen  #flag #jan_mayen #other #svalbard
@@ -1271,7 +1275,7 @@ exit $?
 🇸  Flag for El Salvador  #el_salvador #flag #other
 🇸  Flag for Sint Maarten  #flag #maarten #other #sint
 🇸  Flag for Syria  #flag #other #syria
-🇸  Flag for Swaziland  #flag #other #swaziland
+🇸  Flag for Swaziland	#flag #other #swaziland
 🇹  Flag for Tristan da Cunha  #flag #other #tristan_da_cunha
 🇹  Flag for Turks & Caicos Islands  #caicos #flag #island #other #turks
 🇹  Flag for Chad  #chad #flag #other
@@ -1285,7 +1289,7 @@ exit $?
 🇹  Flag for Tunisia  #flag #other #tunisia
 🇹  Flag for Tonga  #flag #other #tonga
 🇹  Flag for Turkey  #flag #other #turkey
-🇹  Flag for Trinidad & Tobago  #flag #other #tobago #trinidad
+🇹  Flag for Trinidad & Tobago	#flag #other #tobago #trinidad
 🇹  Flag for Tuvalu  #flag #other #tuvalu
 🇹  Flag for Taiwan  #china #flag #other #taiwan
 🇹  Flag for Tanzania  #flag #other #tanzania
@@ -1297,7 +1301,7 @@ exit $?
 🇺  Flag for Uzbekistan  #flag #other #uzbekistan
 🇻  Flag for Vatican City  #flag #other #vatican
 🇻  Flag for St. Vincent & Grenadines  #flag #grenadines #other #saint #vincent
-🇻  Flag for Venezuela  #flag #other #venezuela
+🇻  Flag for Venezuela	#flag #other #venezuela
 🇻  Flag for British Virgin Islands  #british #flag #island #other #virgin
 🇻  Flag for U.S. Virgin Islands  #america #american #flag #island #other #united #united_states #us #usa #virgin
 🇻  Flag for Vietnam  #flag #other #viet_nam #vietnam
@@ -1310,4 +1314,3 @@ exit $?
 🇿  Flag for South Africa  #flag #other #south #south_africa
 🇿  Flag for Zambia  #flag #other #zambia
 🇿  Flag for Zimbabwe  #flag #other #zimbabwe
-
