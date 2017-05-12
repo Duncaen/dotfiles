@@ -1,105 +1,30 @@
 #!/bin/sh
-
-usage() cat <<EOUSAGE
-usage: s [-u <user>] [-w <sec>] <COMMAND> [SERVICE...]
-COMMANDS
-  enable
-  disable
-  up
-  down
-  reload
-  restart
-EOUSAGE
-
-fatal() {
-  msg "$@" >&2
-  exit 1
-}
-
-msg() {
-  printf "$@\n"
-}
-
-sv_enable() {
-}
-
-sv_disable() {
-}
-
-sv_status_wants() {
-  dd if="$1/supervise/status" bs=1 skip=17 count=1 2>/dev/null
-}
-
-sv_list() {
-  for dir in "$1/"*; do
-    status="disabled"
-    color="$COLOR_FG_GREY"
-    wants=""
-    name="${dir##*/}"
-    [ -e "${dir}/supervise/stat" ] && status=$(cat "${dir}/supervise/stat")
-    [ "$status" != "disabled" ] && wants=$(sv_status_wants "${dir}")
-    case "$status" in
-      run)
-        if [ "$wants" = "u" ]; then
-          color="$COLOR_FG_GREEN"
-        else
-          color="$COLOR_FG_RED"
-        fi
-        ;;
-      down)
-        if [ "$wants" = "d" ]; then
-          color="$COLOR_FG_GREEN"
-        else
-          color="$COLOR_FG_RED"
-        fi
-        ;;
-    esac
-    printf "%-20s\t$color%-10s$COLOR_FG\n" "$name" "$status"
-  done
-}
+# s [-w sec] [cmd] [service...] - runit service helper
 
 : ${SVCMD:=$(command -v sv)}
 
-: ${COLOR_FG:="\e[0;37;40m"}
-: ${COLOR_FG_RED="\e[0;31;40m"}
-: ${COLOR_FG_GREEN="\e[0;32;40m"}
-: ${COLOR_FG_GREY:="\e[1;30;40m"}
-
 while getopts "u:w:v" opt; do
-  case "$opt" in
-    u) SVUSER="$OPTARG" ;;
-    w) export SVWAIT="$OPTARG" ;;
-  esac
+	case "$opt" in
+	w) export SVWAIT="$OPTARG" ;;
+	esac
 done
 shift $(($OPTIND - 1))
 
-case "${SVUSER:=$USER}" in
-  root)
-    : ${ETCSVDIR:="/etc/sv"}
-    : ${SVDIR:="/var/service"}
-    ;;
-  *)
-    : ${ETCSVDIR:="${HOME}/sv"}
-    : ${SVDIR:="${HOME}/service"}
-    ;;
+case "$(id -u)" in
+0)
+	: ${ETCSVDIR:="/etc/sv"}
+	: ${SVDIR:="/var/service"}
+	;;
+1000)
+	: ${ETCSVDIR:="/home/duncan/sv"}
+	: ${SVDIR:="/home/duncan/service /home/duncan/service.x"}
+	;;
 esac
 
-[ -z "$1" ] && usage && exit 1
-case "$1" in
-  ls|list) sv_list "${ETCSVDIR}" ;;
-  en)
-    [ -z "$2" ] && usage && exit 1
-    [ -d "${ETCSVDIR}/$2" ] && fatal "service '$2' does not exist"
-    [ -h "$2" ] && fatal "service '$2' is already enabled"
-    ln -sfv "${ETCSVDIR}/${2}" "${SVDIR}/${2}"
-    ;;
-  dis)
-    [ -z "$2" ] && usage && exit 1
-    [ -d "${ETCSVDIR}/$2" ] && fatal "service '$2' does not exist"
-    [ ! -h "$2" ] && fatal "service '$2' is not enabled"
-    rm -v "${SVDIR}/$2"
-    ;;
-  x|e|X|E|D|T|c|u|d|o|t|p|h|a|i|k|q|1|2|s|r|f|restart)
-    SVDIR="${ETCSVDIR}" "${SVCMD}" "$@"
-    ;;
+cmd=$1
+case "${cmd:=ls}" in
+	l|ls|list) set -- s $(for x in ${SVDIR}; do echo $x/*; done) ;;
+	x|e|X|E|D|T|c|u|d|o|t|p|h|a|i|k|q|1|2|s|r|f|restart) ;;
+	*) set -- s ${cmd} ;;
 esac
+SVDIR="${ETCSVDIR}" "${SVCMD}" "$@"
