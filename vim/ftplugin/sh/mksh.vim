@@ -1,1 +1,0 @@
-inoreabbr <buffer> fun function
