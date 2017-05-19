@@ -1,3 +1,3 @@
 #!/bin/sh
 
-ln -sfv "${PWD}/sv/runsvdir-duncan" /etc/sv
+ln -sf "${PWD}/sv/runsvdir-duncan" /etc/sv

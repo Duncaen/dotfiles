@@ -5,11 +5,11 @@ msg() { t=$1; shift; printf '%s: %s\n' "$t" "$@"; }
 _ln_home() {
 	[ -z "$2" ] && tgt="$HOME/$1" || tgt="$HOME/$2"
 	src="$PWD/$1"
-	[ -e "$tgt" ] && mv -v "$tgt" "$tgt.bak"
-	ln -sfv "$src" "$tgt"
+	[ -e "$tgt" ] && mv "$tgt" "$tgt.bak"
+	ln -sf "$src" "$tgt"
 }
 _mkdir() {
-	mkdir -vp $@
+	mkdir -p $@
 }
 
 _vim() {
@@ -51,7 +51,7 @@ _void() {
 }
 _ssh() {
 	msg "INSTALL" "ssh config"
-	mkdir -pv "$HOME/.ssh"
+	mkdir -p "$HOME/.ssh"
 	_ln_home "ssh/config" ".ssh/config"
 }
 _bin() {
