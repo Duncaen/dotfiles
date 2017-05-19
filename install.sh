@@ -34,6 +34,10 @@ _mksh() {
 	msg "INSTALL" "mksh config"
 	_ln_home "mkshrc" ".mkshrc"
 }
+_yash() {
+	msg "INSTALL" "yash config"
+	_ln_home "yashrc" ".yashrc"
+}
 _shell() {
 	msg "INSTALL" "shell config"
 	_ln_home "profile" ".profile"
@@ -74,6 +78,7 @@ _gtk() {
 : ${HOME:=~}
 
 _mksh
+_yash
 _shell
 _bin
 _sv

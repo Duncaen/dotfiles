@@ -1,0 +1,254 @@
+[ -r ~/.profile ] && . ~/.profile
+
+# enable bash-like extended expansion
+set --brace-expand
+
+# enable recursive pathname expansion
+set --extended-glob
+
+# prevent redirections from overwriting existing files
+set --no-clobber
+
+# don't implicitly expand non-existent variables to empty strings
+set --no-unset
+
+# if yash is built with command history enabled...
+if command --identify --builtin-command history >/dev/null; then
+	# don't save commands starting with a space in history
+	set --hist-space
+fi
+
+if command --identify --builtin-command bindkey >/dev/null; then
+	# print job status update ASAP, but only while line-editing
+	set --notify-le
+	# some terminfo data are broken; meta flags have to be ignored for UTF-8
+	set --le-no-conv-meta
+
+	# most users are more familiar with emacs mode than vi mode
+	[ -o vi ] && set --emacs
+
+	# some useful key bindings
+	bindkey --emacs '\^N' beginning-search-forward
+	bindkey --emacs '\^O' clear-candidates
+	bindkey --emacs '\^P' beginning-search-backward
+	bindkey --emacs '\N' complete-next-column
+	bindkey --emacs '\P' complete-prev-column
+	bindkey --emacs '\^[[1;5C' forward-emacsword
+	bindkey --emacs '\^[[1;5D' backward-emacsword
+
+	# key bindings for vi mode, some of which are from emacs mode
+	bindkey --vi-insert '\^A' beginning-of-line
+	bindkey --vi-insert '\^B' backward-char
+	bindkey --vi-insert '\^D' eof-or-delete
+	bindkey --vi-insert '\#'  eof-or-delete
+	bindkey --vi-insert '\^E' end-of-line
+	bindkey --vi-insert '\^F' forward-char
+	bindkey --vi-insert '\^K' forward-kill-line
+	bindkey --vi-insert '\^N' beginning-search-forward
+	bindkey --vi-insert '\^O' clear-candidates
+	bindkey --vi-insert '\^P' beginning-search-backward
+	bindkey --vi-insert '\^U' backward-kill-line
+	bindkey --vi-insert '\$'  backward-kill-line
+	bindkey --vi-insert '\^W' backward-delete-viword
+	bindkey --vi-insert '\^Y' put-left
+	bindkey --vi-insert '\N' complete-next-column
+	bindkey --vi-insert '\P' complete-prev-column
+	bindkey --vi-command '\^N' beginning-search-forward
+	bindkey --vi-command '\^P' beginning-search-backward
+fi
+
+[ -r ~/.aliases ] && . ~/.aliases
+[ -z "$SSH_AUTH_SOCK" ] && [ -r ~/.cache/ssh-agent-info ] && \
+	. ~/.cache/ssh-agent-info
+
+# define some basic variables if missing
+: ${PAGER:=less} ${EDITOR:=vi} ${FCEDIT:=$EDITOR}
+: ${LOGNAME:=$(logname)} ${HOSTNAME:=$(uname -n)}
+
+# disable confusing treatment of arguments in the echo command
+: ${ECHO_STYLE:=RAW}
+
+# variables needed for command history
+HISTFILE=~/.yash_history HISTSIZE=5000
+
+PS1=\
+'${${${PWD:/~/\~}##*/}:-$PWD}'\
+'${SSH_CONNECTION:+@${HOSTNAME}}'\
+'${{?:/0/}:+?\\fr.$?\\fd.}'\
+'\$ '
+PS1R=
+PS1S=
+PS2='> '
+PS2R=
+PS2S=$PS1S
+PS4='\fm.+ '
+PS4S='\fmo.'
+
+function completion/xbps::all_packages {
+	while read -r _ name desc; do
+		complete -P "$PREFIX" -D "$desc" -- "$name"
+	done <(xbps-query -Rs '')
+}
+
+function completion/xbps::installed_packages {
+	while read -r _ name desc; do
+		complete -P "$PREFIX" -D "$desc" -- "$name"
+	done <(xbps-query -l)
+}
+
+function completion/xbps-install {
+	typeset OPTIONS ARGOPT PREFIX
+	OPTIONS=( #>#
+	"A --automatic; Set automatic installation mode"
+	"c --cachedir:; Full path to cachedir"
+	"n --dry-run; Dry-run mode"
+	"f --force; Force package re-installation"
+	"i --ignore-conf-repos; Ignore repositories defined in xbps.d"
+	"M --memory-sync; Keep remote repository data in memory only"
+	"R: --repository:; Add repository to the top of the list"
+	"S --sync; Sync remote repository index"
+	"u --update; Update target packages"
+	"U --unpack-only; Unpack packages without configuring"
+	"y --yes; Assume yes to all questions"
+	) #<#
+
+	command -f completion//parseoptions ${long:+-es}
+	case $ARGOPT in
+	(-)
+		command -f completion//completeoptions
+		;;
+	(R|--repository)
+		complete -P "$PREFIX" -d
+		;;
+	(*)
+		command -f completion/xbps::all_packages
+		;;
+	esac
+}
+
+function completion/xbps-pkgdb {
+	typeset OPTIONS ARGOPT PREFIX
+	OPTIONS=( #>#
+	"a --all; Process all packages"
+	"m: --mode:; Change to this mode"
+	"u --update; Update pkgdb to the latest format"
+	) #<#
+	command -f completion//parseoptions ${long:+-es}
+	case $ARGOPT in
+	(-)
+		command -f completion//completeoptions
+		;;
+	(m|--mode)
+		complete -P "$PREFIX" -- auto manual hold unhold repolock repounlock
+		;;
+	(*)
+		command -f completion/xbps::installed_packages
+		;;
+	esac
+}
+
+function completion/xbps-src::all_packages {
+	for p in srcpkgs/*/template; do
+		complete -P "$PREFIX" -- ${{p%/template}#srcpkgs/}
+	done
+}
+function completion/xbps-src::destdir_packages {
+	for p in srcpkgs/*/template; do
+		complete -P "$PREFIX" -- ${{p%/template}#srcpkgs/}
+	done
+}
+function completion/xbps-src::build_packages {
+	for p in srcpkgs/*/template; do
+		complete -P "$PREFIX" -- ${{p%/template}#srcpkgs/}
+	done
+}
+function completion/xbps-src {
+	typeset OPTIONS ARGOPT PREFIX
+	OPTIONS=( #>#
+	"a:; Cross compile packages"
+	"C; Do not remove build directory/autodeps/destdir"
+	"E; Exit immediately when binary package already exists"
+	"f; Force building and registering binary packages"
+	"G; Enable XBPS_USE_GIT_REVS"
+	"g; Enable building -dbg packages"
+	"H:; Absolute path to hostdir"
+	"h; Help"
+	"I; Ignore required dependencies"
+	"j; Number of parallel build jobs"
+	"L; Disable ASCII colors"
+	"m:; Absolute path to masterdir"
+	"N; Disable use of remote repositories"
+	"o; Set package build options"
+	"r; Use alternative local repository"
+	"t; Create a temporary masterdir"
+	) #<#
+	command -f completion//parseoptions ${long:+-es}
+	case $ARGOPT in
+	(-)
+		command -f completion//completeoptions
+		;;
+	(a)
+		complete -P "$PREFIX" -- armv6hf-musl armv6hf armv7hf-musl \
+			armv7hf i686-musl i686 mips mipsel x86_64-musl
+		;;
+	(m|H)
+		complete -d
+		;;
+	(*)
+		command -f completion//getoperands
+		case ${WORDS[#]} in
+		(0)
+			complete -P "$PREFIX" -- binary-bootstrap bootstrap \
+				bootstrap-update \
+				build chroot clean configure extract fetch install \
+				list pkg remove remove-autodeps show show-build-deps \
+				show-deps show-files show-options show-shlib-provides \
+				show-shlib-requires show-var show-repo-updates \
+				show-sys-updates update-bulk update-check update-sys zap
+			;;
+		(*)
+			case ${WORDS[-1]} in
+			(build|configure|extract|fetch|install|pkg|show|show-build-deps|update-check)
+				command -f completion/xbps-src::all_packages
+				;;
+			(binary-bootstrap)
+				;;
+			(clean)
+				command -f completion/xbps-src::build_packages
+				;;
+			(remove|show-deps|show-files|show-options|show-shlib-provides|show-shlib-requires)
+				command -f completion/xbps-src::destdir_packages
+				;;
+			esac
+			;;
+		esac
+		;;
+	esac
+}
+
+function completion/doas {
+	typeset OPTIONS ARGOPT PREFIX
+	OPTIONS=( #>#
+	"C:; Parse and check configuration file"
+	"n; Non interactive mode"
+	"s; Execute the shell"
+	"u:; Specify the user"
+	) #<#
+
+	command -f completion//parseoptions
+	case $ARGOPT in
+	(-)
+		command -f completion//completeoptions
+		;;
+	(C)
+		complete -P "$PREFIX" -f
+		;;
+	(u)
+		complete -P "$PREFIX" -u
+		;;
+	('')
+		command -f completion//getoperands
+		command -f completion//reexecute
+		;;
+	esac
+}
