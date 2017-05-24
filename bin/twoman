@@ -3,5 +3,5 @@
 for cmd; do
 	cmd=$(command -v "$cmd" 2>/dev/null)
 	[ -z "$cmd" ] && continue
-	sed -n '1{/^[^#][^!]/q;d};0,/^$\|^[^#]/s/^# //p' $cmd
+	sed -rn '1{/^[^#][^!]/q;d;};/^$|^[^#]/q;s/^# //p' $cmd
 done
