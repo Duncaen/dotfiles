@@ -38,6 +38,7 @@ bin/
 - oomtop - lists processes by oom score
 - psgrep [pattern] - `ps` for matching processes
 - rgb2hex red green blue - converts rgb to hex colors
+- s [-w sec] [cmd] [service...] - runit service helper
 - sprunge FILES... - paste to sprunge.us
 - ssh-copy-term - copy terminfo via ssh
 - swaptop - show most swap-using processes
@@ -54,11 +55,13 @@ Proudly presented by
 links
 -----
 
-[0] http://chneukirchen.org/dotfiles/
-[1] https://github.com/chneukirchen/extrace
-[2] https://github.com/chneukirchen/lr
-[3] https://github.com/chneukirchen/snooze
-[4] https://github.com/chneukirchen/xe
-[5] http://tools.suckless.org/dmenu/
-[6] http://dwm.suckless.org/
-[7] http://st.suckless.org/
+
+
+- [0] http://chneukirchen.org/dotfiles/
+- [1] https://github.com/chneukirchen/extrace
+- [2] https://github.com/chneukirchen/lr
+- [3] https://github.com/chneukirchen/snooze
+- [4] https://github.com/chneukirchen/xe
+- [5] http://tools.suckless.org/dmenu/
+- [6] http://dwm.suckless.org/
+- [7] http://st.suckless.org/
