@@ -35,6 +35,7 @@ if command --identify --builtin-command bindkey >/dev/null; then
 	bindkey --emacs '\P' complete-prev-column
 	bindkey --emacs '\^[[1;5C' forward-emacsword
 	bindkey --emacs '\^[[1;5D' backward-emacsword
+	bindkey --emacs '\^I' complete-max-then-list
 
 	# key bindings for vi mode, some of which are from emacs mode
 	bindkey --vi-insert '\^A' beginning-of-line
