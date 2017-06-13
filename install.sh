@@ -9,7 +9,9 @@ _ln_home() {
 	ln -sf "$src" "$tgt"
 }
 _mkdir() {
-	mkdir -p $@
+	for x; do
+		mkdir -p "$HOME/$x"
+	done
 }
 
 _vim() {
