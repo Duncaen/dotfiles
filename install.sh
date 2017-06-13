@@ -40,6 +40,11 @@ _mksh() {
 	msg "INSTALL" "mksh config"
 	_ln_home "mkshrc" ".mkshrc"
 }
+_ksh() {
+	[ -n "$(command -v ksh 2>/dev/null)" ] || return
+	msg "INSTALL" "ksh config"
+	_ln_home "kshrc" ".kshrc"
+}
 _yash() {
 	[ -n "$(command -v yash 2>/dev/null)" ] || return
 	msg "INSTALL" "yash config"
@@ -90,6 +95,7 @@ _gtk() {
 : ${HOME:=~}
 
 _mksh
+_ksh
 _yash
 _shell
 _bin
