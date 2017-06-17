@@ -1,0 +1,47 @@
+matrix-off: about-scheme true
+matrix-off: behind-the-scene true
+matrix-off: chrome-extension-scheme true
+matrix-off: chrome-scheme true
+matrix-off: localhost true
+matrix-off: opera-scheme true
+referrer-spoof: * true
+referrer-spoof: strato.de false
+referrer-spoof: youtube.com false
+ua-spoof: * true
+ua-spoof: strato.de false
+ua-spoof: youtube.com false
+* * * block
+* * css allow
+* * frame block
+* * image allow
+* 1st-party * allow
+* 1st-party frame allow
+file-scheme mobile.twitter.com frame allow
+github.com raw.githubusercontent.com * allow
+github.com render.githubusercontent.com * allow
+github.com render.githubusercontent.com frame allow
+imgur.com cdnjs.cloudflare.com script allow
+instagram.com instagramstatic-a.akamaihd.net script allow
+oddshot.tv oddshot.akamaized.net script allow
+prnt.sc prntscr.com frame allow
+prnt.sc prntscr.com script allow
+reddit.com www.redditstatic.com script allow
+soundcloud.com sndcdn.com * allow
+travis-ci.org s3.amazonaws.com xhr allow
+travis-ci.org ws.pusherapp.com other allow
+twitch.tv akamaized.net * allow
+twitch.tv ttvnw.net * allow
+twitter.com abs.twimg.com script allow
+twitter.com ma-0.twimg.com script allow
+twitter.com ton.twimg.com script allow
+twitter.com video.twimg.com other allow
+twitter.com video.twimg.com xhr allow
+utrace.de maps.googleapis.com script allow
+vimeo.com f.vimeocdn.com script allow
+vimeo.com fpdl.vimeocdn.com other allow
+vimeo.com vimeocdn.com * allow
+youtube.com apis.google.com script allow
+youtube.com googlevideo.com * allow
+youtube.com s.ytimg.com script allow
+youtube.com www.google.com script allow
+youtube.com ytimg.com * allow

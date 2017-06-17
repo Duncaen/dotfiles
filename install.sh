@@ -90,6 +90,17 @@ _gtk() {
 	_ln_home "gtkrc-2.0" ".gtkrc-2.0"
 	_ln_home "gtk-3.0" ".config/gtk-3.0"
 }
+_firefox() {
+	[ -n "$(command -v firefox 2>/dev/null)" ] || return
+	printf "INSTALL: firefox user.js for profile: "
+	for p in ~/.mozilla/firefox/*/; do
+		p="${p%/*}"; p="${p##*/}"
+		case "$p" in *backup*|*crashrecovery*|"") continue ;; esac
+		printf " %s" "'${p}'"
+		_ln_home "user.js" ".mozilla/firefox/$p/user.js"
+	done
+	printf "\n"
+}
 
 : ${PWD:=$(pwd)}
 : ${HOME:=~}
@@ -107,3 +118,4 @@ _vim
 _void
 _ssh
 _gtk
+_firefox
