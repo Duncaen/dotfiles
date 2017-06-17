@@ -7,16 +7,12 @@ if v:version >= 800
 	Plug 'maralla/completor.vim'
 endif
 
-" Git
-Plug 'airblade/vim-gitgutter'
-
 " Navigation
-Plug 'ctrlpvim/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim', { 'on': '<plug>(ctrlp)' }
 Plug 'bling/vim-bufferline'
 
 " Editing
 Plug 'tpope/vim-surround'
-Plug 'spf13/vim-autoclose'
 Plug 'tpope/vim-commentary'
 
 " Languages
@@ -123,7 +119,8 @@ call s:map_change_option('t', 'textwidth',
 " ============================================================================
 " ctrlp
 " ============================================================================
-let g:ctrlp_map = '<c-p>'
+map <c-p> <plug>(ctrlp)
+let g:ctrlp_map = ''
 let g:ctrlp_custom_ignore = {
 	\ 'dir':  '\v[\/]\.(git|hg|svn)$',
 	\ 'file': '\.pyc$\|\.pyo$\|\.rbc$|\.rbo$\|\.class$\|\.o$\|\~$\',
