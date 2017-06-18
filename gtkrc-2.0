@@ -1,8 +1,5 @@
-gtk-theme-name="Zukitre"
 gtk-icon-theme-name="Paper"
-gtk-font-name="Liberation Sans 10"
-gtk-cursor-theme-name="neutral"
-gtk-cursor-theme-size=18
+gtk-font-name="Liberation Sans 9"
 gtk-toolbar-style=GTK_TOOLBAR_ICONS
 gtk-toolbar-icon-size=GTK_ICON_SIZE_SMALL_TOOLBAR
 gtk-button-images=0
@@ -13,3 +10,4 @@ gtk-xft-antialias=1
 gtk-xft-hinting=1
 gtk-xft-hintstyle="hintfull"
 gtk-xft-rgba="rgb"
+gtk-cursor-theme-name=plan9
