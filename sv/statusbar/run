@@ -1,4 +1,4 @@
 #!/bin/sh
 
 exec 2>&1
-exec /home/duncan/go/bin/go-dwmstatus
+exec dwmstatus

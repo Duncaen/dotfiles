@@ -1,4 +1,0 @@
-#!/bin/sh
-
-feh --recursive --randomize --bg-fill --no-fehbg ~/.wallpaper
-exec chpst -b wallpaper pause
