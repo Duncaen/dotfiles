@@ -26,6 +26,7 @@ bin/
 ----
 
 - colors - terminal color and attribute escape sequences
+- cppgrep - grep in C/C++ headers
 - diffed [-CHT] [-pN] [-s SUBST -r REPL] [-x EXCLUDE] - filter for unified diffs 
 - dmoji - dmenu based emoji picker
 - fzpsgrep [pattern] - psgrep with fzy selection
