@@ -97,10 +97,11 @@ _firefox() {
 	for p in ~/.mozilla/firefox/*/; do
 		p="${p%/*}"; p="${p##*/}"
 		case "$p" in *backup*|*crashrecovery*|"") continue ;; esac
-		printf " %s" "'${p}'"
+		printf " %s\n" "'${p}'"
 		_ln_home "user.js" ".mozilla/firefox/$p/user.js"
+		mkdir -p "$HOME/.mozilla/firefox/$p/chrome"
+		_ln_home "userChrome.css" ".mozilla/firefox/$p/chrome/userChrome.css"
 	done
-	printf "\n"
 }
 
 : ${PWD:=$(pwd)}

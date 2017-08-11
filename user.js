@@ -7,8 +7,9 @@ user_pref('browser.fullscreen.animate', false);
 user_pref('browser.tabs.animate', false);
 user_pref('browser.download.animateNotifications', false);
 
+user_pref('browser.urlbar.oneOffSearches', false);
 user_pref('browser.urlbar.trimURLs', false);
-user_pref('browser.urlbar.unifiedcomplete', false);
+user_pref('browser.urlbar.unifiedcomplete', true);
 user_pref('browser.urlbar.daysBeforeHidingSuggestionsPrompt', 0);
 user_pref('browser.search.suggest.enabled', false);
 
@@ -113,6 +114,7 @@ user_pref('dom.indexedDB.enabled', false);
 user_pref('dom.enable_user_timing', false);
 user_pref('dom.netinfo.enabled', false);
 user_pref('dom.netinfo.enabled', false);
+user_perf('dom.push.enabled', false);
 
 user_pref('device.sensors.enabled', false);
 user_pref('camera.control.face_detection.enabled', false);

@@ -1,0 +1,42 @@
+:root {
+	--tab-selection-background-color: var(--chrome-secondary-background-color) !important;
+	--tab-selection-color: var(--chrome-secondary-color) !important;
+
+	--chrome-nav-buttons-background: var(--chrome-secondary-background-color) !important;
+	--toolbarbutton-hover-background: none !important;
+
+	--tab-min-height: 21px !important;
+	--tab-curve-width: 20px !important;
+
+	--url-and-searchbar-background-color: var(--chrome-secondary-background-color) !important;
+}
+
+.tab-close-button:not(:hover):-moz-lwtheme-darktext {
+	/* light only */
+	background-image: -moz-image-rect(url("chrome://global/skin/icons/close.svg"), 0, 96, 16, 80) !important;
+}
+
+#urlbar {
+	background-color: var(--chrome-secondary-background-color) !important;
+}
+
+.scrollbutton-up, .scrollbutton-down {
+	min-width: 0 !important;
+}
+
+.toolbarbutton-icon, toolbarbutton, .toolbarbutton-badge-stack, #urlbar, .urlbar-input-box, #reload-button, #urlbar-go-button, #stop-button {
+	border: none !important;
+}
+
+#back-button {
+	padding-inline-start: 0 !important;
+	padding-inline-end: 0 !important;
+}
+
+#nav-bar {
+	max-height: 28px !important;
+}
+
+#nav-bar toolbarbutton {
+	padding: 0 !important;
+}
