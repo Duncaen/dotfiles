@@ -15,14 +15,7 @@ xmodmap ~/.us-intl-german.xmodmap
 xrdb -merge ~/.Xresources
 xset b off
 
-# display colors
+# color temperature
 [ $(command -v sct 2>/dev/null) ] && sct 4400
-
-[ "$(hostname)" = "fly" ] && xinput \
-	--set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation" 1 \
-	--set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Button" 2 \
-	--set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Timeout" 200 \
-	--set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Axes" 6 7 4 5 \
-	--set-prop "TPPS/2 IBM TrackPoint" "Device Accel Constant Deceleration" 0.95
 
 exec $STARTUP runsvdir -P ~/service.x 'log: ...........................................................................................................................................................................................................................................................................................................................................................................................................'
