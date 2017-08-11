@@ -1,0 +1,8 @@
+#!/bin/sh
+# cppgrep - grep in C/C++ headers
+# 10aug2017  +leah+
+
+printf '#include "%s"' "$@[2,-1]" \
+	| gcc -E -M -MP -x c++ - \
+	| awk -F: '/:$/ {print $1}' \
+	| xe -N0 grep "$1"
