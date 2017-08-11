@@ -33,6 +33,14 @@
 	padding-inline-end: 0 !important;
 }
 
+.tabs-newtab-button {
+	width: 26px !important;
+}
+
+#personal-bookmarks {
+	min-height: 16px !important;
+}
+
 #nav-bar {
 	max-height: 28px !important;
 }
