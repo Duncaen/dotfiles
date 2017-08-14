@@ -27,7 +27,7 @@ set ignorecase              " overwritten by smartcase if it contains uppercase 
 
 " compelete
 set complete-=i
-set completeopt=longest,menuone
+set completeopt=menuone
 
 " ignore
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.db,*.o,*.a
