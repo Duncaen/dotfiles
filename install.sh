@@ -103,6 +103,11 @@ _firefox() {
 		_ln_home "userChrome.css" ".mozilla/firefox/$p/chrome/userChrome.css"
 	done
 }
+_tmux() {
+	[ -n "$(command -v tmux 2>/dev/null)" ] || return
+	msg "INSTALL" "tmux config"
+	_ln_home "tmux.conf" ".tmux.conf"
+}
 
 : ${PWD:=$(pwd)}
 : ${HOME:=~}
@@ -121,3 +126,4 @@ _void
 _ssh
 _gtk
 _firefox
+_tmux
