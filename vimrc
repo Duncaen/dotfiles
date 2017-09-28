@@ -111,9 +111,11 @@ call s:map_change_option('n', 'number', 'setlocal number!')
 call s:map_change_option('h', 'hlsearch', 'setlocal hlsearch!')
 call s:map_change_option('l', 'list', 'setlocal list!')
 call s:map_change_option('p', 'paste')
-call s:map_change_option('w', 'wrap', 'setlocal wrap!')
+call s:map_change_option('s', 'syntax',
+	\ 'if exists("g:syntax_on")<bar>syntax off<bar>else<bar>syntax enable<bar>endif<bar>redraw')
 call s:map_change_option('t', 'textwidth',
 	\ 'let &l:textwidth = input("textwidth (". &l:textwidth ."): ")<bar>redraw')
+call s:map_change_option('w', 'wrap', 'setlocal wrap!')
 
 
 " ============================================================================
