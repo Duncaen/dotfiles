@@ -46,9 +46,10 @@ set laststatus=2            " always show the statusline
 " set lazyredraw            " foo
 " }}}
 
+set visualbell
+
 set timeoutlen=500          " time to wait for key code, mapped key sequence
 set history=1000            " store a ton of history (default is 20)
-
 
 set incsearch               " match search while typing
 set hlsearch                " hightligt search results
