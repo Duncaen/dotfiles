@@ -1,25 +1,19 @@
 set nocompatible
 filetype off
 
-silent! if plug#begin('~/.vim/plugged')
+sil! if plug#begin('~/.vim/plugged')
 
-if v:version >= 800
+if v:version >= 800 && (has('python') || has('python3'))
 	Plug 'maralla/completor.vim'
 endif
 
 " Navigation
 Plug 'ctrlpvim/ctrlp.vim', { 'on': '<plug>(ctrlp)' }
-Plug 'bling/vim-bufferline'
+" Plug 'bling/vim-bufferline'
 
 " Editing
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
-
-" Languages
-if hostname() != "pi"
-	Plug 'fatih/vim-go', { 'for': ['go'] }
-	Plug 'python-rope/ropevim', { 'for': ['python'], 'do': 'python2 setup.py install --user && python3 setup.py install --user' }
-endif
 
 call plug#end()
 endif
