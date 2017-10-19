@@ -22,23 +22,22 @@ endif
 " Basic settings
 " ============================================================================
 
-" Leader
 let mapleader      = ','
 let maplocalleader = ','
 
-" interface {{{
 set showcmd                 " show current command
 set number                  " show line numbers
 set list                    " show tabs, whitespaces etc
 set cursorline              " highlight current line
 set scrolloff=5             " scroll 5 lines before reaching top/bottom
-silent! set colorcolumn=80  " show line after 80 chars
+sil! set colorcolumn=80  " show line after 80 chars
 set diffopt=filler,vertical " vertical vimdiff
 set ruler                   " cursor position in status line
 set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
-set laststatus=2            " always show the statusline
-" set lazyredraw            " foo
-" }}}
+set laststatus=1            " show the statusline if there are at least two windows
+syntax off                  " no syntax highlighting by default
+sil! colorscheme shblah  " default colorscheme
+let g:is_kornshell = 1      " ksh syntax by default
 
 set visualbell
 
@@ -79,28 +78,14 @@ set foldlevelstart=99
 set foldmethod=indent
 set textwidth=0             " dont wrap text automatically
 
-silent! colorscheme shblah  " default colorscheme
-
-" The Silver Searcher
-if executable('ag')
-	" Use ag over grep
-	set grepprg=ag\ --nogroup\ --nocolor
-	" Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-	let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-	" ag is fast enough that CtrlP doesn't need to cache
-	let g:ctrlp_use_caching = 0
-endif
-
-
-
 " ----------------------------------------------------------------------------
 " co? : Toggle options (inspired by unimpaired.vim) from: https://github.com/junegunn/dotfiles
 " ----------------------------------------------------------------------------
-function! s:map_change_option(...)
+fu! s:map_change_option(...)
 	let [key, opt] = a:000[0:1]
 	let op = get(a:, 3, 'set '.opt.'!')
 	execute printf("nnoremap co%s :%s<BAR>echo '%s: '. &%s<CR>", key, op, opt, opt)
-endfunction
+endf
 
 call s:map_change_option('n', 'number', 'setlocal number!')
 call s:map_change_option('h', 'hlsearch', 'setlocal hlsearch!')
@@ -112,10 +97,10 @@ call s:map_change_option('t', 'textwidth',
 	\ 'let &l:textwidth = input("textwidth (". &l:textwidth ."): ")<bar>redraw')
 call s:map_change_option('w', 'wrap', 'setlocal wrap!')
 
-
 " ============================================================================
 " ctrlp
 " ============================================================================
+
 map <c-p> <plug>(ctrlp)
 let g:ctrlp_map = ''
 let g:ctrlp_custom_ignore = {
@@ -124,65 +109,26 @@ let g:ctrlp_custom_ignore = {
 \ }
 
 " ============================================================================
-" python-mode
-" ,b - breakpoint
-" <C-c>ra - autoimport module under cursor
-" <C-c>g - goto definition
-" K - pymode doc
-" ============================================================================
-" let g:pymode_folding=0
-
-" ============================================================================
-" surround
-" }/]/) insets without space
-" {/[/( insets with space
-" mappings:
-" cs'" - change ' to "
-" ds" - delete "
-" ysiw" - wraps word with "
-" yss" - wraps line with "
-" YS<p> - add <p> around selection lines
-" ============================================================================
-"foo" bar
-
-" TODO: activate for django templates
-" let b:surround_{char2nr("v")} = "{{ \r }}"
-" let b:surround_{char2nr("%")} = "{% \r %}"
-" let b:surround_{char2nr("b")} = "{% block \1block name: \1 %}\r{% endblock \1\1 %}"
-" let b:surround_{char2nr("i")} = "{% if \1condition: \1 %}\r{% endif %}"
-" let b:surround_{char2nr("w")} = "{% with \1with: \1 %}\r{% endwith %}"
-" let b:surround_{char2nr("f")} = "{% for \1for loop: \1 %}\r{% endfor %}"
-" let b:surround_{char2nr("c")} = "{% comment %}\r{% endcomment %}"
-
-" ============================================================================
 " FILETYPES
 " ============================================================================
 
 " void-packages template file
 autocmd BufNewFile,BufRead template set ft=sh sts=0 sw=0 noet
 
-" ksh syntax by default
-let g:is_kornshell = 1
-
 " ============================================================================
 " MAPPINGS
 " ============================================================================
 
-" too often i type W instead of w
-command! W w
-
+" w!! to write with doas/sudo
 if executable('doas')
-	" For when you forget to doas.. Really Write the file.
 	cmap w!! w !doas tee % >/dev/null
 else
 	cmap w!! w !sudo tee % >/dev/null
 endif
 
-" Make Y behave like other capitals
-nnoremap Y y$
-
-" qq to record, Q to replay
-nnoremap Q @q
+command! W w    " too often i type W instead of w
+nnoremap Y y$   " Make Y behave like other capitals
+nnoremap Q @q   " qq to record, Q to replay
 
 " Reselect visual block after indent/outdent
 vnoremap < <gv
@@ -191,10 +137,6 @@ vnoremap = =gv
 
 " ,s - reload vim rc
 nmap <Leader>s :source $MYVIMRC<cr>
-
-" <tab> / <s-tab> | Circular windows navigation
-nnoremap <tab>   <c-w>w
-nnoremap <S-tab> <c-w>W
 
 " ,c - toggle comment
 nmap <Leader>c <Plug>Commentary
