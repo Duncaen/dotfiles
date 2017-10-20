@@ -7,10 +7,7 @@ if v:version >= 800 && (has('python') || has('python3'))
 	Plug 'maralla/completor.vim'
 endif
 
-" Navigation
 Plug 'ctrlpvim/ctrlp.vim', { 'on': '<plug>(ctrlp)' }
-
-" Editing
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 
