@@ -2,7 +2,7 @@
 # grurls - substitute and group urls
 
 BEGIN { i=0 }
-END { for (l = 0; l < i; l++) printf "[%d] %s\n", l, links[l] }
+END { printf "\n\n"; for (l = 0; l < i; l++) printf "- [%d] %s\n", l, links[l] }
 length() {
 	# [title](url)
 	while (match($0, /\[[^]]*\]\([^)]*\)/)) {
@@ -14,9 +14,9 @@ length() {
 		sub(/\[[^]]*\]\([^)]*\)/, t " [" i++ "]")
 	}
 	# http[s]://foo/bar
-	while (match($0, /http[s]?:\/\/[^ ]*/)) {
+	while (match($0, /http[s]?:\/\/[^/ ]*\/[^? ]*(\?[^.!,()\[\] ]*)?/)) {
 		links[i] = substr($0, RSTART, RLENGTH)
-		sub(/http[s]?:\/\/[^ ]*/, "[" i++ "]")
+		sub(/http[s]?:\/\/[^/ ]*\/[^? ]*(\?[^.!,()\[\] ]*)?/, "[" i++ "]")
 	}
 }
 {print}
