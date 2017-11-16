@@ -7,7 +7,6 @@ if v:version >= 800 && (has('python') || has('python3'))
 	Plug 'maralla/completor.vim'
 endif
 
-Plug 'ctrlpvim/ctrlp.vim', { 'on': '<plug>(ctrlp)' }
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 
@@ -18,17 +17,16 @@ endif
 " Basic settings
 " ============================================================================
 
+set tabstop=4
+set shiftwidth=4
+
 set autoread                " automatically read changed files
 
 " syntax
 syntax off                  " no syntax highlighting by default
 sil! colorscheme shblah     " default colorscheme
-let g:is_kornshell = 1      " ksh syntax by default
 
 " interface
-set cursorline              " highlight current line
-sil! set colorcolumn=80     " show line after 80 chars
-set list                    " show tabs, whitespaces etc
 set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
 set vb t_vb=                " disable beep
 set timeoutlen=500          " time to wait for key code, mapped key sequence
@@ -44,7 +42,7 @@ set complete-=i
 set completeopt=longest,menuone
 
 " ignore
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.db
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.db,*.o,*.a
 
 " directories
 set undodir=~/.vim/undo//
@@ -95,8 +93,27 @@ nmap <leader>c <plug>Commentary
 vmap <leader>c <plug>Commentary
 
 " ctrlp plugin on-demand loading
-map <c-p> <plug>(ctrlp)
-let g:ctrlp_map = ''
+" map <c-p> <plug>(ctrlp)
+" let g:ctrlp_map = ''
+
+function! FzyCommand(choice_command, vim_command)
+	try
+		let output = system(a:choice_command . " | fzy ")
+	catch /Vim:Interrupt/
+		" Swallow errors from ^C, allow redraw! below
+	endtry
+	redraw!
+	if v:shell_error == 0 && !empty(output)
+		exec a:vim_command . ' ' . output
+	endif
+endfunction
+
+let lrigdir = "name =~ \"(\.git|\.hg|CVS)\""
+let lrigfil = "name =~ \"\.(so|swp|tar|gz|zip|db|o|a)$\""
+let lrfile = printf("lr -Ut 'type == f && ! %s || %s && prune'", lrigfil, lrigdir)
+let lrdirs = printf("lr -Ut 'type == d && !(%s && !prune)'", lrigdir)
+nnoremap <c-p>p :call FzyCommand(lrfile, ':e')<cr>
+nnoremap <c-p>d :call FzyCommand(lrdirs, ':e')<cr>
 
 " ----------------------------------------------------------------------------
 " co? : Toggle options (inspired by unimpaired.vim) from: https://github.com/junegunn/dotfiles
@@ -115,8 +132,10 @@ call s:map_change_option('p', 'paste')
 call s:map_change_option('s', 'syntax',
 	\ 'if exists("g:syntax_on")<bar>syntax off<bar>else<bar>syntax enable<bar>endif<bar>redraw')
 call s:map_change_option('t', 'textwidth',
-	\ 'let &l:textwidth = input("textwidth (". &l:textwidth ."): ")<bar>redraw')
+\ 'let &l:textwidth = input("textwidth (". &l:textwidth ."): ")<bar>redraw')
 call s:map_change_option('w', 'wrap', 'setlocal wrap!')
+call s:map_change_option('m', 'colorcolumn',
+\ 'let &l:colorcolumn = input("colorcolumn (". &l:colorcolumn ."): ")<bar>redraw')
 
 " ============================================================================
 " FILETYPES
@@ -124,3 +143,6 @@ call s:map_change_option('w', 'wrap', 'setlocal wrap!')
 
 " void-packages template file
 autocmd BufNewFile,BufRead template set ft=sh sts=0 sw=0 noet
+
+" dont indent case in switch
+set cinoptions+=:0
