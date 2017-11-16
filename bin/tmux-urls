@@ -1,0 +1,11 @@
+#!/bin/sh
+# tmux-urls - get a list of all visible urls
+
+get_urls() {
+	grep -oE '(www.|http[s]?://)[^ ]+'
+}
+tmux display-message -p '#W'
+case "$(tmux display-message -p '#W')" in
+	weechat|WeeChat*) tmux send-keys M-l; tmux capture-pane -pJ | get_urls; tmux send-keys M-l ;;
+	*) tmux capture-pane -pJ | get_urls ;;
+esac
