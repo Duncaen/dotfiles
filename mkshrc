@@ -156,14 +156,16 @@ export HISTFILE HISTSIZE SHELL
 [ -r ~/.aliases ] && . ~/.aliases
 
 case "$TERM" in
-xterm|screen|*-256color)
+xterm|screen|*256col*)
+	# ((e=$?)) && print "${|errno2str "$e"}" && e="?\e[0;31m$e\e[0m" || e=
 	alias weechat='print "\033]0;weechat\a$d$s$e$i " && weechat'
-	PS1=$'\001\r''$(\
-((e=$?)) && e="?\e[0;31;40m$e\e[0m" || e=
+	PS1=$'\001\r\r''$(\
+((e=$?)) && e="?\e[0;31m$e\e[0m" || e=
 d=${PWD/$HOME/\~}; d=${d##*/};\
 [ "$SSH_CONNECTION" ] && s="@${HOSTNAME:=$(hostname)}" || s=;\
 i=\#; ((USER_ID)) && i=\$;\
-\print "\033]0;$d$s$i\a$d$s$e$i") '
+i1=\#; ((USER_ID)) && i1="\e[0;32m\$\e[0m";\
+\print "\033]0;$d$s$i\a$d$s$e$i1") '
 ;;
 network|dump|*)
 	PS1=$'\001\r''$(\
@@ -174,3 +176,9 @@ d=${PWD/$HOME/\~}; d=${d##*/};\
 print "$d$s$e$i ")'
 ;;
 esac
+
+function fgg {
+	j=$(jobs|fzy); j=${j%%]*}; j=${j#[*}; fg "%$j"
+}
+
+export GCC_COLORS='locus=34'
