@@ -6,7 +6,7 @@
 "
 " A 16 colors scheme that use your terminal colors
 
-set background=dark
+set background=light
 if version > 580
     highlight clear
     if exists("g:syntax_on")
@@ -15,51 +15,55 @@ if version > 580
 endif
 let g:colors_name="shblah"
 
-" Actual colours and styles.
-hi ColorColumn  term=NONE cterm=NONE ctermfg=NONE ctermbg=8
-hi Comment      term=NONE cterm=NONE ctermfg=8    ctermbg=NONE
-hi Constant     term=NONE cterm=NONE ctermfg=4    ctermbg=NONE
-hi Cursor       term=NONE cterm=NONE ctermfg=3    ctermbg=NONE
-hi CursorLine   term=NONE cterm=NONE ctermfg=NONE ctermbg=NONE
-hi DiffAdd      term=NONE cterm=NONE ctermfg=2    ctermbg=NONE
-hi DiffChange   term=NONE cterm=NONE ctermfg=NONE ctermbg=NONE
-hi DiffDelete   term=NONE cterm=NONE ctermfg=7    ctermbg=1
-hi DiffText     term=NONE cterm=NONE ctermfg=7    ctermbg=4
-hi Directory    term=NONE cterm=NONE ctermfg=4    ctermbg=0
-hi Error        term=NONE cterm=NONE ctermfg=0    ctermbg=1
-hi ErrorMsg     term=NONE cterm=NONE ctermfg=1    ctermbg=0
-hi FoldColumn   term=NONE cterm=NONE ctermfg=0    ctermbg=NONE
-hi Folded       term=NONE cterm=NONE ctermfg=0    ctermbg=NONE
-hi Function     term=NONE cterm=NONE ctermfg=7    ctermbg=NONE
-hi Identifier   term=NONE cterm=NONE ctermfg=4    ctermbg=NONE
-hi IncSearch    term=NONE cterm=NONE ctermfg=0    ctermbg=5
-hi NonText      term=NONE cterm=NONE ctermfg=8    ctermbg=NONE
-hi Normal       term=NONE cterm=NONE ctermfg=7    ctermbg=NONE
-hi Pmenu        term=NONE cterm=NONE ctermfg=7    ctermbg=7
-hi PreProc      term=NONE cterm=NONE ctermfg=7    ctermbg=NONE
-hi Search       term=NONE cterm=NONE ctermfg=0    ctermbg=5
-hi Special      term=NONE cterm=NONE ctermfg=4    ctermbg=NONE
-hi SpecialKey   term=NONE cterm=NONE ctermfg=8    ctermbg=NONE
-hi Statement    term=NONE cterm=NONE ctermfg=7    ctermbg=NONE
-hi StatusLine   term=NONE cterm=NONE ctermfg=7    ctermbg=NONE
-" highlight StatusLineNC term=NONE cterm=NONE ctermfg=0    ctermbg=NONE
-hi String       term=NONE cterm=NONE ctermfg=4    ctermbg=NONE
-hi TabLineSel   term=NONE cterm=NONE ctermfg=7    ctermbg=NONE
-hi Todo         term=NONE cterm=NONE ctermfg=7    ctermbg=1
-hi Type         term=NONE cterm=NONE ctermfg=4    ctermbg=NONE
-hi Underlined   term=underline cterm=underline ctermfg=NONE   ctermbg=NONE
-hi VertSplit    term=NONE cterm=NONE ctermfg=7    ctermbg=NONE
-hi Visual       term=NONE cterm=NONE ctermfg=0    ctermbg=7
-hi WarningMsg   term=NONE cterm=NONE ctermfg=3    ctermbg=NONE
-
-hi Pmenu        term=NONE cterm=NONE ctermfg=7    ctermbg=8
-hi PmenuSel     term=NONE cterm=NONE ctermfg=2    ctermbg=8
+if &background == "dark"
+	hi ColorColumn  term=NONE cterm=NONE ctermfg=NONE ctermbg=8
+	hi Comment      term=NONE cterm=NONE ctermfg=8    ctermbg=NONE
+	hi Constant     term=NONE cterm=NONE ctermfg=4    ctermbg=NONE
+	hi Cursor       term=NONE cterm=NONE ctermfg=3    ctermbg=NONE
+	hi CursorLine   term=NONE cterm=NONE ctermfg=NONE ctermbg=NONE
+	hi DiffAdd      term=NONE cterm=NONE ctermfg=2    ctermbg=NONE
+	hi DiffChange   term=NONE cterm=NONE ctermfg=NONE ctermbg=NONE
+	hi DiffDelete   term=NONE cterm=NONE ctermfg=7    ctermbg=1
+	hi DiffText     term=NONE cterm=NONE ctermfg=7    ctermbg=4
+	hi Directory    term=NONE cterm=NONE ctermfg=4    ctermbg=0
+	hi Error        term=NONE cterm=NONE ctermfg=0    ctermbg=1
+	hi ErrorMsg     term=NONE cterm=NONE ctermfg=1    ctermbg=0
+	hi FoldColumn   term=NONE cterm=NONE ctermfg=0    ctermbg=NONE
+	hi Folded       term=NONE cterm=NONE ctermfg=0    ctermbg=NONE
+	hi Function     term=NONE cterm=NONE ctermfg=7    ctermbg=NONE
+	hi Identifier   term=NONE cterm=NONE ctermfg=4    ctermbg=NONE
+	hi IncSearch    term=NONE cterm=NONE ctermfg=0    ctermbg=5
+	hi NonText      term=NONE cterm=NONE ctermfg=8    ctermbg=NONE
+	hi Normal       term=NONE cterm=NONE ctermfg=7    ctermbg=NONE
+	hi Pmenu        term=NONE cterm=NONE ctermfg=7    ctermbg=7
+	hi PreProc      term=NONE cterm=NONE ctermfg=7    ctermbg=NONE
+	hi Search       term=NONE cterm=NONE ctermfg=0    ctermbg=5
+	hi Special      term=NONE cterm=NONE ctermfg=4    ctermbg=NONE
+	hi SpecialKey   term=NONE cterm=NONE ctermfg=NONE    ctermbg=NONE
+	hi Statement    term=NONE cterm=NONE ctermfg=7    ctermbg=NONE
+	hi StatusLine   term=NONE cterm=NONE ctermfg=7    ctermbg=NONE
+	" highlight StatusLineNC term=NONE cterm=NONE ctermfg=0    ctermbg=NONE
+	hi String       term=NONE cterm=NONE ctermfg=4    ctermbg=NONE
+	hi TabLineSel   term=NONE cterm=NONE ctermfg=7    ctermbg=NONE
+	hi Todo         term=NONE cterm=NONE ctermfg=7    ctermbg=1
+	hi Type         term=NONE cterm=NONE ctermfg=4    ctermbg=NONE
+	hi Underlined   term=underline cterm=underline ctermfg=NONE   ctermbg=NONE
+	hi VertSplit    term=NONE cterm=NONE ctermfg=7    ctermbg=NONE
+	hi Visual       term=NONE cterm=NONE ctermfg=0    ctermbg=7
+	hi WarningMsg   term=NONE cterm=NONE ctermfg=3    ctermbg=NONE
+	
+	hi Pmenu        term=NONE cterm=NONE ctermfg=7    ctermbg=8
+	hi PmenuSel     term=NONE cterm=NONE ctermfg=2    ctermbg=8
+else
+	hi CursorLine   term=NONE cterm=NONE ctermfg=NONE ctermbg=NONE
+	hi SpecialKey   term=NONE cterm=bold ctermfg=7    ctermbg=NONE
+endif
 
 " General highlighting group links.
 hi! link diffAdded       DiffAdd
 hi! link diffRemoved     DiffDelete
 hi! link diffChanged     DiffChange
-hi! link StatusLineNC    StatusLine
+ei! link StatusLineNC    StatusLine
 hi! link Title           Normal
 hi! link LineNr          Comment
 hi! link MoreMsg         Normal
