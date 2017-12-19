@@ -1,0 +1,14 @@
+#!/bin/sh
+# tmux-signal pid [signal] - send signal to running processes in pids session
+# bind ^T run-shell -b "tmux-signal #{pane_pid} USR1"
+
+[ "$#" -lt 1 ] && return 1
+sid=$(cut -d' ' -f6 "/proc/$1/stat")
+sig=$2
+: ${sig:=USR1}
+ps -ho state,pid --sid "$sid" | \
+while read state pid; do
+	case "$state" in
+	R) kill -s"$sig" "$pid" ;;
+	esac
+done
