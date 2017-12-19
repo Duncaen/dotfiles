@@ -44,6 +44,8 @@ bin/
 - ssh-copy-term - copy terminfo via ssh
 - swaptop - show most swap-using processes
 - timer [hh:mm[:ss]]... [[0-9]*[h|m|s]]... -- prog [args...]
+- tmux-signal pid [signal] - send signal to running processes in pids session
+- tmux-urls - get a list of all visible urls
 - twoman CMD... - show comments at the beginning of a script
 - unpatch [-pN] FILES... - re-generate patch from files and their .orig version
 - venv - small POSIX shell script for python virtualenv
@@ -56,13 +58,11 @@ Proudly presented by
 links
 -----
 
-
-
-- [0] http://chneukirchen.org/dotfiles/
-- [1] https://github.com/chneukirchen/extrace
-- [2] https://github.com/chneukirchen/lr
-- [3] https://github.com/chneukirchen/snooze
-- [4] https://github.com/chneukirchen/xe
-- [5] http://tools.suckless.org/dmenu/
-- [6] http://dwm.suckless.org/
-- [7] http://st.suckless.org/
+[0] http://chneukirchen.org/dotfiles/
+[1] https://github.com/chneukirchen/extrace
+[2] https://github.com/chneukirchen/lr
+[3] https://github.com/chneukirchen/snooze
+[4] https://github.com/chneukirchen/xe
+[5] http://tools.suckless.org/dmenu/
+[6] http://dwm.suckless.org/
+[7] http://st.suckless.org/
