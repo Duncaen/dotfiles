@@ -13,6 +13,6 @@
 : ${PAGER:=$(command -v less 2>/dev/null)}
 : ${MANWIDTH:=80}
 
-PATH="$HOME/bin:$PATH:$GOPATH/bin"
+PATH="$HOME/bin:/usr/local/bin:/usr/local/lobase/bin:$PATH:$GOPATH/bin:/usr/local/plan9/bin"
 
 export BROWSER EDITOR GOPATH MANWIDTH PAGER PATH VISUAL
