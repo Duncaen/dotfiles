@@ -73,10 +73,10 @@ fi
 HISTFILE=~/.yash_history HISTSIZE=5000
 
 PS1=\
-'${${${PWD:/~/\~}##*/}:-$PWD}'\
+'${{{PWD:/~/\~}##*/}:-$PWD}'\
 '${SSH_CONNECTION:+@${HOSTNAME}}'\
 '${{?:/0/}:+?\\fr.$?\\fd.}'\
-'\$ '
+'\fg\$\fd '
 PS1R=
 PS1S=
 PS2='> '
