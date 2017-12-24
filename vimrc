@@ -1,18 +1,6 @@
 set nocompatible
 filetype off
 
-sil! if plug#begin('~/.vim/plugged')
-
-if v:version >= 800 && (has('python') || has('python3'))
-	Plug 'maralla/completor.vim'
-endif
-
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-commentary'
-
-call plug#end()
-endif
-
 " ============================================================================
 " Basic settings
 " ============================================================================
