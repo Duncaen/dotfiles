@@ -7,13 +7,6 @@
 	tags = tag -l
 	branches = branch -a
 	remotes = remote -v
-	reb = rebase
-
-[color]
-	ui = auto
-
-[push]
-	default = simple
 
 [core]
 	pager = less -r
