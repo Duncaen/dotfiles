@@ -6,7 +6,7 @@
 "
 " A 16 colors scheme that use your terminal colors
 
-set background=light
+set background=dark
 if version > 580
     highlight clear
     if exists("g:syntax_on")
@@ -57,13 +57,14 @@ if &background == "dark"
 else
 	hi CursorLine   term=NONE cterm=NONE ctermfg=NONE ctermbg=NONE
 	hi SpecialKey   term=NONE cterm=bold ctermfg=7    ctermbg=NONE
+	hi Search    term=NONE cterm=NONE ctermfg=0    ctermbg=5
 endif
 
 " General highlighting group links.
 hi! link diffAdded       DiffAdd
 hi! link diffRemoved     DiffDelete
 hi! link diffChanged     DiffChange
-ei! link StatusLineNC    StatusLine
+hi! link StatusLineNC    StatusLine
 hi! link Title           Normal
 hi! link LineNr          Comment
 hi! link MoreMsg         Normal
