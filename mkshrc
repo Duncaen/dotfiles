@@ -13,7 +13,7 @@ d=${PWD/$HOME/\~}; d=${d##*/};\
 [ "$SSH_CONNECTION" ] && s="@${HOSTNAME:=$(hostname)}" || s=;\
 i=\#; ((USER_ID)) && i=\$;\
 i1=\#; ((USER_ID)) && i1="\001\e[0;32m\$\001\e[0m";\
-\print "\001\033]0;$d$s$i\001\a$d$s$e$i1") '
+\print -n "\033k$d$s$i\033\\"; \print "$d$s$e$i1") '
 ;;
 network|dump|*)
 	PS1=$'\001\r''$(\
