@@ -17,8 +17,6 @@ user_pref('browser.download.useDownloadDir', '');
 
 user_pref('general.warnOnAboutConfig', false);
 
-user_pref('browser.uiCustomization.state', '{"placements":{"PanelUI-contents":["edit-controls","zoom-controls","new-window-button","privatebrowsing-button","save-page-button","history-panelmenu","fullscreen-button","find-button","preferences-button","add-ons-button","developer-button","sync-button","openwith-widget","downloads-button"],"addon-bar":["addonbar-closebutton","status-bar"],"PersonalToolbar":["ctraddon_bookmarks-menu-toolbar-button"],"nav-bar":["ctraddon_appbutton","ctraddon_back-forward-button","urlbar-container","personal-bookmarks","noscript-tbb","ctraddon_panelui-button","ublock0-button","umatrix-button"],"TabsToolbar":["tabbrowser-tabs","new-tab-button","alltabs-button","ctraddon_tabs-closebutton"],"toolbar-menubar":["menubar-items"],"ctraddon_addon-bar":["ctraddon_addonbar-close","customizableui-special-spring1","ctraddon_statusbar"],"ctraddon_extra-bar":["customizableui-special-spring2"]},"seen":["pocket-button","developer-button","cleanlinks-toolbar-button","ublock0-button","openwith-widget","openwith-widewidget","umatrix-button","webide-button","https-everywhere_eff_org-browser-action"],"dirtyAreaCache":["PersonalToolbar","nav-bar","TabsToolbar","toolbar-menubar","PanelUI-contents","addon-bar","ctraddon_addon-bar","ctraddon_extra-bar"],"currentVersion":6,"newElementCount":6}');
-
 user_pref('dom.disable_beforeunload', true);
 user_pref('dom.disable_window_open_feature.location', true);
 user_pref('dom.disable_window_open_feature.resizable', true)
