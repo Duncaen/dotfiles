@@ -3,7 +3,7 @@
 	name = Duncaen
 
 [alias]
-	l = log --pretty=oneline -n 20 --graph --abbrev-commit
+	l = log --pretty='format:%h %s%d' -n 20 --graph
 	tags = tag -l
 	branches = branch -a
 	remotes = remote -v
@@ -11,3 +11,7 @@
 [core]
 	pager = less -r
 	excludesfile = /home/duncan/.gitignore_global
+
+[color]
+	ui = false
+	diff = auto
