@@ -15,6 +15,8 @@ xmodmap ~/.us-intl-german.xmodmap
 xrdb -merge ~/.Xresources
 xset b off
 
+xinput --set-prop 11 'libinput Accel Speed' -0.7
+
 # color temperature
 [ $(command -v sct 2>/dev/null) ] && sct 4400
 
