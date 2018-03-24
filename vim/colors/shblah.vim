@@ -6,7 +6,7 @@
 "
 " A 16 colors scheme that use your terminal colors
 
-set background=dark
+" set background=dark
 if version > 580
     highlight clear
     if exists("g:syntax_on")
