@@ -12,6 +12,6 @@
 
 : ${GCC_COLORS:="locus=34"}
 
-PATH="$HOME/bin:/usr/local/bin:/usr/local/lobase/bin:$PATH:$GOPATH/bin:/usr/local/plan9/bin"
+PATH="$HOME/bin:/usr/local/bin:/usr/local/lobase/bin:/usr/local/lobase/sbin:$PATH:$GOPATH/bin:/usr/local/plan9/bin"
 
 export BROWSER EDITOR GOPATH MANWIDTH PAGER PATH VISUAL GCC_COLORS
