@@ -1,0 +1,12 @@
+#!/bin/sh
+# ix FILES... - paste to ix.io
+
+if [ $# -lt 2 ]; then
+  cat "$@"
+else
+  for f; do
+    echo "## $f"
+    cat "$f"
+    echo
+  done  
+fi | curl -sF 'f:1=<-' ix.io
