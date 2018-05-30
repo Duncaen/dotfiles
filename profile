@@ -1,17 +1,13 @@
-: ${BROWSER:=$(command -v firefox 2>/dev/null)}
-: ${BROWSER:=$(command -v chromium 2>/dev/null)}
+BROWSER=firefox
+EDITOR=vim
+PAGER=less
+VISUAL=vim
 
-: ${EDITOR:=$(command -v vim 2>/dev/null)}
-: ${EDITOR:=$(command -v vi 2>/dev/null)}
-: ${VISUAL:="$EDITOR"}
+MANWIDTH=80
 
-: ${GOPATH:="$HOME/go"}
+GCC_COLORS:="locus=34"
 
-: ${PAGER:=$(command -v less 2>/dev/null)}
-: ${MANWIDTH:=80}
-
-: ${GCC_COLORS:="locus=34"}
-
-PATH="$HOME/bin:/usr/local/bin:/usr/local/lobase/bin:/usr/local/lobase/sbin:$PATH:$GOPATH/bin:/usr/local/plan9/bin"
+GOPATH="$HOME/go"
+PATH="$HOME/bin:$HOME/.local/bin:/usr/local/bin:/usr/local/lobase/bin:/usr/local/lobase/sbin:$PATH:$GOPATH/bin:/usr/local/plan9/bin"
 
 export BROWSER EDITOR GOPATH MANWIDTH PAGER PATH VISUAL GCC_COLORS
