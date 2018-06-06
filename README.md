@@ -1,39 +1,37 @@
-dotfiles
-========
+# dotfiles
 
 This repository contains my dotfiles, runit services and small scripts.
-Many scripts are inspired by or copied from leah2 [0].
+Many scripts are inspired by or copied from [leah2](http://chneukirchen.org/dotfiles/).
 
-usage
------
+## usage
 
 	$ ./install.sh
 	# ./install-root.sh
 
-deps
-----
+## deps
 
-- extarce [1] - trace exec() calls system-wide
-- lr [2] - list files, recursively
-- snooze [3] - run a command at a particular time
-- xe [4] - simple xargs and apply replacement
+- [extarce](https://github.com/chneukirchen/extrace) - trace exec() calls system-wide
+- [lr](https://github.com/chneukirchen/lr) - list files, recursively
+- [snooze](https://github.com/chneukirchen/snooze) - run a command at a particular time
+- [xe](https://github.com/chneukirchen/xe) - simple xargs and apply replacement
 
-- dmenu [5]
-- dwm [6]
-- st [7]
+- [dmenu](http://tools.suckless.org/dmenu/)
+- [dwm](http://dwm.suckless.org/)
+- [st](http://st.suckless.org/)
 
-bin/
-----
+## bin/
 
 - colors - terminal color and attribute escape sequences
 - cppgrep - grep in C/C++ headers
 - diffed [-CHT] [-pN] [-s SUBST -r REPL] [-x EXCLUDE] - filter for unified diffs 
 - dmoji - dmenu based emoji picker
+- errstr errno... - print error string
 - fzpsgrep [pattern] - psgrep with fzy selection
 - git merge-pr [PRNUM][@REMOTE] [GIT-AM FLAGS...] - list or apply GitHub pull request from command-line
 - grurls - substitute and group urls
 - h - print the current paths vcs root or home
 - hex2rgb [hex ...] - converts hex colors to rgb
+- ix FILES... - paste to ix.io
 - jour [-d YYYY.MM.DD] [ls|read|write] - simple text journal
 - nginx-here [DIR] [PORT] - serve current directory (or DIR) on PORT (or 8080)
 - oomtop - lists processes by oom score
@@ -50,19 +48,3 @@ bin/
 - unpatch [-pN] FILES... - re-generate patch from files and their .orig version
 - venv - small POSIX shell script for python virtualenv
 - yiff - colored diff
-
-Proudly presented by
-
-	# git ls-files bin/ | xe awk 'NR==2{if(sub("# ","- ")){print}}'
-
-links
------
-
-[0] http://chneukirchen.org/dotfiles/
-[1] https://github.com/chneukirchen/extrace
-[2] https://github.com/chneukirchen/lr
-[3] https://github.com/chneukirchen/snooze
-[4] https://github.com/chneukirchen/xe
-[5] http://tools.suckless.org/dmenu/
-[6] http://dwm.suckless.org/
-[7] http://st.suckless.org/
