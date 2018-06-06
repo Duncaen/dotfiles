@@ -14,16 +14,15 @@ Many scripts are inspired by or copied from [leah2](http://chneukirchen.org/dotf
 
 ## deps
 
-- [extarce](https://github.com/chneukirchen/extrace) - trace exec() calls system-wide
-- [lr](https://github.com/chneukirchen/lr) - list files, recursively
-- [snooze](https://github.com/chneukirchen/snooze) - run a command at a particular time
-- [xe](https://github.com/chneukirchen/xe) - simple xargs and apply replacement
-
-- [dmenu](http://tools.suckless.org/dmenu/)
-- [dwm](http://dwm.suckless.org/)
-- [st](http://st.suckless.org/)
+* [extarce](https://github.com/chneukirchen/extrace) - trace exec() calls system-wide
+* [lr](https://github.com/chneukirchen/lr) - list files, recursively
+* [snooze](https://github.com/chneukirchen/snooze) - run a command at a particular time
+* [xe](https://github.com/chneukirchen/xe) - simple xargs and apply replacement
+* [dmenu](http://tools.suckless.org/dmenu/)
+* [dwm](http://dwm.suckless.org/)
+* [st](http://st.suckless.org/)
 
 ## bin/
 
-$(git ls-files bin/ | xe awk 'NR==2{if(sub("# ","- ")){print}}')
+$(git ls-files bin/ | xe awk 'NR==2{if(sub("# ","* ")){print}}')
 !
