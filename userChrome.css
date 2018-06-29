@@ -1,5 +1,6 @@
 :root {
 	--url-and-searchbar-background-color: var(--chrome-secondary-background-color) !important;
+	--lwt-toolbar-field-background-color: var(--chrome-secondary-background-color) !important;
 	--tab-min-height: 0 !important;
 	--toolbarbutton-inner-padding: 2 !important;
 	--toolbarbutton-border-radius: 0 !important;
@@ -15,4 +16,7 @@
 }
 .tab-content {
 	padding: 0 2px !important;
+}
+#titlebar, #tabbrowser-tabs {
+	--tab-min-height: 22px !important;
 }
