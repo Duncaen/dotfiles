@@ -56,8 +56,9 @@ if &background == "dark"
 	hi PmenuSel     term=NONE cterm=NONE ctermfg=2    ctermbg=8
 else
 	hi CursorLine   term=NONE cterm=NONE ctermfg=NONE ctermbg=NONE
-	hi SpecialKey   term=NONE cterm=bold ctermfg=7    ctermbg=NONE
-	hi Search    term=NONE cterm=NONE ctermfg=0    ctermbg=5
+	hi SpecialKey   term=NONE cterm=NONE ctermfg=1    ctermbg=NONE
+	hi Search       term=NONE cterm=NONE ctermfg=0    ctermbg=5
+	hi NonText      term=NONE cterm=NONE ctermfg=1    ctermbg=NONE
 endif
 
 " General highlighting group links.
