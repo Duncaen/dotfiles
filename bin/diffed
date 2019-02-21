@@ -1,22 +1,28 @@
 #!/bin/sh
-# diffed [-CHT] [-pN] [-s SUBST -r REPL] [-x EXCLUDE] - filter for unified diffs 
+# diffed [-CHT] [-pN|-a|-P PREFIX] [-s SUBST -r REPL] [-x EXCLUDE] - filter for unified diffs 
 #
 #   -C		       remove all non-diff lines
 #   -H		       remove diff headers
 #   -T		       remove file timestamps
 #   -p N	       strip N levels of directories from file names
+#   -a                 add a/ b/ to file names
+#   -P                 add PREFIX to file names
 #   -s SUBST -r REPL   replace regexp SUBST with REPL in filenames
 #   -x EXCLUDE	       exclude diffs touching files matching regexp EXCLUDE
 #
-# To the extent possible under law, Christian Neukirchen has waived
+# To the extent possible under law, Leah Neukirchen has waived
 # all copyright and related or neighboring rights to this work.
 # http://creativecommons.org/publicdomain/zero/1.0/
 #
 # 05may2016:: don't modify /dev/null path
+# 09sep2016:: known bug: lines which remove -- or add ++ are regarded
+#             as new diffs
+# 16jan2018:: add -a, -P
 
 striptime=0
 stripheader=0
 stripprefix=0
+addprefix=0
 clean=0
 subst=
 repl=
@@ -24,12 +30,14 @@ exclude=
 nl='
 '
 
-while getopts CHTp:s:r:x: name
+while getopts CHTap:P:s:r:x: name
 do
 	case $name in
 	C)	clean=1;;
 	H)	stripheader=1;;
 	T)	striptime=1;;
+	a)	addprefix=-;;
+	P)	addprefix=${OPTARG%/};;
 	p)	stripprefix=$((0+OPTARG));;
 	s)	subst=$OPTARG;;
 	r)	repl=$OPTARG;;
@@ -42,6 +50,7 @@ done
 exec awk -v "striptime=$striptime" \
 	 -v "stripheader=$stripheader" \
 	 -v "stripprefix=$stripprefix" \
+	 -v "addprefix=$addprefix" \
 	 -v "subst=$subst" \
 	 -v "repl=$repl" \
 	 -v "excludes=$exclude" \
@@ -72,6 +81,14 @@ inpatch && /^[^ +-@]/ { inpatch = 0; strippatch = 0 }
 			sub("[^/]*\\/", "", f)
 	if (subst && repl)
 		gsub(subst, repl, f)
+	if (addprefix == "-") {
+		if (index($0, "---") == 1)
+			f = "a/" f;
+		else
+			f = "b/" f;
+	} else if (addprefix) {
+		f = addprefix "/" f;
+	}
 	$0 = s f t
 	for (e in exclude)
 		if (match(f, exclude[e]))
