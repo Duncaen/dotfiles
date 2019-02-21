@@ -3,11 +3,25 @@ EDITOR=vim
 PAGER=less
 VISUAL=vim
 
-MANWIDTH=80
-
 GCC_COLORS="locus=34"
 
-GOPATH="$HOME/go"
-PATH="$HOME/bin:$HOME/.local/bin:/usr/local/bin:/usr/local/lobase/bin:/usr/local/lobase/sbin:$PATH:$GOPATH/bin:/usr/local/plan9/bin"
+: ${GOPATH:="$HOME/go"}
+: ${XDG_RUNTIME_DIR:=/run/$USER}
 
-export BROWSER EDITOR GOPATH MANWIDTH PAGER PATH VISUAL GCC_COLORS
+for x in \
+	"/usr/local/bin" \
+	"/usr/local/lobase/bin" \
+	"/usr/local/lobase/sbin" \
+	"$HOME/.local/bin" \
+	"$HOME/.cargo/bin" \
+	"$HOME/.cabal/bin" \
+	"$GOPATH/bin" \
+	"$HOME/bin"; do
+	[ -d "$x" ] || continue
+	case "$PATH" in
+	*"$x"*) ;;
+	*) PATH="$x:$PATH" ;;
+	esac
+done
+
+export BROWSER EDITOR PAGER PATH VISUAL GCC_COLORS XDG_RUNTIME_DIR GOPATH
