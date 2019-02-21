@@ -1,12 +1,6 @@
 :root {
-	--url-and-searchbar-background-color: var(--chrome-secondary-background-color) !important;
-	--lwt-toolbar-field-background-color: var(--chrome-secondary-background-color) !important;
-	--tab-min-height: 0 !important;
-	--toolbarbutton-inner-padding: 2 !important;
-	--toolbarbutton-border-radius: 0 !important;
-}
-#nav-bar {
-	padding: 0 !important;
+	--lwt-toolbar-field-background-color: var(--toolbar-bgcolor) !important;
+	--toolbarbutton-inner-padding: 2px !important;
 }
 #urlbar, .searchbar-textbox {
 	margin: 0 !important;
@@ -19,4 +13,26 @@
 }
 #titlebar, #tabbrowser-tabs {
 	--tab-min-height: 22px !important;
+}
+.tab-line {
+	display: none;
+}
+
+.tab {
+	border: solid 1px #00000012; 
+}
+
+#main-window[tabsintitlebar="true"]:not([extradragspace="true"]) #titlebar #TabsToolbar {
+	opacity: 0;
+	pointer-events: none;
+}
+#main-window[tabsintitlebar="true"]:not([extradragspace="true"]) #titlebar:hover #TabsToolbar {
+	opacity: 1;
+	pointer-events: initial;
+}
+#main-window:not([tabsintitlebar="true"]) #titlebar #TabsToolbar {
+	visibility: collapse !important;
+}
+#main-window[tabsintitlebar="true"]:not([extradragspace="true"]) #titlebar:hover #TabsToolbar {
+	visibility: visible !important;
 }
