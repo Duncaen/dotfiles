@@ -4,7 +4,7 @@
 \export MKSH SHELL HISTFILE HISTSIZE
 
 case "$TERM" in
-xterm|screen|alacritty|*256col*)
+xterm|linux|screen|alacritty|*256col*)
 	# ((e=$?)) && print "${|errno2str "$e"}" && e="?\001\e[0;31m$e\001\e[0m" || e=
 	PS1=$'\001\r''$(\
 ((e=$?)) && e="?\001\e[0;31m$e\001\e[0m" || e=
