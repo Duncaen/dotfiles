@@ -1,15 +1,14 @@
 [user]
 	email = mail@duncano.de
-	name = Duncaen
+	name = Duncan Overbruck
 
 [alias]
 	l = log --pretty='format:%h %s%d' -n 20 --graph
 	tags = tag -l
 	branches = branch -a
 	remotes = remote -v
-
-[core]
-	excludesfile = /home/duncan/.gitignore_global
+	s = status -sb
+	ss = s -uno
 
 [color]
 	ui = false
