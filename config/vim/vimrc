@@ -1,6 +1,16 @@
 set nocompatible
 filetype off
 
+if empty($XDG_CACHE_HOME)
+	let $XDG_CACHE_HOME = fnamemodify("~/.cache", ":p:h")
+endif
+if empty($XDG_CONFIG_HOME)
+	let $XDG_CONFIG_HOME = fnamemodify("~/.config", ":p:h")
+endif
+if empty($XDG_DATA_HOME)
+	let $XDG_DATA_HOME = fnamemodify("~/.local/share", ":p:h")
+endif
+
 " ============================================================================
 " Basic settings
 " ============================================================================
@@ -33,9 +43,9 @@ set completeopt=menuone,longest
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.db,*.o,*.a
 
 " directories
-set undodir=~/.vim/undo//
-set backupdir=~/.vim/backup//
-set directory=~/.vim/swp//
+set undodir=$XDG_DATA_HOME/vim/undo//
+set backupdir=$XDG_DATA_HOME/vim/backup//
+set directory=$XDG_CACHE_HOME/vim/swp//
 
 " histroy/undo
 set history=1000            " store a ton of history (default is 20)
