@@ -7,7 +7,7 @@ PORT=${2:-8080}
 mkdir -p /tmp/.nginx-here.$$
 cat >/tmp/.nginx-here.$$/cfg <<EOF
 worker_processes 1;
-error_log "/dev/stdout";
+error_log "/dev/stderr";
 daemon off;
 pid "/tmp/.nginx-here.$$/pid";
 events {
