@@ -1,5 +1,4 @@
 #!/bin/sh
 
-[ -r ./conf ] && . ./conf
-rm -f ${SSH_AGENT_INFO_FILE:=~/.cache/ssh-agent-info}
+rm -f "${XDG_CACHE_HOME:-$HOME/.cache}"/ssh-agent.sock
 exit 0

@@ -26,3 +26,6 @@ for x in \
 done
 
 export BROWSER EDITOR PAGER PATH VISUAL GCC_COLORS XDG_RUNTIME_DIR GOPATH
+
+SSH_AUTH_SOCK="${XDG_CACHE_HOME:-$HOME/.cache}"/ssh-agent.sock
+export SSH_AUTH_SOCK

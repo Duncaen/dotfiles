@@ -1,4 +1,3 @@
 #!/bin/sh
 
-[ -r ./conf ] && . ./conf
-exec ssh-agent -D > ${SSH_AGENT_INFO_FILE:=~/.cache/ssh-agent-info}
+exec ssh-agent -Da "${XDG_CACHE_HOME:-$HOME/.cache}"/ssh-agent.sock
