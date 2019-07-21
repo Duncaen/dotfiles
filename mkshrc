@@ -5,31 +5,18 @@
 
 case "$TERM" in
 xterm|linux|screen|alacritty|*256col*)
-	# ((e=$?)) && print "${|errno2str "$e"}" && e="?\001\e[0;31m$e\001\e[0m" || e=
 	PS1=$'\001\r''$(\
-((e=$?)) && e="?\001\e[0;31m$e\001\e[0m" || e=
-d=${PWD/$HOME/\~}; d=${d##*/};\
-[ "$SSH_CONNECTION" ] && s="@${HOSTNAME:=$(hostname)}" || s=;\
-i=\#; ((USER_ID)) && i=\$;\
-i1=\#; ((USER_ID)) && i1="\001\e[0;32m\$\001\e[0m";\
-\print "$d$s$e$i1") '
+((e=$?))||e="";
+d=${PWD/$HOME/\~};
+\print "${d##*/}'"${SSH_CONNECTION:+"@${HOSTNAME:=$(hostname)}"}"'${e:+"?\001\e[0;31m$e\001\e[0m"}\001\e[0;32m'"$(((USER_ID)) && \print \$ || \print \#)\001\e[0m"'") '
 ;;
 network|dump|*)
 	PS1=$'\001\r''$(\
-((r=$?)) && e="?$r" || e=;\
-d=${PWD/$HOME/\~}; d=${d##*/};\
-[ "$SSH_CONNECTION" ] && s="@${HOSTNAME:=$(hostname)}" || s=;\
-((USER_ID)) && i=\$ || i=\#;\
-print "$d$s$e$i ")'
+((e=$?))||e="";
+d=${PWD/$HOME/\~};
+\print "${d##*/}'"${SSH_CONNECTION:+"@${HOSTNAME:=$(hostname)}"}"'${e:+"?$e"}'"$(((USER_ID)) && \print \$ || \print \#)"'") '
 ;;
 esac
-
-function fgg {
-	j=$(jobs|fzy)
-	[ -z "$j" ] && return
-	j=${j%%]*}; j=${j#[*}
-	fg "%$j"
-}
 
 . ~/.aliases 2>/dev/null
 . ~/.cache/ssh-agent-info 2>/dev/null
