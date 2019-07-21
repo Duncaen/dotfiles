@@ -122,9 +122,9 @@ user_pref('geo.enabled', false);
 user_pref('geo.wifi.logging.enabled', false);
 user_pref('geo.wifi.uri', '');
 
-user_pref('javascript.options.asmjs', false);
-user_pref('javascript.options.wasm', false);
+// user_pref('javascript.options.asmjs', false);
+// user_pref('javascript.options.wasm', false);
 
-user_pref('webgl.disabled', true);
+// user_pref('webgl.disabled', true);
 
 user_pref('toolkit.cosmeticAnimations.enabled', false);
