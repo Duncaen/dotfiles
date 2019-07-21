@@ -1,0 +1,4 @@
+# text/html: elinks -force-html -dump 1 -dump-color-mode 3 -localhost 1
+# application/pdf: pdftotext - - | par
+# application: file -b -
+# image: file -b -
