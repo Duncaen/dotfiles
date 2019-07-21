@@ -18,5 +18,5 @@ d=${PWD/$HOME/\~};
 ;;
 esac
 
-. ~/.aliases 2>/dev/null
+. "${XDG_CONFIG_HOME:-$HOME/.config}"/sh/aliases 2>/dev/null
 . ~/.cache/ssh-agent-info 2>/dev/null
