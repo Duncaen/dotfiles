@@ -1,0 +1,3 @@
+#!/usr/bin/sh
+
+exec nclttr -j 50 -t 3
