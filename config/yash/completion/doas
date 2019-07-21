@@ -1,0 +1,26 @@
+function completion/doas {
+	typeset OPTIONS ARGOPT PREFIX
+	OPTIONS=( #>#
+	"C:; Parse and check configuration file"
+	"n; Non interactive mode"
+	"s; Execute the shell"
+	"u:; Specify the user"
+	) #<#
+
+	command -f completion//parseoptions
+	case $ARGOPT in
+	(-)
+		command -f completion//completeoptions
+		;;
+	(C)
+		complete -P "$PREFIX" -f
+		;;
+	(u)
+		complete -P "$PREFIX" -u
+		;;
+	('')
+		command -f completion//getoperands
+		command -f completion//reexecute
+		;;
+	esac
+}

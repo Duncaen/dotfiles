@@ -1,0 +1,84 @@
+[ -r ~/.profile ] && . ~/.profile
+
+# enable bash-like extended expansion
+set --brace-expand
+
+# enable recursive pathname expansion
+set --extended-glob
+
+# prevent redirections from overwriting existing files
+set --no-clobber
+
+# don't implicitly expand non-existent variables to empty strings
+set --no-unset
+
+# if yash is built with command history enabled...
+if command --identify --builtin-command history >/dev/null; then
+	# don't save commands starting with a space in history
+	set --hist-space
+fi
+
+if command --identify --builtin-command bindkey >/dev/null; then
+	# print job status update ASAP, but only while line-editing
+	set --notify-le
+	# some terminfo data are broken; meta flags have to be ignored for UTF-8
+	set --le-no-conv-meta
+
+	# most users are more familiar with emacs mode than vi mode
+	[ -o vi ] && set --emacs
+
+	# some useful key bindings
+	bindkey --emacs '\^N' beginning-search-forward
+	bindkey --emacs '\^O' clear-candidates
+	bindkey --emacs '\^P' beginning-search-backward
+	bindkey --emacs '\N' complete-next-column
+	bindkey --emacs '\P' complete-prev-column
+	bindkey --emacs '\^[[1;5C' forward-emacsword
+	bindkey --emacs '\^[[1;5D' backward-emacsword
+	bindkey --emacs '\^I' complete-max-then-list
+
+	# key bindings for vi mode, some of which are from emacs mode
+	bindkey --vi-insert '\^A' beginning-of-line
+	bindkey --vi-insert '\^B' backward-char
+	bindkey --vi-insert '\^D' eof-or-delete
+	bindkey --vi-insert '\#'  eof-or-delete
+	bindkey --vi-insert '\^E' end-of-line
+	bindkey --vi-insert '\^F' forward-char
+	bindkey --vi-insert '\^K' forward-kill-line
+	bindkey --vi-insert '\^N' beginning-search-forward
+	bindkey --vi-insert '\^O' clear-candidates
+	bindkey --vi-insert '\^P' beginning-search-backward
+	bindkey --vi-insert '\^U' backward-kill-line
+	bindkey --vi-insert '\$'  backward-kill-line
+	bindkey --vi-insert '\^W' backward-delete-viword
+	bindkey --vi-insert '\^Y' put-left
+	bindkey --vi-insert '\N' complete-next-column
+	bindkey --vi-insert '\P' complete-prev-column
+	bindkey --vi-command '\^N' beginning-search-forward
+	bindkey --vi-command '\^P' beginning-search-backward
+fi
+
+. "${XDG_CONFIG_HOME:-$HOME/.config}"/sh/aliases 2>/dev/null
+
+# define some basic variables if missing
+: ${PAGER:=less} ${EDITOR:=vi} ${FCEDIT:=$EDITOR}
+: ${LOGNAME:=$(logname)} ${HOSTNAME:=$(uname -n)}
+
+# disable confusing treatment of arguments in the echo command
+: ${ECHO_STYLE:=RAW}
+
+# variables needed for command history
+HISTFILE=~/.yash_history HISTSIZE=5000
+
+PS1=\
+'${{{PWD:/~/\~}##*/}:-$PWD}'\
+"${SSH_CONNECTION:+@${HOSTNAME}}"\
+'${{?:/0/}:+?\\fr.$?\\fd.}'\
+"\fg\$\fd "
+PS1R=
+PS1S=
+PS2='> '
+PS2R=
+PS2S=$PS1S
+PS4='\fm.+ '
+PS4S='\fmo.'
