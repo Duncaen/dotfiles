@@ -9,6 +9,7 @@ GCC_COLORS="locus=34"
 : ${XDG_RUNTIME_DIR:=/run/$USER}
 
 for x in \
+	"/usr/bin" \
 	"/usr/local/bin" \
 	"/usr/local/lobase/bin" \
 	"/usr/local/lobase/sbin" \

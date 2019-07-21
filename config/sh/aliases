@@ -1,7 +1,8 @@
 alias ga='git add'
 alias gc='git commit'
 alias gp='git pull'
-alias gs='git status -sb'
+alias gs='git s'
+alias gss='git ss'
 alias gb='git branch'
 alias gd='git diff'
 alias gl='git l'
@@ -32,3 +33,7 @@ alias rot13='tr \
 
 type hd >/dev/null || hd() hexdump -e '"%08.8_ax  " 8/1 "%02X " \
 	" - " 8/1 "%02X "' -e '"  |" "%_p"' -e '"|\n"' "$@"
+
+alias xlint='PATH=/usr/bin xlint'
+
+err() errstr $?
