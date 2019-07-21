@@ -15,7 +15,6 @@ d=${PWD/$HOME/\~}; d=${d##*/};\
 print "$d$s$e$i ")'
 ;;
 xterm|*-256color)
-	alias weechat='print "\033]0;weechat\a$d$s$e$i " && weechat'
 	PS1=$'\001\r\W'$([ "$SSH_CONNECTION" ] && print '@\h')'$(((e=$?)) && print "?\e[0;31;40m$e\e[0m")\$ '
 ;;
 esac
