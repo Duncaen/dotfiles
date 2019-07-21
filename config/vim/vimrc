@@ -46,6 +46,7 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.db,*.o,*.a
 set undodir=$XDG_DATA_HOME/vim/undo//
 set backupdir=$XDG_DATA_HOME/vim/backup//
 set directory=$XDG_CACHE_HOME/vim/swp//
+let g:netrw_home=expand("$XDG_DATA_HOME/vim")
 
 " histroy/undo
 set history=1000            " store a ton of history (default is 20)
