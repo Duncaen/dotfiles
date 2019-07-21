@@ -9,7 +9,6 @@
 	remotes = remote -v
 
 [core]
-	pager = less -r
 	excludesfile = /home/duncan/.gitignore_global
 
 [color]
