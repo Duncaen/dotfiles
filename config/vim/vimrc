@@ -7,9 +7,6 @@ endif
 if empty($XDG_CONFIG_HOME)
 	let $XDG_CONFIG_HOME = fnamemodify("~/.config", ":p:h")
 endif
-if empty($XDG_DATA_HOME)
-	let $XDG_DATA_HOME = fnamemodify("~/.local/share", ":p:h")
-endif
 
 " ============================================================================
 " Basic settings
@@ -19,6 +16,8 @@ set tabstop=4
 set shiftwidth=4
 
 set autoread                " automatically read changed files
+
+set viminfo+=n$XDG_CACHE_HOME/vim/viminfo
 
 " syntax
 syntax off                  " no syntax highlighting by default
@@ -43,9 +42,22 @@ set completeopt=menuone,longest
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.db,*.o,*.a
 
 " directories
-set undodir=$XDG_DATA_HOME/vim/undo//
-set backupdir=$XDG_DATA_HOME/vim/backup//
+"
+if !isdirectory($XDG_CACHE_HOME . "/vim/undo")
+	call mkdir($XDG_CACHE_HOME . "/vim/undo", "p")
+endif
+set undodir=$XDG_CACHE_HOME/vim/undo//
+
+if !isdirectory($XDG_CACHE_HOME . "/vim/backup")
+	call mkdir($XDG_CACHE_HOME . "/vim/backup", "p")
+endif
+set backupdir=$XDG_CACHE_HOME/vim/backup//
+
+if !isdirectory($XDG_CACHE_HOME . "/vim/swp")
+	call mkdir($XDG_CACHE_HOME . "/vim/swp", "p")
+endif
 set directory=$XDG_CACHE_HOME/vim/swp//
+
 let g:netrw_home=expand("$XDG_DATA_HOME/vim")
 
 " histroy/undo
