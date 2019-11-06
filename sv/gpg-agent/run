@@ -1,0 +1,16 @@
+#!/bin/execlineb
+
+backtick -n agent-socket { gpgconf --list-dirs agent-socket }
+backtick -n agent-ssh-socket { gpgconf --list-dirs agent-ssh-socket }
+multisubstitute {
+	importas agent-socket agent-socket
+	importas agent-ssh-socket agent-ssh-socket
+}
+getpid LISTEN_PID
+export LISTEN_FDS 2
+export LISTEN_FDNAMES std:ssh
+s6-ipcserver-socketbinder -a 0600 $agent-socket
+fdmove 3 0
+s6-ipcserver-socketbinder -a 0600 $agent-ssh-socket
+fdmove 4 0
+gpg-agent --supervised
