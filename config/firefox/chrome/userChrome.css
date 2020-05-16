@@ -1,19 +1,62 @@
 :root {
 	--lwt-toolbar-field-background-color: var(--toolbar-bgcolor) !important;
 	--toolbarbutton-inner-padding: 2px !important;
+	--urlbar-container-height: 20px !important;
+	--urlbar-height: 20px !important;
+	--urlbar-toolbar-height: 26px !important;
 }
-#urlbar, .searchbar-textbox {
-	margin: 0 !important;
+
+#urlbar-container {
+	--urlbar-container-height: 20px !important;
+}
+
+#urlbar[breakout] {
+	top: 0 !important;
+}
+
+#urlbar[breakout][breakout-extend] {
+	top: 0 !important;
+	left: 0 !important;
+	width: 100% !important;
+}
+#urlbar[breakout][breakout-extend] > #urlbar-input-container {
+	height: var(--urlbar-height) !important;
+}
+:root[uidensity=compact] #urlbar,
+:root[uidensity=compact] #searchbar {
+	min-height: 20px !important; // 26px
+}
+
+#urlbar.megabar > #urlbar-input-container {
 	border: 0 !important;
-	min-height: 0 !important;
-	height: 19px !important ;
 }
-.tab-content {
-	padding: 0 2px !important;
+
+#urlbar-container, #search-container {
+	padding-block: 0 !important;
+	margin-inline: 0 !important;
 }
-#titlebar, #tabbrowser-tabs {
-	--tab-min-height: 22px !important;
+
+#urlbar[breakout][breakout-extend] > #urlbar-input-container {
+	padding-block: 0 !important;
+	padding-inline: 0 !important;
 }
+
+#urlbar:not(.megabar), #urlbar.megabar > #urlbar-background, #searchbar {
+	border: 0 !important;
+}
+
+/* #urlbar, .searchbar-textbox { */
+/* 	margin: 0 !important; */
+/* 	border: 0 !important; */
+/* 	min-height: 0 !important; */
+/* 	height: 19px !important ; */
+/* } */
+/* .tab-content { */
+/* 	padding: 0 2px !important; */
+/* } */
+/* #titlebar, #tabbrowser-tabs { */
+/* 	--tab-min-height: 22px !important; */
+/* } */
 .tab-line {
 	display: none;
 }
@@ -22,17 +65,16 @@
 	border: solid 1px #00000012; 
 }
 
-#main-window[tabsintitlebar="true"]:not([extradragspace="true"]) #titlebar #TabsToolbar {
+.sidebar-splitter {
+	width: 1px !important;
+}
+
+// sidebarcommand="treestyletab_piro_sakura_ne_jp-sidebar-action"
+
+#main-window[tabsintitlebar="true"]:not([extradragspace="true"]) #TabsToolbar > .toolbar-items {
 	opacity: 0;
 	pointer-events: none;
 }
-#main-window[tabsintitlebar="true"]:not([extradragspace="true"]) #titlebar:hover #TabsToolbar {
-	opacity: 1;
-	pointer-events: initial;
-}
-#main-window:not([tabsintitlebar="true"]) #titlebar #TabsToolbar {
+#main-window:not([tabsintitlebar="true"]) #TabsToolbar {
 	visibility: collapse !important;
-}
-#main-window[tabsintitlebar="true"]:not([extradragspace="true"]) #titlebar:hover #TabsToolbar {
-	visibility: visible !important;
 }
