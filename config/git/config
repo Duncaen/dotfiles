@@ -1,9 +1,10 @@
 [user]
 	email = mail@duncano.de
 	name = Duncan Overbruck
+	signingkey = AAE55DC91A8315F7
 
 [alias]
-	l = log --pretty='format:%h %s%d' -n 20 --graph
+	l = log --pretty='format:%h %G? %s%d' -n 20 --graph
 	tags = tag -l
 	branches = branch -a
 	remotes = remote -v
@@ -13,3 +14,12 @@
 [color]
 	ui = false
 	diff = auto
+
+[commit]
+	gpgsign = true
+
+[tag]
+	gpgsign = true
+
+[gpg]
+	program = gpg2
