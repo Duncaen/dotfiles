@@ -22,7 +22,7 @@ user_pref('dom.disable_beforeunload', true);
 user_pref('dom.disable_window_open_feature.location', true);
 user_pref('dom.disable_window_open_feature.resizable', true);
 user_pref('dom.disable_window_open_feature.status', true);
-user_pref('dom.event.contextmenu.enabled', false);
+// user_pref('dom.event.contextmenu.enabled', false);
 
 user_pref('browser.newtabpage.directory.ping', '');
 user_pref('browser.newtabpage.directory.source', '');
@@ -67,14 +67,14 @@ user_pref('browser.safebrowsing.enabled', false);
 user_pref('browser.safebrowsing.downloads.enabled', false);
 user_pref('browser.safebrowsing.malware.enabled', false);
 
-user_pref('media.navigator.enabled', false);
+// user_pref('media.navigator.enabled', false);
 user_pref('media.getusermedia.screensharing.enabled', false);
 user_pref('media.getusermedia.screensharing.allowed_domains', '');
 
-user_pref('media.peerconnection.enabled', false);
-user_pref('media.peerconnection.ice.default_address_only', true);
-user_pref('media.peerconnection.ice.no_host', true);
-user_pref('media.peerconnection.use_document_iceservers', false);
+// user_pref('media.peerconnection.enabled', false);
+// user_pref('media.peerconnection.ice.default_address_only', true);
+// user_pref('media.peerconnection.ice.no_host', true);
+// user_pref('media.peerconnection.use_document_iceservers', false);
 
 user_pref('media.eme.enabled', false);
 
@@ -98,17 +98,17 @@ user_pref('network.prefetch-next', false);
 
 user_pref('browser.send_pings', false);
 
-// crupto
-user_pref('security.ssl.require_safe_negotiation', true);
-user_pref('security.ssl.treat_unsafe_negotiation_as_broken', true);
-user_pref('security.ssl3.rsa_des_ede3_sha', false);
+// crypto
+// user_pref('security.ssl.require_safe_negotiation', true);
+// user_pref('security.ssl.treat_unsafe_negotiation_as_broken', true);
+// user_pref('security.ssl3.rsa_des_ede3_sha', false);
 
 // Useless features
-user_pref('dom.event.clipboardevents.enabled', false);
+// user_pref('dom.event.clipboardevents.enabled', false);
 
 // user_pref('dom.serviceWorkers.enabled', false);
 // user_pref('dom.storage.enabled', false);
-user_pref('dom.battery.enabled', false);
+// user_pref('dom.battery.enabled', false);
 // user_pref('dom.indexedDB.enabled', false);
 // user_pref('dom.enable_user_timing', false);
 // user_pref('dom.netinfo.enabled', false);
