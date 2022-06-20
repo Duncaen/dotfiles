@@ -16,11 +16,22 @@ PROJECT=${URL%.git}
 PROJECT=${PROJECT##*:}
 PROJECT=${PROJECT#//github.com/}
 
+if command -v wget >/dev/null; then
+	API_CMD="wget -q -O- --header"
+	PATCH_CMD="wget -nv -O"
+elif command -v curl >/dev/null; then
+	API_CMD="curl -s -H"
+	PATCH_CMD="curl -Lo"
+else
+	echo "Neither wget or curl could be found in PATH"
+	exit 1
+fi
+
 if [ -z "$PR" ]; then
-	wget -q -O- --header 'Accept: application/json' \
-		"https://api.github.com/repos/${PROJECT}/pulls?direction=asc" |
+	$API_CMD 'Accept: application/json' \
+		"https://api.github.com/repos/${PROJECT}/pulls" |
 		jq -r 'if length > 0
-			then .[] | "\(.number) <\(.user.login)> \(.title)"
+			then reverse[] | "\(.number) <\(.user.login)> \(.title)"
 			else "No open pull requests." end'
 	exit $?
 else
@@ -29,8 +40,9 @@ fi
 
 PATCH="$(mktemp)"
 trap "rm -f $PATCH" INT TERM EXIT
-wget -nv -O "$PATCH" https://github.com/$PROJECT/pull/"$PR".patch
-git am "$@" "$PATCH"
+$PATCH_CMD "$PATCH" https://github.com/$PROJECT/pull/"$PR".patch
+WHITESPACE="$(git config --get merge-pr.whitespace || true)"
+git am "--whitespace=${WHITESPACE:-warn}" "$@" "$PATCH"
 
 if [ "$(git config --bool --get merge-pr.autoclose)" = false ]; then
 	exit 0
