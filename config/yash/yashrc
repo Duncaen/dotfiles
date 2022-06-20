@@ -1,5 +1,7 @@
 [ -r ~/.profile ] && . ~/.profile
 
+YASH_LOADPATH="${XDG_CONFIG_HOME:-~/.config}/yash:/usr/share/yash"
+
 # enable bash-like extended expansion
 set --brace-expand
 
@@ -19,13 +21,11 @@ if command --identify --builtin-command history >/dev/null; then
 fi
 
 if command --identify --builtin-command bindkey >/dev/null; then
+	set --emacs
 	# print job status update ASAP, but only while line-editing
 	set --notify-le
 	# some terminfo data are broken; meta flags have to be ignored for UTF-8
 	set --le-no-conv-meta
-
-	# most users are more familiar with emacs mode than vi mode
-	[ -o vi ] && set --emacs
 
 	# some useful key bindings
 	bindkey --emacs '\^N' beginning-search-forward
@@ -35,7 +35,8 @@ if command --identify --builtin-command bindkey >/dev/null; then
 	bindkey --emacs '\P' complete-prev-column
 	bindkey --emacs '\^[[1;5C' forward-emacsword
 	bindkey --emacs '\^[[1;5D' backward-emacsword
-	bindkey --emacs '\^I' complete-max-then-list
+	# bindkey --emacs '\^I' complete-max-then-list
+	bindkey --emacs '\^I' complete
 
 	# key bindings for vi mode, some of which are from emacs mode
 	bindkey --vi-insert '\^A' beginning-of-line
@@ -58,7 +59,10 @@ if command --identify --builtin-command bindkey >/dev/null; then
 	bindkey --vi-command '\^P' beginning-search-backward
 fi
 
-. "${XDG_CONFIG_HOME:-$HOME/.config}"/sh/aliases 2>/dev/null
+# ensure job control works as expected
+case $- in
+(*m*) trap - TSTP TTIN TTOU
+esac
 
 # define some basic variables if missing
 : ${PAGER:=less} ${EDITOR:=vi} ${FCEDIT:=$EDITOR}
@@ -68,9 +72,10 @@ fi
 : ${ECHO_STYLE:=RAW}
 
 # variables needed for command history
-HISTFILE=~/.yash_history HISTSIZE=5000
+HISTFILE=~/.yash_history
+HISTSIZE=5000
 
-PS1=\
+YASH_PS1=\
 '${{{PWD:/~/\~}##*/}:-$PWD}'\
 "${SSH_CONNECTION:+@${HOSTNAME}}"\
 '${{?:/0/}:+?\\fr.$?\\fd.}'\
@@ -82,3 +87,7 @@ PS2R=
 PS2S=$PS1S
 PS4='\fm.+ '
 PS4S='\fmo.'
+
+alias source=.
+
+. "${XDG_CONFIG_HOME:-~/.config}/sh/aliases"
