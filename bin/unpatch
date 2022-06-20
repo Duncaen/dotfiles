@@ -1,10 +1,18 @@
 #!/bin/sh
-# unpatch [-pN] FILES... - re-generate patch from files and their .orig version
+# unpatch [-g] [-pN] FILES... - re-generate patch from files and their .orig copy
 
 STRIP=0
-case "$1" in
-	-p*) STRIP=${1#-p}; shift;;
-esac
+PREFIX_A=
+PREFIX_B=
+ORIG=.orig
+while getopts gp: opt; do
+	case "$opt" in
+	g) PREFIX_A=a/ PREFIX_B=b/ ORIG=;;
+	p) STRIP=$OPTARG;;
+	?) sed -n -e '2s/^# //p' "$0" 1>&2; exit 1;;
+	esac
+done
+shift $((OPTIND-1))
 
 pstrip() {
 	i=0 p=$1
@@ -27,13 +35,13 @@ if [ "$#" -eq 0 ]; then
 fi
 for f; do
 	if [ -f "$f" ] && [ -f "$f.orig" ]; then
-		diff -u --label "$(pstrip "$f.orig")" "$f.orig" \
-			--label "$(pstrip "$f")" "$f"
+		diff -u --label "$PREFIX_A$(pstrip "$f$ORIG")" "$f.orig" \
+			--label "$PREFIX_B$(pstrip "$f")" "$f"
 	elif match "$f" "*.orig" && [ -f "$f" ] && [ -f "${f%.orig}" ]; then
-		diff -u --label "$(pstrip "$f")" "$f" \
-			--label "$(pstrip "${f%.orig}")" "${f%.orig}"
+		diff -u --label "$PREFIX_A$(pstrip "${f%.orig}$ORIG")" "$f" \
+			--label "$PREFIX_B$(pstrip "${f%.orig}")" "${f%.orig}"
 	elif [ -d "$f" ]; then
-		find "$f" -type f -name '*.orig' -exec "$0" "-p$STRIP" {} ';'
+		find "$f" -type f -name '*.orig' -exec "$0" ${PREFIX_A:+-g} "-p$STRIP" {} ';'
 	else
 		printf "Can't unpatch '%s'.\n" "$f" 1>&2
 	fi
