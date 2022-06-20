@@ -1,3 +1,0 @@
-#!/usr/bin/sh
-
-exec unclutter --jitter 10 --timeout 3
