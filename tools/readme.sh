@@ -1,7 +1,7 @@
 #!/bin/sh
 # README.sh - generate README file
 
-cat <<! >README.md
+cat <<!
 # dotfiles
 
 This repository contains my dotfiles, runit services and small scripts.
@@ -24,5 +24,5 @@ Many scripts are inspired by or copied from [leah2](http://chneukirchen.org/dotf
 
 ## bin/
 
-$(git ls-files bin/ | xe awk 'NR==2{if(sub("# ","* ")){print}}')
+$(git ls-files bin/ | xe sed -rn '1{/^[^#][^!]/q;d;};/^$|^[^#]/q;s/^# /* /p;q')
 !
