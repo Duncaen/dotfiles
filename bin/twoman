@@ -1,7 +1,13 @@
 #!/bin/sh
 # twoman CMD... - show comments at the beginning of a script
 for cmd; do
-	cmd=$(command -v "$cmd" 2>/dev/null)
-	[ -z "$cmd" ] && continue
-	sed -rn '1{/^[^#][^!]/q;d;};/^$|^[^#]/q;s/^# //p' $cmd
+	if [ ! -r "$cmd" ]; then
+		abs=$(command -v "$cmd" 2>/dev/null)
+		if [ -z "$abs" ]; then
+			printf '%s: %s: file not found\n' "${0##*/}" "$cmd"
+			continue
+		fi
+		cmd="$abs"
+	fi
+	sed -rn '1{/^[^#][^!]/q;d;};/^$|^[^#]/q;s/^# //p' "$cmd"
 done
