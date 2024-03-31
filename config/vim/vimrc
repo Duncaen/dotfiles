@@ -7,6 +7,11 @@ endif
 if empty($XDG_CONFIG_HOME)
 	let $XDG_CONFIG_HOME = fnamemodify("~/.config", ":p:h")
 endif
+if empty($XDG_CONFIG_DATA)
+	let $XDG_CONFIG_DATA = fnamemodify("~/.local/share", ":p:h")
+endif
+
+let &runtimepath .= ','.expand("$XDG_DATA_HOME/vim")
 
 " ============================================================================
 " Basic settings
