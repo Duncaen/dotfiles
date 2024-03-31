@@ -21,8 +21,5 @@
 [tag]
 	gpgsign = true
 
-[gpg]
-	program = gpg2
-
 [init]
 	defaultBranch = main
