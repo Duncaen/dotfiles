@@ -1,26 +1,21 @@
-\: ${LANG:=C.UTF-8}
-\export LANG
+\export LANG=${LANG:-C.UTF-8}
 
-\: ${XDG_CACHE_HOME:=$HOME/cache}
-\: ${XDG_CONFIG_HOME:=$HOME/config}
-\: ${XDG_DATA_HOME:=$HOME/data}
-\: ${XDG_RUNTIME_DIR:=/run/$USER}
-\export XDG_CACHE_HOME XDG_CONFIG_HOME XDG_DATA_HOME XDG_RUNTIME_DIR
+\export XDG_CACHE_HOME="${HOME}/cache"
+\export XDG_CONFIG_HOME="${HOME}/config"
+\export XDG_DATA_HOME="${HOME}/data"
+\export XDG_DATA_DIRS="${XDG_DATA_HOME}/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/share"
 
-\: ${BROWSER:=firefox}
-\: ${EDITOR:=vim}
-\: ${PAGER:=less}
-\: ${VISUAL:=vim}
-\export BROWSER EDITOR PAGER PATH VISUAL
 
-\: ${GCC_COLORS:=locus=34}
-\export GCC_COLORS
+\export BROWSER=firefox
+\export EDITOR=vim
+\export VISUAL=vim
+\export PAGER=less
 
-\: ${GOPATH:="$HOME/go"}
-\export GOPATH
+\export GCC_COLORS=locus=34
 
-\: ${SSH_AUTH_SOCK:="${XDG_CACHE_HOME:-$HOME/.cache}"/ssh-agent.sock}
-\export SSH_AUTH_SOCK
+\export GOPATH="${HOME}/go"
+
+\export SSH_AUTH_SOCK=${SSH_AUTH_SOCK:-"${XDG_RUNTIME_DIR}/ssh-agent.sock"}
 
 NEW_PATH=
 for x in \
