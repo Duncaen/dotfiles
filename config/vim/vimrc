@@ -171,6 +171,16 @@ call s:map_change_option('m', 'colorcolumn',
 
 " void-packages template file
 autocmd BufNewFile,BufRead template set ft=sh sts=0 sw=0 noet
+autocmd BufNewFile,BufRead *.ncl set filetype=nickel
+autocmd BufNewFile,BufRead *.nomad set filetype=hcl
+
+autocmd FileType ninja setlocal shiftwidth=2 tabstop=2 et
+autocmd FileType c setlocal shiftwidth=8 tabstop=8 noet
+autocmd FileType cpp setlocal shiftwidth=8 tabstop=8 noet
+autocmd FileType css setlocal shiftwidth=2 tabstop=2 et
+autocmd FileType hcl setlocal shiftwidth=2 tabstop=2 et
+autocmd FileType kdl setlocal shiftwidth=2 tabstop=2 et
+autocmd FileType nickel setlocal shiftwidth=2 tabstop=2 et
 
 " dont indent case in switch
 set cinoptions+=:0
