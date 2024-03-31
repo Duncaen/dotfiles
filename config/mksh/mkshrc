@@ -18,4 +18,5 @@ d=${PWD/$HOME/\~};
 ;;
 esac
 
-. "${XDG_CONFIG_HOME:-$HOME/.config}"/sh/aliases 2>/dev/null
+\source "${XDG_CONFIG_HOME:-$HOME/.config}"/sh/aliases 2>/dev/null || :
+\source "${XDG_CONFIG_HOME:-$HOME/.config}"/sh/rc 2>/dev/null || :
