@@ -22,21 +22,17 @@
 \: ${SSH_AUTH_SOCK:="${XDG_CACHE_HOME:-$HOME/.cache}"/ssh-agent.sock}
 \export SSH_AUTH_SOCK
 
+NEW_PATH=
 for x in \
 	"$HOME/bin" \
 	"$HOME/.local/bin" \
 	"$HOME/.cargo/bin" \
 	"$HOME/.cabal/bin" \
 	"$GOPATH/bin" \
-	"/usr/local/lobase/sbin" \
-	"/usr/local/lobase/bin" \
+	"/usr/local/sbin" \
 	"/usr/local/bin" \
 	"/usr/bin" \
-	; do
-	[ -d "$x" ] || continue
-	case ":${PATH}:" in
-	*":${x}:"*) ;;
-	*) PATH="${PATH+${PATH}:}${x}" ;;
-	esac
-done
-
+	"/bin"
+	do \[ -d "$x" ] && NEW_PATH="${NEW_PATH:+${NEW_PATH}:}${x}"; done
+\export PATH=$NEW_PATH
+\unset NEW_PATH
