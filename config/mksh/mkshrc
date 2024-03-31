@@ -4,7 +4,7 @@
 \export MKSH SHELL
 
 case "$TERM" in
-xterm|linux|screen|alacritty|*256col*)
+xterm|linux|screen|alacritty|foot|*256col*)
 	PS1=$'\001\r''$(\
 ((e=$?))||e="";
 d=${PWD/$HOME/\~};
