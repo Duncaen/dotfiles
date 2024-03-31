@@ -1,5 +1,6 @@
 #!/bin/execlineb
 
+export DBUS_SESSION_ADDRESS ''
 backtick -n agent-socket { gpgconf --list-dirs agent-socket }
 backtick -n agent-ssh-socket { gpgconf --list-dirs agent-ssh-socket }
 multisubstitute {
@@ -13,4 +14,4 @@ s6-ipcserver-socketbinder -a 0600 $agent-socket
 fdmove 3 0
 s6-ipcserver-socketbinder -a 0600 $agent-ssh-socket
 fdmove 4 0
-gpg-agent --supervised
+gpg-agent --supervised --no-allow-external-cache
