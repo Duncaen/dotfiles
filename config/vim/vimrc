@@ -110,6 +110,16 @@ nmap <leader>s :source $MYVIMRC<cr>
 nmap <leader>c <plug>Commentary
 vmap <leader>c <plug>Commentary
 
+" nmap <leader>k <cmd>LspHover<cr>
+" vmap <leader>k <cmd>LspHover<cr>
+
+nnoremap <buffer> gd <cmd>LspGotoDefinition<cr>
+nnoremap <buffer> <C-W>gd <cmd>topleft LspGotoDefinition<cr>
+nnoremap <buffer> gi <cmd>LspGotoImpl<cr>
+nnoremap <buffer> gt <cmd>LspGotoTypeDef<CR>
+xnoremap <silent> <leader>e <cmd>LspSelectionExpand<cr>
+xnoremap <silent> <leader>E <cmd>LspSelectionShrink<cr>
+
 " ctrlp plugin on-demand loading
 " map <c-p> <plug>(ctrlp)
 " let g:ctrlp_map = ''
@@ -164,3 +174,30 @@ autocmd BufNewFile,BufRead template set ft=sh sts=0 sw=0 noet
 
 " dont indent case in switch
 set cinoptions+=:0
+
+packadd lsp
+call LspAddServer([
+	\     #{
+	\        filetype: ['c', 'cpp'],
+	\        path: 'clangd',
+	\        args: ['--background-index', '--enable-config']
+	\      },
+	\     #{
+	\        filetype: ['go', 'gomod'],
+	\        path: 'gopls',
+	\        args: ['serve'],
+	\        syncInit: v:true
+	\      },
+	\     #{
+	\        filetype: ['python'],
+	\        path: 'pylsp',
+	\        args: []
+	\      },
+	\     #{
+	\        filetype: ['rust'],
+	\        path: 'rust-analyzer',
+	\        args: [],
+	\        syncInit: v:true
+	\      },
+	\   ])
+call LspOptionsSet(#{autoHighlightDiags: v:true})
