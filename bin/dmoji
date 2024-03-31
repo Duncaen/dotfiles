@@ -2,7 +2,7 @@
 # dmoji - dmenu based emoji picker
 
 # GNU cut doesn't grok UTF-8.
-EMOJI=$(sed '1,/^exit/d' $0 | dmenu -i -l 10 -fn Symbola:size=20 | /usr/bin/grep -Po '^[^ ]*')
+EMOJI=$(sed '1,/^exit/d' $0 | dmenu -i -l 10 -fn :size=20 | /usr/bin/grep -Po '^[^ ]*')
 if [ "$EMOJI" ]; then
 	printf %s "$EMOJI" | xclip -i
 	sleep 0.1
