@@ -7,3 +7,6 @@
 [submodule "config/vim/pack/plugins/start/lsp"]
 	path = config/vim/pack/plugins/start/lsp
 	url = git@github.com:yegappan/lsp.git
+[submodule "config/vim/pack/plugins/start/vim-surround"]
+	path = config/vim/pack/plugins/start/vim-surround
+	url = git@github.com:tpope/vim-surround.git
