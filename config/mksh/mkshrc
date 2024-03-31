@@ -1,7 +1,7 @@
 \: "${MKSH:=$(\builtin whence -p mksh)}"; \: "${MKSH:=/bin/mksh}";
 \: SHELL=$MKSH;
-\: HISTFILE=~/.mksh_history; \: HISTSIZE=1000;
-\export MKSH SHELL HISTFILE HISTSIZE
+\: HISTFILE=~/.mksh_history;
+\export MKSH SHELL
 
 case "$TERM" in
 xterm|linux|screen|alacritty|*256col*)
