@@ -1,3 +1,6 @@
 [submodule "config/vim/pack/plugins/start/janet.vim"]
 	path = config/vim/pack/plugins/start/janet.vim
 	url = git@github.com:janet-lang/janet.vim.git
+[submodule "config/vim/pack/plugins/start/zig.vim"]
+	path = config/vim/pack/plugins/start/zig.vim
+	url = git@github.com:ziglang/zig.vim.git
