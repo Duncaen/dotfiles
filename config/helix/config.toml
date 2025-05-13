@@ -1,0 +1,28 @@
+theme = "no"
+
+[keys.normal.space]
+l = ":toggle-option whitespace.render all none"
+t = ":toggle-option lsp.display-inlay-hints"
+m = ":toggle-option rulers [80] []"
+
+[editor]
+mouse = false
+end-of-line-diagnostics = "hint"
+
+[editor.inline-diagnostics]
+cursor-line = "error"
+
+[editor.statusline]
+right = ["diagnostics", "selections", "position", "position-percentage", "file-encoding", "file-line-ending", "file-type"]
+
+[keys.normal]
+tab = "move_parent_node_end"
+S-tab = "move_parent_node_start"
+C-S-c = "no_op"
+
+[keys.insert]
+S-tab = "move_parent_node_start"
+
+[keys.select]
+tab = "extend_parent_node_end"
+S-tab = "extend_parent_node_start"

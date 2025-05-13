@@ -1,0 +1,31 @@
+inherits = "term16_light"
+
+"comment" = {}
+
+"attribute" = {}
+"constant" = {}
+"constant.numeric" = {}
+"constant.character.escape" = {}
+"constructor" = {}
+"function" = {}
+"function.builtin" = {}
+"function.macro" = {}
+"tag" = {}
+"type" = {}
+"type.builtin" = {}
+"type.enum.variant" = {}
+"string"  = {}
+"special" = {}
+"variable" = {}
+"variable.parameter" = {}
+"variable.other.member" = {}
+"keyword" = {}
+"keyword.control.exception" = {}
+"keyword.directive" = {}
+"keyword.operator" = {}
+"label" = {}
+"namespace" = {}
+
+"ui.virtual.whitespace" = { fg = "gray" }
+"ui.selection" = { bg = "16" }
+"ui.menu" = { bg = "gray" }
