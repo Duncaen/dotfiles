@@ -1,7 +1,7 @@
 [user]
 	email = mail@duncano.de
 	name = Duncan Overbruck
-	signingkey = AAE55DC91A8315F7
+	signingkey = 424E8CEE0902DEBE
 
 [alias]
 	l = log --pretty='format:%h %G? %s%d' -n 20 --graph
