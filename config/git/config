@@ -29,3 +29,5 @@
 
 [pull]
 	ff = only
+[gpg]
+	program = gpg-sq
