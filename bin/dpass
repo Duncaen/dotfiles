@@ -1,0 +1,26 @@
+#!/bin/sh
+# dpass - pass password menu
+
+prefix=${PASSWORD_STORE_DIR:-~/.password-store}
+
+list() {
+	for x in "$prefix/""$1"/*; do
+		x="${x#"$prefix/$1"/}"
+		case "${x}" in
+		*.gpg) echo "${x%.gpg}" ;;
+		*) echo "${x}/" ;;
+		esac
+	done
+}
+
+while :; do
+	resp=$(list "$sel" | fuzzel -dl 10)
+	[ "$resp" ] || break
+	echo "$sel$resp"
+	if [ -d "$prefix/$sel$resp" ]; then
+		sel="$sel$resp"
+	else
+		pass show -c "$sel$resp"
+		break
+	fi
+done
