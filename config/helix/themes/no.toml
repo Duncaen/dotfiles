@@ -1,4 +1,34 @@
-inherits = "term16_light"
+"ui.background.separator" = "light-gray"
+"ui.cursor" = { fg = "gray", modifiers = ["reversed"] }
+"ui.cursor.match" = { fg = "yellow", modifiers = ["reversed"] }
+"ui.cursor.primary" = { fg = "black", modifiers = ["reversed"] }
+"ui.cursor.secondary" = { fg = "gray", modifiers = ["reversed"] }
+"ui.cursorline.primary" = { bg = "white" }
+"ui.cursorline.secondary" = { bg = "white" }
+"ui.cursorcolumn.primary" = { bg = "white" }
+"ui.cursorcolumn.secondary" = { bg = "white" }
+"ui.gutter" = { }
+"ui.gutter.selected" = { bg = "white" }
+"ui.linenr" = { fg = "gray", modifiers = ["dim"] }
+"ui.linenr.selected" = { fg = "black",  modifiers = ["bold"] }
+"ui.menu" = { bg = "gray" }
+"ui.menu.selected" = { fg = "white", bg = "gray", modifiers = ["bold"] }
+"ui.menu.scroll" = { fg = "light-blue" }
+"ui.help" = { }
+"ui.text" = { }
+"ui.text.focus" = { }
+"ui.popup" = { bg = "white" }
+"ui.selection" = { bg = "16" }
+"ui.statusline" = { bg = "white" }
+"ui.statusline.inactive" = { fg = "gray", modifiers = ["underlined"] }
+"ui.statusline.insert" = { fg = "white", bg = "blue" }
+"ui.statusline.select" = { fg = "white", bg = "magenta" }
+"ui.virtual" = { fg = "light-gray" }
+"ui.virtual.whitespace" = { fg = "gray" }
+"ui.virtual.indent-guide" = { fg = "light-gray", modifiers = ["dim"] }
+"ui.virtual.ruler" = { bg = "white" }
+"ui.virtual.wrap" = { fg = "light-gray" }
+"ui.window" = { fg = "gray", modifiers = ["dim"] }
 
 "comment" = {}
 
@@ -26,6 +56,29 @@ inherits = "term16_light"
 "label" = {}
 "namespace" = {}
 
-"ui.virtual.whitespace" = { fg = "gray" }
-"ui.selection" = { bg = "16" }
-"ui.menu" = { bg = "gray" }
+"markup.heading" = { modifiers = ["bold"] }
+"markup.list" = {}
+"markup.bold" = { }
+"markup.italic" = { }
+"markup.strikethrough" = { }
+"markup.link.url" = { }
+"markup.link.text" = { }
+"markup.quote" = { }
+"markup.raw" = "blue"
+
+# rainbow = ["#ff0000", "#ffa500", "#fff000", { fg = "#00ff00", modifiers = ["bold"] }]
+
+"diff.plus" = "green"
+"diff.delta" = "yellow"
+"diff.minus" = "red"
+
+"diagnostic.hint" = { underline = { color = "cyan", style = "curl" } }
+"diagnostic.info" = { underline = { color = "blue", style = "curl" } }
+"diagnostic.warning" = { underline = { color = "yellow", style = "curl" } }
+"diagnostic.error" = { underline = { color = "red", style = "curl" } }
+
+"hint" = "cyan"
+"info" = "blue"
+"debug" = "light-yellow"
+"warning" = "yellow"
+"error" = "red"
