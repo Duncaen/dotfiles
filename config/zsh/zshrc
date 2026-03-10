@@ -1,0 +1,97 @@
+setopt NO_BEEP
+setopt C_BASES
+setopt OCTAL_ZEROES
+#setopt SH_NULLCMD
+setopt AUTO_CONTINUE
+setopt NO_BG_NICE
+setopt PATH_DIRS
+setopt NO_NOMATCH
+setopt EXTENDED_GLOB
+
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_SPACE
+setopt INC_APPEND_HISTORY
+setopt EXTENDED_HISTORY
+
+HISTFILE=~/.histfile
+HISTSIZE=10000000
+SAVEHIST=10000000
+bindkey -e
+
+autoload -z edit-command-line
+zle -N edit-command-line
+bindkey "^X^E" edit-command-line
+
+bindkey '^H' backward-kill-word
+bindkey '^[[127;2u' undefined-key
+
+
+zstyle :compinstall filename '/home/duncan/.zshrc'
+
+autoload -Uz select-word-style
+select-word-style bash
+
+autoload -Uz compinit
+compinit
+
+list-expand-or-complete() {
+	zle list-expand
+	local ret=$?
+	echo "1: $ret" >>/tmp/test
+	if [ ! $ret ]; then
+		zle complete-word
+		ret=$?
+		echo "2: $ret" >>/tmp/test
+	fi
+	return ret
+}
+# zle -N list-expand-or-complete
+# bindkey "^I" list-expand-or-complete
+
+# bindkey "^I" expand-or-complete-prefix
+# bindkey "^I" menu-expand-or-complete
+# bindkey "^I" complete-word
+
+# setopt GLOB_COMPLETE
+zle -C complete-files complete-word _generic
+
+source "${XDG_CONFIG_HOME:-$HOME/.config}"/sh/aliases 2>/dev/null || :
+source "${XDG_CONFIG_HOME:-$HOME/.config}"/sh/rc 2>/dev/null || :
+
+# completion
+zmodload zsh/complist
+autoload -Uz compinit && compinit
+# zstyle ':completion:*' menu select=long  # matter of taste
+# keep // normal
+zstyle ':completion:*' squeeze-slashes true
+# zstyle ':completion:*' completer _expand _complete _match _ignored
+# zstyle ':completion:*' completer _complete _match _ignored
+function _match_list {
+	local ret=1 opm="$compstate[pattern_match]"
+	compstate[pattern_match]='-'
+	_complete && ret=0
+	compstate[pattern_match]="$opm"
+	compstate[pattern_insert]=
+	return ret
+}
+# zstyle ':completion:*' completer _complete _match _ignored
+# zstyle ':completion:*' list-suffixes true
+# zstyle ':completion:*' match-original both
+# zstyle ':completion:*' insert-unambiguous no
+# zstyle ':completion:*' original true
+# zstyle ':completion:*:kill:*'   force-list always
+# zstyle ':completion:*:_match_list:*'   force-list always
+# zstyle ':completion:*:_match:*'   force-list always
+
+
+zstyle ':completion:*' squeeze-slashes true
+zstyle ':completion:*' special-dirs ..
+zstyle ':completion:*' accept-exact-dirs true
+zstyle ':completion:*' use-ip true
+zstyle ':completion::*' insert-tab true
+zstyle ':completion::*' keep-prefix true
+zstyle ':completion::*' keep-suffix true
+zstyle ':completion::complete:*' use-cache on
+zstyle ':completion::complete:*' rehash true
+
+PS1='%1~'"${SSH_CONNECTION:+@%m}"'%(?;;?%F{red}%?)%F{green}%#%f '
