@@ -1,0 +1,4 @@
+#!/bin/sh
+# niri-session - start a niri-session
+
+exec systemctl --user --wait start niri.service
