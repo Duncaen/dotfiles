@@ -1,0 +1,11 @@
+[Unit]
+Description=Background for Wayland
+Documentation=man:swaybg(1)
+PartOf=graphical-session.target
+After=graphical-session.target
+Requisite=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=swaybg -m fill -i "%D/wallpaper/default"
+Restart=on-failure
