@@ -1,28 +1,47 @@
 theme = "no"
 
 [keys.normal.space]
+m = "@miw:sh man 3 %{selection}|col -b<ret>"
+
+[keys.normal.space.t]
 l = ":toggle-option whitespace.render all none"
 t = ":toggle-option lsp.display-inlay-hints"
-m = ":toggle-option rulers [80] []"
+r = ":toggle-option rulers [80] []"
+#  = ":toggle-option rainbow-brackets"
 
 [editor]
 mouse = false
 end-of-line-diagnostics = "hint"
+rainbow-brackets = false
 
 [editor.inline-diagnostics]
-cursor-line = "error"
+cursor-line = "hint"
 
 [editor.statusline]
 right = ["diagnostics", "selections", "position", "position-percentage", "file-encoding", "file-line-ending", "file-type"]
+
+[editor.whitespace]
+render = "all"
 
 [keys.normal]
 tab = "move_parent_node_end"
 S-tab = "move_parent_node_start"
 C-S-c = "no_op"
 
-[keys.insert]
-S-tab = "move_parent_node_start"
+[keys.normal."C-w"]
+W = "rotate_view_reverse"
+
+# [keys.insert]
+# S-tab = "move_parent_node_start"
 
 [keys.select]
 tab = "extend_parent_node_end"
 S-tab = "extend_parent_node_start"
+
+[keys.normal."+"]
+d = ":sh tmux popup git diff"
+# b = ":sh git blame --date=short -L %{cursor_line},+1 %{buffer_name}"
+b = ":echo %sh{git blame -L %{cursor_line},+1 %{buffer_name}}"
+
+[keys.normal."g"]
+f = "no_op"

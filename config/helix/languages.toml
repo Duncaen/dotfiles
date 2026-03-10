@@ -1,3 +1,18 @@
+[language-server.clangd-c]
+command = "clangd"
+
 [[language]]
 name = "c"
 indent = { tab-width = 8, unit = "\t" }
+rulers = [80]
+file-types = ["c", "h"]
+language-servers = ["clangd-c"]
+
+[[language]]
+name = "bash"
+indent = { tab-width = 4, unit = "\t" }
+file-types = [{ glob = "srcpkgs/*/template" }]
+
+[[language]]
+name = "python"
+language-servers = ["ty", "ruff"]
