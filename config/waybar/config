@@ -1,0 +1,21 @@
+{
+    "layer": "top",
+    "modules-left": ["niri/workspaces"],
+    "modules-center": ["niri/window"],
+    "modules-right": ["tray", "cpu", "clock", "privacy"],
+    "tray": {
+        "spacing": 10
+    },
+    "clock": {
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "format": "{:%a %d %b %H:%M}"
+    },
+    "cpu": {
+        "interval": 30,
+        "format": "{load1} {load5} {load15}",
+        "tooltip": true,
+    },
+    "niri/window": {
+        "icon": false,
+    },
+}
