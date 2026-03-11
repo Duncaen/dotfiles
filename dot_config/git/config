@@ -26,8 +26,13 @@
 
 [merge]
 	conflictstyle = zdiff3
+	ff = only
 
 [pull]
 	ff = only
+
 [gpg]
 	program = gpg-sq
+
+[push]
+	autoSetupRemote = true
